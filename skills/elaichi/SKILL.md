@@ -115,23 +115,27 @@ number from memory — it moves.
 **Gold** is the plan you can buy today: $15 per user per month, with a 14-day
 free trial and no credit card.
 
-**Gold unlocks every feature that ships today** — the MCP endpoint, custom
-roles, restrictions, synthetic tools, custom connectors, SAML and OIDC single
-sign-on, SCIM provisioning, group-to-role mapping, bring-your-own-key, and
-logging destinations. So the answer to "which plan do I need for X" is Gold,
-for every X that exists.
+**Gold covers everything a team needs day to day** — the MCP endpoint, custom
+roles, restrictions, synthetic tools, custom connectors, and enterprise
+identity: SAML and OIDC single sign-on, SCIM provisioning, and group-to-role
+mapping.
 
-**Black is coming soon and cannot be bought yet.** What will set it apart is
-workflows and dashboards — **neither of which is live**. Until they ship,
-Black unlocks exactly what Gold does, so there is nothing anyone gains by
-waiting for it.
+**Black is coming soon and cannot be bought yet.** Four things sit behind it:
 
-Two things follow, and both matter when somebody asks:
+| Black feature | State |
+|---|---|
+| Bring your own key — customer-managed AWS KMS | Built |
+| Logging destinations — forward audit events to Datadog | Built |
+| Workflows and automations | **Not available** |
+| Collections and live dashboards | **Not available** |
 
-- **Never send a person to Black for something Gold already has.** SSO, SCIM,
-  BYOK and logging destinations are the ones most often misattributed.
-- **Never promise workflows or dashboards a date, or describe them as
-  available.** They are not.
+Two things to get right when somebody asks:
+
+- **Enterprise identity is Gold, not Black.** SSO, SCIM and group mappings are
+  the ones most often misattributed upward. Do not send someone to Black for
+  them.
+- **Never give workflows or dashboards a date, or describe them as
+  available.** They are not, and Black itself is not on sale.
 
 An organization's **data region** — United States, European Union, or
 Asia-Pacific — is chosen when it is created and cannot be changed afterwards.

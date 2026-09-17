@@ -144,7 +144,8 @@ Rows are eventually consistent — one may take a moment to appear after the
 action.
 
 Events can also be forwarded to your own observability tooling from
-**Settings → Logging** (`logging:manage`). Each destination picks which event
+**Settings → Logging** (`logging:manage`) — a **Black** feature, and Black is
+not on sale yet. Each destination picks which event
 types it wants: `tool_call`, `auth`, `admin`. Datadog delivery is fully
 supported. Delivery is asynchronous and batched, with retries and a
 dead-letter queue.
