@@ -115,15 +115,23 @@ number from memory — it moves.
 **Gold** is the plan you can buy today: $15 per user per month, with a 14-day
 free trial and no credit card.
 
-**Gold unlocks every gated feature there is.** The MCP endpoint, custom roles,
-restrictions, synthetic tools, custom connectors, SAML and OIDC single sign-on,
-SCIM provisioning, group-to-role mapping, bring-your-own-key, and logging
-destinations. **Black** exists in the catalog for capabilities still in
-development and is **not sellable yet**; it unlocks the same set. So the honest
-answer to "which plan do I need for X" is Gold, for every X that ships today.
+**Gold unlocks every feature that ships today** — the MCP endpoint, custom
+roles, restrictions, synthetic tools, custom connectors, SAML and OIDC single
+sign-on, SCIM provisioning, group-to-role mapping, bring-your-own-key, and
+logging destinations. So the answer to "which plan do I need for X" is Gold,
+for every X that exists.
 
-Workflows, automations, collections and live dashboards are planned and are
-**not available** — do not promise them.
+**Black is coming soon and cannot be bought yet.** What will set it apart is
+workflows and dashboards — **neither of which is live**. Until they ship,
+Black unlocks exactly what Gold does, so there is nothing anyone gains by
+waiting for it.
+
+Two things follow, and both matter when somebody asks:
+
+- **Never send a person to Black for something Gold already has.** SSO, SCIM,
+  BYOK and logging destinations are the ones most often misattributed.
+- **Never promise workflows or dashboards a date, or describe them as
+  available.** They are not.
 
 An organization's **data region** — United States, European Union, or
 Asia-Pacific — is chosen when it is created and cannot be changed afterwards.
