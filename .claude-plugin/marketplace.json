@@ -1,0 +1,14 @@
+{
+  "name": "elaichi-skills",
+  "owner": {
+    "name": "Elaichi",
+    "url": "https://elaichi.ai"
+  },
+  "plugins": [
+    {
+      "name": "elaichi",
+      "source": "./",
+      "description": "Official Elaichi plugin: skills for the MCP endpoint, toolboxes, connections, governance, and the control-plane API."
+    }
+  ]
+}

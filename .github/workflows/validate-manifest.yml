@@ -1,0 +1,23 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regenerate the manifest and the Cursor rule
+        run: |
+          node scripts/generate-manifest.mjs
+          node scripts/generate-rule.mjs
+      - name: Fail if either generated file is stale
+        run: git diff --exit-code manifest/skills.json rules/elaichi.mdc
+      - name: Check relative links
+        run: node scripts/check-links.mjs

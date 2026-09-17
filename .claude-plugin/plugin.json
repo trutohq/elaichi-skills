@@ -1,0 +1,20 @@
+{
+  "name": "elaichi",
+  "version": "0.1.0",
+  "description": "Official plugin for Elaichi -- the agent platform for companies. Connect the software your teams already run on, curate toolboxes of MCP tools, and keep every agent inside the access the person it acts for already has.",
+  "author": {
+    "name": "Elaichi",
+    "url": "https://elaichi.ai"
+  },
+  "homepage": "https://elaichi.ai",
+  "repository": "https://github.com/trutohq/elaichi-skills",
+  "license": "Apache-2.0",
+  "keywords": [
+    "elaichi",
+    "mcp",
+    "model-context-protocol",
+    "governance",
+    "integrations",
+    "toolbox"
+  ]
+}
