@@ -106,8 +106,8 @@ have the user's words for an account:
 ## When an expected tool is missing
 
 Almost never a typo. Work the ladder in order and stop at the first rung that
-explains it. A `pending` or `needs_reauth` connection contributes **zero**
-tools — absent from the list, not present-and-failing.
+explains it. **Only an `active` connection contributes tools** — every other
+status leaves them absent from the list, not present-and-failing.
 
 1. **Does the connection exist?** `elaichi__connection__list`. If not, this is
    setup — run the `connect_app` playbook.

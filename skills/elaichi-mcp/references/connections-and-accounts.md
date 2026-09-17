@@ -78,9 +78,9 @@ one that shows the broken accounts.
 | `disconnected` | The underlying account is gone | **No** | Reconnect, or delete it |
 | `post_install_error` | The credential works, but a connector setup step failed | **No** | Read the recorded error and clear it. Only `active` contributes tools, so the connection advertises nothing until it gets back there |
 
-A `pending` or `needs_reauth` connection contributes **zero** tools. It is
-absent from the list entirely, not present-and-failing — which is why a
-missing tool so often turns out to be a connection problem.
+**Only `active` contributes tools.** Every other status leaves them absent
+from the list entirely, not present-and-failing — which is why a missing tool
+so often turns out to be a connection problem.
 
 One trap: `elaichi__connection__list_tools` filters by **restriction, not by
 status**, so a connection still `pending` answers with the connector's full

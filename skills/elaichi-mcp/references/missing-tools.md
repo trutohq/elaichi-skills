@@ -4,10 +4,11 @@ A tool the user expects and you cannot find is almost never a typo. Work this
 ladder in order — it is ordered by how often each rung is the cause — and stop
 at the first rung that explains it.
 
-The thing that makes this hard: **a connection that is `pending` or
-`needs_reauth` contributes zero tools.** It is absent from the list entirely,
-not present-and-failing. A governance restriction removes tools just as
-silently. Both look identical to "this connector never had that tool".
+The thing that makes this hard: **only an `active` connection contributes
+tools.** Every other status — including `post_install_error`, where the
+credential itself is live — leaves them absent from the list entirely, not
+present-and-failing. A governance restriction removes tools just as silently.
+All three look identical to "this connector never had that tool".
 
 ## 1. Does the connection exist at all?
 

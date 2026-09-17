@@ -14,7 +14,7 @@
 `post_install_error`, where the credential itself is fine — leaves the
 connection advertising nothing.
 
-### Why "contributes zero tools" matters
+### Why "only active contributes tools" matters
 
 A broken connection does not appear with failing tools. Its tools are **absent
 entirely** from every list. So:
