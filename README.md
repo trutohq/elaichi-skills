@@ -2,6 +2,10 @@
   <img src="./assets/logo.png" alt="Elaichi" width="72">
 </p>
 
+<p align="center">
+  <a href="https://skills.sh/trutohq/elaichi-skills"><img alt="skills.sh" src="https://skills.sh/b/trutohq/elaichi-skills?style=for-the-badge" height="28"></a>
+</p>
+
 # Elaichi Agent Skills
 
 Official agent skills for [Elaichi](https://elaichi.ai) — the agent platform
