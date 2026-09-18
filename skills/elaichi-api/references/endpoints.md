@@ -13,16 +13,21 @@ Every list endpoint takes `limit` and `cursor`, and returns
 GET    /health                                   liveness, no auth
 GET    /schema/openapi.json                      the OpenAPI description
 GET    /schema/openapi.yml                       the same, as YAML
+GET    /openapi.json                             same content, at the conventional root path
+GET    /openapi.yaml                             same content, as YAML, at the conventional root path
 GET    /.well-known/oauth-protected-resource     MCP resource metadata
 GET    /.well-known/oauth-authorization-server   authorization server metadata
 GET    /.well-known/openid-configuration         OIDC discovery document
 ```
 
+`/openapi.json` and `/openapi.yaml` are the same document as their `/schema/`
+counterparts, mounted a second time because that is where an
+agent-readiness auditor looks first.
+
 ## The signed-in person
 
 ```
 GET    /user/me                                  the caller, their organizations and capabilities
-POST   /feedback                                 submit an in-product feedback report
 ```
 
 `GET /user/me` is the closest thing to "who am I" — no other operation answers
@@ -138,7 +143,6 @@ Connectors are identified by **slug**, not by a TypeID.
 POST   /connection                               start a connect session — returns connect_url
 GET    /connection                               list the ones you can reach
 GET    /connection/:id                           read one, with its shares
-GET    /connection/connector-summary             per-connector counts
 GET    /connection/:id/tools                     this account's tools, already filtered by restriction
 PATCH  /connection/:id                           rename                     owner or edit grant
 DELETE /connection/:id                           delete                     owner or manage
