@@ -4,6 +4,7 @@
     "name": "Elaichi",
     "url": "https://elaichi.ai"
   },
+  "description": "Official agent skills for Elaichi — how to find a connected tool, pick the right account, curate toolboxes, reason about access, and call the control-plane API.",
   "plugins": [
     {
       "name": "elaichi",
