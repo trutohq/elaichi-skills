@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "description": "Official plugin for Elaichi -- the agent platform for companies. Connect the software your teams already run on, curate toolboxes of MCP tools, and keep every agent inside the access the person it acts for already has.",
   "author": {
-    "name": "Elaichi",
-    "url": "https://elaichi.ai"
+    "name": "Elaichi"
   },
+  "homepage": "https://elaichi.ai",
+  "repository": "https://github.com/trutohq/elaichi-skills",
   "license": "Apache-2.0",
   "keywords": [
     "elaichi",
@@ -15,5 +16,8 @@
     "integrations",
     "toolbox"
   ],
-  "logo": "./assets/logo.png"
+  "logo": "./assets/logo-square.png",
+  "skills": "./skills",
+  "rules": "./rules",
+  "mcpServers": "./mcp.json"
 }

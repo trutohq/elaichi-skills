@@ -21,3 +21,5 @@ jobs:
         run: git diff --exit-code manifest/skills.json rules/elaichi.mdc
       - name: Check relative links
         run: node scripts/check-links.mjs
+      - name: Validate plugin manifests
+        run: node scripts/validate-plugin-manifests.mjs

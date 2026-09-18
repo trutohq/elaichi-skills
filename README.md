@@ -38,18 +38,29 @@ Skills become namespaced as `elaichi:elaichi`, `elaichi:elaichi-mcp`,
 `elaichi:elaichi-toolboxes`, `elaichi:elaichi-governance`,
 `elaichi:elaichi-api` and `elaichi:elaichi-conventions`.
 
+The plugin also bundles the [Elaichi MCP server](https://api.elaichi.ai/mcp),
+so installing it connects Claude Code to Elaichi too — sign in and choose
+your organization on the OAuth consent screen when prompted.
+
 To try it locally before installing, run `claude --plugin-dir /path/to/elaichi-skills`.
 
 ### Cursor
 
-Open **Cursor Settings → Rules**, click **Add Rule** under **Project Rules**,
-choose **Remote Rule (GitHub)**, and enter:
+Install **Elaichi** from the [Cursor plugin marketplace](https://cursor.com/marketplace).
+Installing it also connects the [Elaichi MCP server](https://api.elaichi.ai/mcp) —
+Cursor will prompt you to sign in and choose your organization on the OAuth
+consent screen, the same one you'd see connecting any other client.
+
+Before it is listed, or if you'd rather skip the marketplace, add the repo as
+a remote rule instead: open **Cursor Settings → Rules**, click **Add Rule**
+under **Project Rules**, choose **Remote Rule (GitHub)**, and enter:
 
 ```
 https://github.com/trutohq/elaichi-skills
 ```
 
-This pulls in both the skills and the always-applied `elaichi` rule.
+This pulls in both the skills and the always-applied `elaichi` rule, but not
+the MCP server — connect that separately from **Cursor Settings → MCP**.
 
 ### Any agent (via `npx skills`)
 
@@ -61,10 +72,10 @@ Add `-g` to install globally instead of into the current project.
 
 ### Updating and removing
 
-| | Claude Code | Cursor | `npx skills` |
-|---|---|---|---|
-| Update | `/plugin marketplace update elaichi-skills` | Re-sync the remote rule from **Settings → Rules** | `npx skills update` |
-| Remove | `/plugin uninstall elaichi@elaichi-skills` | Delete the rule from **Settings → Rules** | `npx skills remove trutohq/elaichi-skills` |
+| | Claude Code | Cursor (marketplace) | Cursor (remote rule) | `npx skills` |
+|---|---|---|---|---|
+| Update | `/plugin marketplace update elaichi-skills` | Managed by the marketplace | Re-sync the remote rule from **Settings → Rules** | `npx skills update` |
+| Remove | `/plugin uninstall elaichi@elaichi-skills` | Uninstall from **Settings → Plugins** | Delete the rule from **Settings → Rules** | `npx skills remove trutohq/elaichi-skills` |
 
 ## Skills
 

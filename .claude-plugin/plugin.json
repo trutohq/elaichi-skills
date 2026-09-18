@@ -16,5 +16,6 @@
     "governance",
     "integrations",
     "toolbox"
-  ]
+  ],
+  "mcpServers": "./mcp.json"
 }
