@@ -46,10 +46,19 @@ To try it locally before installing, run `claude --plugin-dir /path/to/elaichi-s
 
 ### Cursor
 
-Install **Elaichi** from the [Cursor plugin marketplace](https://cursor.com/marketplace).
-Installing it also connects the [Elaichi MCP server](https://api.elaichi.ai/mcp) —
-Cursor will prompt you to sign in and choose your organization on the OAuth
-consent screen, the same one you'd see connecting any other client.
+The plugin listed on the [Cursor plugin marketplace](https://cursor.com/marketplace)
+is a separate, dedicated repo —
+[trutohq/elaichi-cursor-plugin](https://github.com/trutohq/elaichi-cursor-plugin) —
+not this one. Install **Elaichi** from there for the marketplace path; it
+vendors a copy of this repo's skills and rule, kept in sync, alongside the MCP
+server. This repo (`elaichi-skills`) is where the skills and the rule are
+authored, and is what to install directly via `npx skills` or a remote rule
+below.
+
+Installing the marketplace plugin also connects the
+[Elaichi MCP server](https://api.elaichi.ai/mcp) — Cursor will prompt you to
+sign in and choose your organization on the OAuth consent screen, the same one
+you'd see connecting any other client.
 
 Before it is listed, or if you'd rather skip the marketplace, add the repo as
 a remote rule instead: open **Cursor Settings → Rules**, click **Add Rule**

@@ -5,18 +5,47 @@
 // regenerates manifest/skills.json and rules/elaichi.mdc from the skills
 // themselves and diffs them, but a manifest with invalid JSON, a malformed
 // name, an undocumented author field, a version that is not semver, a
-// logo/skills/rules path that does not exist on disk, or a missing/wrong/
-// disagreeing MCP server declaration would still merge clean. This is the
-// check that would have caught those.
+// logo/skills/rules path that does not exist on disk, or a wrong MCP server
+// declaration would still merge clean. This is the check that would have
+// caught those.
+//
+// The two manifests are DELIBERATELY asymmetric on `name` and `mcpServers`,
+// and that asymmetry is a rule here, not an oversight to "fix" back into
+// matching:
+//
+//   - Elaichi ships a SEPARATE, dedicated Cursor plugin repo,
+//     trutohq/elaichi-cursor-plugin, which is the one submitted to and listed
+//     on the Cursor marketplace and which owns the MCP server declaration for
+//     Cursor users. Cursor plugin names must be unique across the
+//     marketplace, and that repo's manifest keeps the name "elaichi" because
+//     it is the one being listed.
+//   - THIS repo's `.cursor-plugin/plugin.json` exists only so `npx skills`
+//     and a Cursor "remote rule" install can pull in the skills and the
+//     always-applied rule — it is not submitted to Cursor and must not carry
+//     the name "elaichi" (that would collide with the dedicated plugin the
+//     moment both were ever visible to Cursor's namespace together) or an
+//     `mcpServers` declaration (a user who installs both would otherwise get
+//     the same MCP server registered twice, from two different plugins).
+//   - `.claude-plugin/plugin.json` has no such sibling — there is no separate
+//     Claude repo — so it legitimately keeps the name "elaichi" and the real
+//     `mcpServers` pointer.
+//
+// If you are changing this file, you are probably looking at a merge
+// conflict between "the two manifests should match" and "the two manifests
+// should NOT match here" — the asymmetry below is the correct state. See
+// also: trutohq/elaichi-cursor-plugin, which has its own validator and its
+// own copy of the endpoint URL and brand copy, checked by nothing in this
+// repo's CI — if you change the MCP URL, the author contact, or the pitch
+// here, go check that repo too.
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 const root = join(import.meta.dirname, '..')
 
 // The one MCP endpoint every organization and every person shares — see
-// skills/elaichi-conventions/SKILL.md. Both plugin manifests must bundle a
+// skills/elaichi-conventions/SKILL.md. The Claude manifest must bundle a
 // server pointed at exactly this URL, so installing the plugin is the act of
-// connecting.
+// connecting. The Cursor manifest must NOT — see the header comment above.
 const EXPECTED_MCP_URL = 'https://api.elaichi.ai/mcp'
 
 // Cursor: https://cursor.com/docs/reference/plugins — "Author info: name
@@ -30,13 +59,13 @@ const MANIFESTS = [
     path: '.cursor-plugin/plugin.json',
     authorFields: ['name', 'email'],
     pathFields: ['logo', 'skills', 'rules'],
-    requireMcp: true,
+    mcp: 'forbidden',
   },
   {
     path: '.claude-plugin/plugin.json',
     authorFields: ['name', 'email', 'url'],
     pathFields: ['skills', 'commands', 'agents', 'workflows', 'outputStyles', 'lspServers'],
-    requireMcp: true,
+    mcp: 'required',
   },
 ]
 
@@ -46,9 +75,9 @@ const NAME_RE = /^[a-z0-9]+(?:[-.][a-z0-9]+)*$/
 const SEMVER_RE = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z-.]+)?(?:\+[0-9A-Za-z-.]+)?$/
 
 const errors = []
-// { label, urls: Set<string> } per manifest that declares mcpServers, so we
-// can check every manifest agrees on the same server set at the end.
-const mcpDeclarations = []
+// { label, name } per manifest with a syntactically valid name, so we can
+// check the two manifests don't collide at the end.
+const names = []
 
 /**
  * Resolves a manifest's "mcpServers" field to a { name: { url, ... } } map.
@@ -85,7 +114,7 @@ function resolveMcpServers(manifest, label) {
   return { error: `"mcpServers" has an unsupported shape (expected a file path string or an inline object)` }
 }
 
-for (const { path, authorFields, pathFields, requireMcp } of MANIFESTS) {
+for (const { path, authorFields, pathFields, mcp } of MANIFESTS) {
   const full = join(root, path)
   const label = path
   const raw = readFileSync(full, 'utf-8')
@@ -102,6 +131,8 @@ for (const { path, authorFields, pathFields, requireMcp } of MANIFESTS) {
     errors.push(
       `${label}: "name" must be lowercase kebab-case (alphanumerics, hyphens, periods), got ${JSON.stringify(manifest.name)}`
     )
+  } else {
+    names.push({ label, name: manifest.name })
   }
 
   if (manifest.version !== undefined && !SEMVER_RE.test(manifest.version)) {
@@ -140,7 +171,7 @@ for (const { path, authorFields, pathFields, requireMcp } of MANIFESTS) {
     }
   }
 
-  if (requireMcp) {
+  if (mcp === 'required') {
     const resolved = resolveMcpServers(manifest, label)
     if (resolved.error) {
       errors.push(`${label}: ${resolved.error}`)
@@ -152,21 +183,25 @@ for (const { path, authorFields, pathFields, requireMcp } of MANIFESTS) {
         errors.push(
           `${label}: "mcpServers" (via ${resolved.source}) does not declare a server at ${EXPECTED_MCP_URL}; found ${JSON.stringify(urls)}`
         )
-      } else {
-        mcpDeclarations.push({ label, urls: new Set(urls) })
       }
     }
+  } else if (mcp === 'forbidden' && manifest.mcpServers !== undefined) {
+    // See the header comment: this manifest is not the one submitted to
+    // Cursor, and the dedicated elaichi-cursor-plugin repo already owns the
+    // MCP server declaration for Cursor users. A second one here would
+    // double-register the same server.
+    errors.push(
+      `${label}: must not declare "mcpServers" — the Cursor MCP server is owned by trutohq/elaichi-cursor-plugin, not this repo (see the header comment in this script)`
+    )
   }
 }
 
-if (mcpDeclarations.length > 1) {
-  const [first, ...rest] = mcpDeclarations
-  const firstKey = [...first.urls].sort().join(',')
+if (names.length > 1) {
+  const [first, ...rest] = names
   for (const other of rest) {
-    const otherKey = [...other.urls].sort().join(',')
-    if (otherKey !== firstKey) {
+    if (other.name === first.name) {
       errors.push(
-        `MCP server declarations disagree: ${first.label} declares {${firstKey}}, ${other.label} declares {${otherKey}}`
+        `"name" collides: ${first.label} and ${other.label} both declare ${JSON.stringify(first.name)} — see the header comment in this script for why they must differ`
       )
     }
   }
