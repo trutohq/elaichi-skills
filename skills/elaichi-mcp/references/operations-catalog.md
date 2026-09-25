@@ -116,10 +116,13 @@ and asking the user a question, stay app-only.
 
 ## Results and failures
 
-Results are redacted and **silently** capped: strings at 8,000 characters,
-arrays at 200 items, objects at 200 keys, depth 8. A broad list can come back
-both enormous and quietly incomplete, so page deliberately and ask narrow
-questions.
+Results are redacted and capped, and a cap firing always shows in the payload:
+strings at 32,000 characters (a cut one ends in
+`…[truncated: kept N of M chars]`), arrays at 200 items, objects at 200 keys,
+depth 8. When any cap fired, the result carries `elaichi_truncated: true` as
+its first key — a vendor's own `truncated` field is separate and untouched. A
+broad list can still come back enormous, just never silently incomplete, so
+page deliberately and ask narrow questions.
 
 Validation, conflict, permission and not-found failures carry a real message —
 act on it. Everything else collapses to a generic try-again sentence naming no
