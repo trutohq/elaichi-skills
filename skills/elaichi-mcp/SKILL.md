@@ -164,17 +164,23 @@ and Run tools.
 What each covers, how toolbox selection works, and what a scope refusal looks
 like: [Scopes and refusals](./references/scopes-and-refusals.md).
 
-## Results are capped, quietly
+## Results are capped, and it says so
 
-Over MCP, results are redacted and truncated with no marker in the payload:
+Over MCP, results are redacted and truncated, and any cap that fires shows up
+in the payload:
 
-- strings at 8,000 characters
+- strings at 32,000 characters — a cut one ends in an in-band marker,
+  `…[truncated: kept N of M chars]`
 - arrays at **200 items**
 - objects at 200 keys
 - depth 8
 
-So a broad list can come back both enormous and silently incomplete. Two habits
-follow. Page deliberately — `elaichi__connector__list_tools` and
+When a cap fired, the result carries `elaichi_truncated: true` as its first
+key. That's Elaichi's own marker — a vendor's own `truncated` field (Notion's
+markdown endpoint, for example) is unrelated and untouched.
+
+So a broad list can still come back enormous, just never silently incomplete.
+Two habits follow. Page deliberately — `elaichi__connector__list_tools` and
 `elaichi__connection__list_tools` take `limit` (default 200) and return
 `nextCursor`; send it back as `cursor` until it is null. And ask a narrow
 question rather than pulling a large connector's full schema set.
