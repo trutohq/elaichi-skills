@@ -131,3 +131,9 @@ it delegates *execution* over whichever connections that toolbox's entries pin,
 without granting the recipient anything on the connections themselves. They run
 the tools; they never see the account, cannot reuse it anywhere else, and lose
 it the moment the share is revoked. See the **elaichi-toolboxes** skill.
+
+Those tools are part of **All my tools**, and `search_tools` finds them like any
+other. The pinned connection, though, is **not** in `elaichi__connection__list`
+or `elaichi://connections` for the recipient — it was never shared with them.
+So "the connection is not in my list" does not mean "I cannot run its tools":
+check `elaichi__toolbox__list` for a toolbox shared with them first.
