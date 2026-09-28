@@ -8,8 +8,9 @@ and both come from the OAuth grant rather than the URL. Two colleagues
 pointing the same client at the same address do not see the same tools.
 
 There is no publishing step. Every tool the user can already use is resolved
-live through their personal `global:{userId}` toolbox, clamped by their
-effective restrictions on each request. Losing a role takes effect
+live — their personal `global:{userId}` toolbox plus every toolbox shared with
+them at `use` or above — clamped by their effective restrictions on each
+request. Losing a role takes effect
 immediately; so does revoking a share.
 
 ## The four scopes
@@ -36,8 +37,12 @@ strictly "what this user could already see in the app".
 When `mcp:tools` is requested, the consent screen also asks **which toolboxes**
 this client may reach. The user picks either:
 
-- **All my tools** — resolved through their `global:{userId}` toolbox, meaning
-  every tool of every connection they can use; or
+- **All my tools** — every tool they can run: their `global:{userId}` toolbox
+  (every connection they own or that is shared with them at `use`) **plus**
+  every toolbox shared with them — directly, through a team, or with the whole
+  organization — at `use` or above. A tool reached only through a shared
+  toolbox runs over the connection that toolbox pins, even though that
+  connection was never shared with them; or
 - **a specific set of toolboxes.**
 
 With a specific set, `elaichi__toolbox__execute` must name one of them. Every
