@@ -16,7 +16,12 @@ All three look identical to "this connector never had that tool".
 elaichi__connection__list
 ```
 
-If the app is not there, this is a setup problem rather than a missing tool.
+If the app is not there, first check `elaichi__toolbox__list` for a toolbox
+someone shared with the user that holds this app's tools. Its pinned connection
+never appears in the recipient's connection list, yet its tools are theirs to
+run — under **All my tools**, or when that toolbox was chosen on the consent
+screen. Nothing there either? Then it is a setup problem rather than a missing
+tool.
 Run the `connect_app` playbook — or the sequence in
 [Connections and accounts](./connections-and-accounts.md).
 

@@ -10,6 +10,17 @@ content, corrected facts, breaking removals.
 
 Dates are `YYYY-MM-DD`.
 
+## [Unreleased]
+
+### Changed
+
+- **All my tools** now covers every toolbox shared with the user at `use` or
+  above, not only the connections they own or were shared. `elaichi-mcp`'s
+  scopes and connections references and `elaichi`'s concepts say so, and the
+  missing-tool ladder now checks for a shared toolbox before calling a missing
+  connection a setup problem: a toolbox's pinned connection never appears in
+  the recipient's connection list.
+
 ## [0.1.0] — 2026-09-17
 
 First release. Eight skills, a Claude Code plugin, and a Cursor rule.
