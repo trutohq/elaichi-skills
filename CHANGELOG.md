@@ -12,6 +12,76 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-10-10
+
+Every skill re-checked against the product as it runs today, and two new
+skills for features that had no guidance at all.
+
+### Added
+
+- `skills/elaichi-automations` — automations (workflows): checking they are on
+  for the organization, choosing between an automation, a synthetic tool or a
+  plain tool call, whose access a run uses, the draft → validate → dry run →
+  publish → enable loop over MCP, the seven trigger types and every step type,
+  runs, approvals, sessions, settings and run input, webhooks and samples,
+  usage limits, and who can see, run and manage. References: **Writing a
+  definition**, **Operating automations**, **Worked example**.
+- `skills/elaichi-data` — collections (shared tables), dashboards and public
+  links, and knowledge bases: when to use each, building them over MCP, draft
+  and publish, why a widget runs as its viewer, what a public link shows,
+  reviewed versus unreviewed knowledge and the search `gate`. References:
+  **Collections**, **Dashboards**, **Knowledge**.
+- `elaichi-toolboxes`: a **Toolbox skills** reference — when to write one (in
+  the same `toolbox.create` call, whenever the toolbox is for a specific job),
+  what goes in it, naming tools by catalog `tool_name`, the 10,000-character
+  limit, staleness and `skill_tool_issues`, and reading a skill before using a
+  toolbox.
+- `elaichi-governance`: **People and identity** (app-only actions, joining,
+  domains, SSO, SCIM, group mappings, offboarding, support access) and
+  **Oversight** (audit log scopes, logging destinations, notifications,
+  approvals, web access, spend) references.
+- `elaichi-mcp`: Code Mode (`run_code`); the full `search_tools` result
+  (`toolbox` filter, `detail: "summary"`, `skills`, restricted rows,
+  `blocked_connections`); files in and out of tools; MCP Apps cards; the five
+  kinds of refusal and filing an access request with `request_access.arguments`.
+- `elaichi-connections`: bring-your-own OAuth apps, remote MCP connectors, the
+  blocked and app-unavailable states, repair actions, and connecting from an
+  agent.
+- `elaichi-api`: published, internal and invite-only route groups, rebuilt from
+  the live OpenAPI schema.
+- `elaichi-clients`: setup for any MCP client, the consent screen's org and
+  toolbox steps, and a longer no-tools troubleshooting ladder.
+- `elaichi` and `elaichi-conventions`: words, app-map entries, id prefixes and
+  error codes for the automation platform, the Elaichi Agent, files and spend.
+
+### Changed
+
+- Automations, collections, dashboards and knowledge are described as early
+  access by invitation, switched on in Settings → Organization → Automations —
+  not "not available", and never with a date.
+- Inviting, changing roles, removing members, and deleting roles or teams are
+  marked "Only in the Elaichi app": they need a fresh sign-in and are refused on
+  every AI surface. Access requests are approved in the app only.
+- Offboarding deletes every connection a leaving member owns; admins pick
+  replacements to keep tools working, and transferring before they leave is the
+  only way to keep a connection.
+- Restrictions layer: a person's own rule only narrows what their role allows,
+  and teams are not a restriction target. Restricted tools are named in
+  `search_tools` with a `restricted` flag, not invisible.
+- The permission catalog is rebuilt: 58 permissions, with the automation, data,
+  apps, spend and `team:create` families. Team admins can delete their team and
+  appoint admins.
+- MCP calls are audited as the person (surface `mcp`); `ai_assistant` marks the
+  in-app Agent only.
+- `search_tools` ranking is described as BM25F with stemming, synonyms and typo
+  tolerance, and it includes synthetic tools that are toolbox entries.
+- The consent screen pre-ticks every requested scope except Delete; adding a
+  scope means connecting the client again. A connected tool that deletes needs
+  `mcp:destructive` as well as `mcp:tools`.
+- API tokens cannot use the API-token routes, and browser-only actions answer
+  `403`, not `428`.
+- Frozen values are visible to the model but cannot be changed — never freeze
+  secrets. Synthetic tools are owner-only.
 ### Changed
 
 - **All my tools** now covers every toolbox shared with the user at `use` or

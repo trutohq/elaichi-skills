@@ -3,7 +3,7 @@
     {
       "id": "elaichi",
       "title": "elaichi",
-      "whenToUse": "Someone asks what Elaichi is, how to do something in it, where a screen or setting lives, or what one of its words means. Also the routing table when you are not sure which Elaichi skill covers a question.",
+      "whenToUse": "Someone asks what Elaichi is, how to do something in it, where a screen or setting lives, what one of its words means, or what their plan includes. Also the routing table when you are not sure which Elaichi skill covers a question.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi/SKILL.md"
     },
     {
@@ -13,39 +13,51 @@
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-api/SKILL.md"
     },
     {
+      "id": "elaichi-automations",
+      "title": "elaichi-automations",
+      "whenToUse": "Someone wants something to happen on its own — on a schedule, once at a set time, when a webhook, Slack message, collection row or another automation fires — or is building, debugging, running, sharing or turning off an Elaichi automation or workflow.",
+      "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-automations/SKILL.md"
+    },
+    {
       "id": "elaichi-clients",
       "title": "elaichi-clients",
-      "whenToUse": "Someone is setting up an AI client against Elaichi, pasting an MCP endpoint, editing mcp.json, or reporting that their client connected but shows no tools or is missing one.",
+      "whenToUse": "Someone is setting up an AI client against Elaichi, pasting the MCP endpoint, editing mcp.json, choosing scopes or toolboxes on the consent screen, or reporting that their client connected but shows no tools, is missing one, or was refused.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-clients/SKILL.md"
     },
     {
       "id": "elaichi-connections",
       "title": "elaichi-connections",
-      "whenToUse": "Someone is connecting a product account, sharing one with a team, reconnecting a broken connection, transferring ownership, offboarding a member, or building a custom connector.",
+      "whenToUse": "Someone is connecting an app account, sharing one with a team, fixing a broken or blocked connection, transferring ownership, offboarding a member, setting up an OAuth app for a connector, adding a remote MCP server, or building a custom connector.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-connections/SKILL.md"
     },
     {
       "id": "elaichi-conventions",
       "title": "elaichi-conventions",
-      "whenToUse": "Load whenever calling, configuring, or reasoning about anything at api.elaichi.ai or an Elaichi MCP endpoint. Read before constructing a URL, an id, or a paged request.",
+      "whenToUse": "Load whenever calling, configuring, or reasoning about anything at api.elaichi.ai or an Elaichi MCP endpoint. Read before constructing a URL, an id, or a paged request, or when an error code needs explaining.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-conventions/SKILL.md"
+    },
+    {
+      "id": "elaichi-data",
+      "title": "elaichi-data",
+      "whenToUse": "Someone wants to store or track data, see it as a chart or report, share numbers with their team or outside the company, save reference text for later, or asks why a widget shows no data or a search found nothing. Also read before calling any elaichi__collection__*, elaichi__dashboard__* or elaichi__knowledge__* tool.",
+      "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-data/SKILL.md"
     },
     {
       "id": "elaichi-governance",
       "title": "elaichi-governance",
-      "whenToUse": "Someone asks who can do what, why an action was refused, how to block a connector or tool, what a role grants, how to read the audit log, or how to set up SSO or SCIM.",
+      "whenToUse": "Someone asks who can do what, why an action was refused, how to block or allow a connector or tool, what a role grants, how access requests or approvals work, how to read the audit log, how to set up SSO, SCIM or domains, or how to offboard someone.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-governance/SKILL.md"
     },
     {
       "id": "elaichi-mcp",
       "title": "elaichi-mcp",
-      "whenToUse": "An Elaichi MCP server is attached and you need to act on the user's connected SaaS accounts, or explain why a tool is missing, refused, or asking which account to use. Read before the first search_tools call.",
+      "whenToUse": "An Elaichi MCP server is attached and you need to act on the user's connected apps, or explain why a tool is missing, refused, restricted, or asking which account to use. Read before the first search_tools call.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-mcp/SKILL.md"
     },
     {
       "id": "elaichi-toolboxes",
       "title": "elaichi-toolboxes",
-      "whenToUse": "Someone is building, sharing or debugging a toolbox, template or synthetic tool, deciding between a toolbox and a template, or asking what happens when they share one with a colleague.",
+      "whenToUse": "Someone is building, sharing or debugging a toolbox, template or synthetic tool, writing or reading a toolbox skill, deciding between a toolbox and a template, or asking what happens when they share one with a colleague.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-toolboxes/SKILL.md"
     }
   ]

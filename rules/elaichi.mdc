@@ -1,5 +1,5 @@
 ---
-description: Elaichi's base facts in one page — production URLs, API token format and the organization header, the cursor list envelope, error codes, id prefixes, the two MCP namespaces, and which Elaichi skill covers which question.
+description: Elaichi's base facts in one page — production URLs, API token format and the organization header, the cursor list envelope, error codes, id prefixes (conn_, tbx_, auto_, dash_…), MCP namespaces and scopes, and which Elaichi skill covers which question.
 globs:
 alwaysApply: true
 ---
@@ -18,11 +18,13 @@ authorized with OAuth, serves Claude, ChatGPT, Cursor and any other MCP client.
 
 | The question is about | Load |
 |---|---|
-| What Elaichi is, where a screen lives, what a word means | **elaichi** |
+| What Elaichi is, where a screen lives, what a word means, what a plan includes | **elaichi** |
 | Acting through an attached Elaichi MCP server | **elaichi-mcp** |
-| Setting up Claude, ChatGPT or Cursor | **elaichi-clients** |
+| Setting up Claude, ChatGPT, Cursor or another MCP client | **elaichi-clients** |
 | Connecting accounts, connection health, transfer, offboarding, custom connectors | **elaichi-connections** |
 | Toolboxes, templates, frozen params, delegation, synthetic tools | **elaichi-toolboxes** |
+| Automations and workflows: triggers, steps, approvals, runs, sessions, webhooks | **elaichi-automations** |
+| Collections, dashboards and public links, knowledge bases | **elaichi-data** |
 | Roles, permissions, restrictions, access requests, audit, SSO, SCIM | **elaichi-governance** |
 | Writing code against `api.elaichi.ai` | **elaichi-api** |
 
@@ -31,14 +33,16 @@ authorized with OAuth, serves Claude, ChatGPT, Cursor and any other MCP client.
 | What | Where |
 |---|---|
 | API | `https://api.elaichi.ai` |
-| MCP endpoint | `https://api.elaichi.ai/mcp` |
+| MCP endpoint | `https://api.elaichi.ai/mcp` (`POST` only) |
 | Console | `https://app.elaichi.ai` |
+| Public dashboard link | `https://app.elaichi.ai/p/<token>` |
 | Docs | `https://elaichi.ai/docs` |
-| OpenAPI | `https://api.elaichi.ai/schema/openapi.json` (also `.yml`) |
+| OpenAPI | `https://api.elaichi.ai/schema/openapi.json` (also `/schema/openapi.yml`, `/openapi.json`, `/openapi.yaml`) |
 | Support | `support@elaichi.ai` |
 
-Paths are unversioned. If an endpoint is not in the OpenAPI schema, it is
-internal and its URL is not a stable contract.
+Paths are unversioned. The API host is the same for every data region. If an
+endpoint is not in the OpenAPI schema, it is internal and its URL is not a
+stable contract.
 
 ## Authentication
 
@@ -50,17 +54,27 @@ X-Organization-Id: org_…            # optional with a token, which already nam
 Create a token at **Settings → API tokens**. The raw value is shown **once**.
 
 A token **has no scopes**. It acts as the person who created it, with their
-live permissions — change their roles and the token changes with them. It is
-bound to one organization. Server-side only.
+live permissions — change their role and the token changes with them; remove
+them and it stops working. It is bound to one organization: naming a different
+one in `X-Organization-Id` is refused. Server-side only.
 
 **An API token is the whole programmatic surface.** The console's own browser
 sign-in is not an integration path, there is no supported way to obtain a
 session outside the browser, and nothing should try to mint or replay one.
 
-Some actions need a **human session** — a real person signed in at
-app.elaichi.ai and re-verified in the moment. Deleting an organization,
-revoking a token, approving an MCP client. A token answers `428
-step_up_required`; the right response is to send the person to the app.
+Some actions need a **person signed in at app.elaichi.ai**, and a token gets
+`403` ("This action needs an interactive browser session"), not `428`: the
+whole `/api-token` router, SCIM tokens, approving an MCP client, managing
+connected apps, resolving access requests, deleting the organization. A
+signed-in person doing a sensitive change may also be asked to confirm it is
+them ("Confirm it's you"), and the API answers `428 step_up_required` until
+they do. Either way, the right response is to send the person to the app.
+
+Over MCP and in the Elaichi Agent there is no way to confirm it is you, so
+these operations are refused there and must be done in the app: sending,
+resending or revoking an invite, changing a member's roles, removing a member,
+deleting a role or a team, and revoking an API token. Listing or renaming API
+tokens works in the Elaichi Agent but is not offered over MCP at all.
 
 MCP clients use neither: they sign in with OAuth and the person approves
 scopes on Elaichi's own consent screen.
@@ -73,9 +87,10 @@ Every endpoint returning an array:
 { "result": [], "next_cursor": "opaque-or-null", "prev_cursor": "opaque-or-null" }
 ```
 
-- `limit` — default **50**, max **200** (above is clamped).
+- `limit` — default **50**, max **200** (above is clamped; below 1 is an error).
 - `cursor` — opaque, round-trip untouched.
-- `q` — server-side search, up to 200 characters, applied before paging.
+- `q` — server-side search, up to 200 characters, applied before paging, on
+  the routes that document it.
 
 **Page until `next_cursor` is null.** Never search, filter, sort or count
 client-side over a paginated list — you would be operating on the pages you
@@ -95,11 +110,19 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 | `validation_error`, `bad_request`, `missing_organization_header` | 400 |
 | `unauthorized` | 401 |
 | `permission_required`, `forbidden` | 403 |
+| `subscription_required` (no active Gold or Black plan), `feature_not_available` (not on this plan), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
+| `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the automation platform is not offered, turned off, or paused) | 403 |
 | `not_found` | 404 |
 | `conflict` | 409 |
+| `payload_too_large` | 413 |
 | `step_up_required` | 428 |
 | `rate_limited` | 429 |
 | `internal_error` | 500 |
+| `platform_mcp_stopped`, `platform_connections_stopped`, `platform_signups_stopped` (paused for maintenance; retry in a few minutes) | 503 |
+| `clove_timeout`, `saffron_timeout` (an internal service did not answer in time; retry) | 504 |
+
+Many routes use a more specific code than these; branch on the ones you know
+and show the message for the rest.
 
 `permission_required` carries `details.required_permissions` — **any one** of
 them suffices. Show `error.message` unchanged; it is written for a person and
@@ -115,7 +138,7 @@ rather than refused.
 | Surface | Limit |
 |---|---|
 | REST API | 600 requests / 60s per API token |
-| MCP endpoint | 120 requests / 60s per OAuth token |
+| MCP endpoint | 120 requests / 60s per OAuth access token |
 
 `429` carries `Retry-After` in seconds. There is no public idempotency key.
 
@@ -138,7 +161,8 @@ Authorization is computed server-side and shipped as a field. **Read it; do
 not re-derive it** from `owner_user_id` and a permission list.
 
 `can_use` · `can_share` · `can_manage` · `can_transfer` · `can_revoke_share` ·
-`can_see_shares`
+`can_see_shares`, plus a few resource-specific ones such as `can_reconnect`
+and `can_delete`.
 
 `can_manage` is the single name for "may mutate this resource's settings"
 across every resource type — there is no `can_edit` or `can_update`.
@@ -166,47 +190,80 @@ Opaque, but chronologically sortable within a prefix.
 | `sso` | SSO connection | `gmap` | group mapping |
 | `stok` | SCIM token | `sgrp` | SCIM group |
 | `ocli` | OAuth client | `ogrt` | OAuth grant |
-| `ldst` | logging destination | `pkey` | passkey |
+| `ldst` | logging destination | `onfd` | notification destination |
+| `pkey` | passkey | `skv` | toolbox or template skill version |
+| `file` | stored tool file | `fupr` | file upload request |
+| `crun` | one `run_code` execution | `req` | request id (logs and audit) |
 
-**Connectors are identified by slug, not by a TypeID.**
+The automation platform adds:
+
+| Prefix | Entity | Prefix | Entity |
+|---|---|---|---|
+| `auto` | automation | `aver` | published automation version |
+| `arun` | automation run | `ases` | automation session |
+| `aapr` | approval | `awh` | webhook endpoint |
+| `coll` | collection | `crow` | collection row |
+| `cfld` | collection field | `dash` | dashboard |
+| `pdl` | public dashboard link | `kbs` | knowledge base |
+| `kdoc` | knowledge document | `bndl` | app (bundle) |
+| `bver` | app version | `bins` | app install |
+| `ulim` | usage limit | `pcap` | payment cap |
+
+**Connectors are identified by slug, not by a TypeID.** A collection's extra
+table is named by its key on the wire.
 
 Three secrets embed an org id instead of being TypeIDs — `elch_…` (API token),
 `einv_…` (invite), `escim_…` (SCIM token), all shaped
 `{prefix}_{orgId}_{secret}`. The org id routes the request; the secret is only
-ever compared as a hash.
+ever compared as a hash. A public dashboard link's token starts `epd_`.
 
-Dynamic toolbox ids are computed and read-only: `global:{userId}` and
-`connection:{connectionId}`.
+Dynamic toolbox ids are computed and read-only: `global:{userId}` (named
+**All tools**) and `connection:{connectionId}`.
 
-## MCP: two namespaces
+## MCP: namespaces and scopes
 
 | Namespace | Cost |
 |---|---|
 | `elaichi__*` — administers Elaichi itself | One internal call. Cheap. |
-| Connected tools, reached via `execute_tool` | Restriction check + credential fetch + live third-party call. Seconds, and the vendor's rate limit. |
+| Connected tools, reached via `execute_tool` or `run_code` | Restriction check + credential fetch + live third-party call. Seconds, and the vendor's rate limit. |
 
 `elaichi__toolbox__execute` and `elaichi__synthetic_tool__execute` cost the
-second kind, because they run a connected tool.
+second kind, because they run a connected tool. Operation `a.b` in Elaichi's
+catalog is MCP tool `elaichi__a__b`.
 
 **Connected tools are never listed in `tools/list`, however few there are.**
-`search_tools` finds one; `execute_tool` runs it. `search_tools` indexes
-connected tools only — never an `elaichi__` operation, and never a synthetic
-tool. Its ranking is **lexical**: query with concrete tool-ish words, not a
-sentence.
+`search_tools` finds one; `execute_tool` runs it; `run_code` runs a small
+JavaScript program that calls several. `search_tools` indexes connected tools
+only — never an `elaichi__` operation. A synthetic tool appears in it only as
+an entry of a toolbox you can reach; a standalone one is listed by
+`elaichi__synthetic_tool__list` and run by `elaichi__synthetic_tool__execute`.
+Ranking is **lexical**: query with concrete tool-ish words, not a sentence.
+
+When the person reaches no connected tool at all, `search_tools` and
+`execute_tool` are not listed. Clients that support MCP Apps also get
+`show_card` and `show_object`, which only draw cards.
 
 A tool reaching several accounts of one app takes a required `connection`
 argument — one of its schema enum labels, copied exactly, up to 12 accounts;
 an exact account name or `conn_…` id beyond that. **Never guess it. Ask.**
 
-Scopes: `mcp:read` (default) · `mcp:write` · `mcp:destructive` (never implied)
-· `mcp:tools`.
+| Scope | Consent screen label | Covers |
+|---|---|---|
+| `mcp:read` | Read your organization's data | Reads, including sensitive ones like the audit log |
+| `mcp:write` | Create and change data | Creates and changes; implies read |
+| `mcp:destructive` | Delete data and remove access | Deletes, removals, revokes; implies read. Never pre-ticked |
+| `mcp:tools` | Run your connected tools | Connected tools, from all of them or chosen toolboxes. A tool that deletes needs `mcp:destructive` too |
+| `openid`, `email` | Confirm who you are, See your email address | Identity only; reach nothing in the organization |
+
+A client that asks for no scope gets `mcp:read` only. A grant's scopes never
+change after consent; adding one means connecting the client again.
 
 ## Two rules that hold everywhere
 
-1. **Nothing in Elaichi accepts a credential.** No API, no tool, no operation
-   takes a password, API key or token as input, and none returns one. A flow
-   that seems to need one really needs a connect link the person opens
-   themselves.
+1. **Nothing in Elaichi takes a credential from a model.** No tool or
+   operation accepts a password, API key or token as input, and none returns
+   one. A flow that seems to need one really needs a connect link the person
+   opens themselves.
 2. **A refusal names what it wanted, and that is the end of it.** Relay the
    permission or scope and stop. Reaching the same data another way is the
    failure mode the whole layer exists to prevent.

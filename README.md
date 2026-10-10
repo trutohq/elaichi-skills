@@ -36,6 +36,7 @@ Add this repo as a plugin marketplace, then install the plugin:
 Skills become namespaced as `elaichi:elaichi`, `elaichi:elaichi-mcp`,
 `elaichi:elaichi-clients`, `elaichi:elaichi-connections`,
 `elaichi:elaichi-toolboxes`, `elaichi:elaichi-governance`,
+`elaichi:elaichi-automations`, `elaichi:elaichi-data`,
 `elaichi:elaichi-api` and `elaichi:elaichi-conventions`.
 
 The plugin also bundles the [Elaichi MCP server](https://api.elaichi.ai/mcp),
@@ -91,11 +92,13 @@ Add `-g` to install globally instead of into the current project.
 | Skill | Description |
 |-------|-------------|
 | [elaichi](./skills/elaichi/SKILL.md) | What Elaichi is, the words it uses, where everything lives in the app, and which skill to load next |
-| [elaichi-mcp](./skills/elaichi-mcp/SKILL.md) | Drive the MCP endpoint — `search_tools` and `execute_tool`, the `connection` argument, scopes and refusals, and the missing-tool ladder |
-| [elaichi-clients](./skills/elaichi-clients/SKILL.md) | Connect Claude, ChatGPT or Cursor, what to grant on the consent screen, and why a client shows no tools |
+| [elaichi-mcp](./skills/elaichi-mcp/SKILL.md) | Drive the MCP endpoint — `search_tools`, `execute_tool` and `run_code`, the `connection` argument, scopes and refusals, and the missing-tool ladder |
+| [elaichi-clients](./skills/elaichi-clients/SKILL.md) | Connect Claude, ChatGPT, Cursor or any other MCP client, what to grant on the consent screen, and why a client shows no tools |
 | [elaichi-connections](./skills/elaichi-connections/SKILL.md) | Connect and look after accounts — sharing versus ownership, status and reconnecting, transfer and offboarding, custom connectors |
 | [elaichi-toolboxes](./skills/elaichi-toolboxes/SKILL.md) | Curate what an agent can do — toolboxes versus templates, frozen parameters, what sharing at `use` delegates, and synthetic tools |
-| [elaichi-governance](./skills/elaichi-governance/SKILL.md) | Roles and the full permission catalog, restrictions, access requests, the audit log, SSO and SCIM |
+| [elaichi-governance](./skills/elaichi-governance/SKILL.md) | Roles and the full permission catalog, restrictions, access requests, approvals, the audit log, offboarding, SSO and SCIM |
+| [elaichi-automations](./skills/elaichi-automations/SKILL.md) | Workflows — triggers and schedules, steps, the draft → dry run → publish loop, runs, approvals and webhooks |
+| [elaichi-data](./skills/elaichi-data/SKILL.md) | Collections (shared tables), dashboards and public links, and knowledge bases |
 | [elaichi-api](./skills/elaichi-api/SKILL.md) | Write code against `api.elaichi.ai` — auth, the cursor envelope, error shapes, capability fields, CRUD conventions |
 | [elaichi-conventions](./skills/elaichi-conventions/SKILL.md) | The base facts in one page — URLs, auth, pagination, error codes, id prefixes, the two MCP namespaces |
 
@@ -150,7 +153,7 @@ Because every call travels through Elaichi:
 - **Synthetic tools** — chain several calls into one tool an agent calls once
 - **Delegated execution** — share a toolbox and colleagues run your accounts
   without ever seeing a credential
-- **38 permissions, 8 predefined roles** plus unlimited custom roles, per-tool
+- **58 permissions, 8 predefined roles** plus unlimited custom roles, per-tool
   restrictions, and an append-only audit log — all of it applying over MCP too
 - **SSO, SCIM and directory group mapping**
 
