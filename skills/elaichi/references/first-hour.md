@@ -6,7 +6,8 @@ rework.
 ## 1. Sign in and create the organization
 
 Open [app.elaichi.ai](https://app.elaichi.ai). There are no passwords — sign
-in with Google, GitHub, Microsoft, a magic link, or your company's SSO.
+in with Google, a six-digit code sent by email, a passkey, or your company's
+SSO.
 
 Your account is global; the **organization** is the workspace. Whoever creates
 it becomes its Org Owner. You are asked for a **region** — United States, European Union, or
@@ -31,13 +32,18 @@ A toolbox appears for that connection immediately. Nothing to publish.
 
 ## 3. Connect your own AI client
 
-Open **Connect your AI client** and copy the endpoint. Add it to
-[Claude](https://elaichi.ai/docs/guides/mcp-servers/claude),
-[ChatGPT](https://elaichi.ai/docs/guides/mcp-servers/chatgpt) or
-[Cursor](https://elaichi.ai/docs/guides/mcp-servers/cursor).
+Click the **Connect** row under the sidebar's list and copy the endpoint. Add
+it to [Claude](https://elaichi.ai/docs/guides/mcp-servers/claude),
+[ChatGPT](https://elaichi.ai/docs/guides/mcp-servers/chatgpt),
+[Cursor](https://elaichi.ai/docs/guides/mcp-servers/cursor) or another MCP
+client.
 
-On the consent screen, grant **Read** and **Run tools**. Leave delete off until
-something genuinely needs it.
+On the consent screen, pick the organization, then look at the boxes. Every
+scope the client asked for starts ticked except **Delete data and remove
+access**. For most people **Read your organization's data** and **Run your
+connected tools** are enough; untick **Create and change data** unless you want
+the client to reshape the organization. Leave Delete off until something
+genuinely needs it. Adding a scope later means connecting the client again.
 
 Then paste this into the client — it confirms the connection and gets you
 moving:
@@ -105,18 +111,30 @@ Then choose how to hand it out:
 | Thing | Where | Why now |
 |---|---|---|
 | Two-factor or passkeys | Settings → Security | Two minutes, and it covers every sign-in |
-| Single sign-on | Settings → Single sign-on | Before headcount grows, not after |
-| Audit forwarding | Settings → Logging | Events are only forwarded from the moment you configure it |
+| Single sign-on | Settings → SSO and SCIM | Before headcount grows, not after |
+| Require two-factor for everyone | Settings → Organization → Security | One switch, and it covers every member |
 | Notifications | Settings → Notifications | Know when a connection breaks, not when someone complains |
+
+## 8. If your organization was invited to the automation platform
+
+The platform is early access, by invitation. In an invited organization,
+someone who can manage the organization turns it on in **Settings →
+Organization → Automations**. Automations, Approvals, Dashboards, Collections
+and Knowledge then appear in the sidebar.
+
+Start small: one automation that reads, on a schedule, writing to one
+collection. Add writes, and the approval in front of anything that deletes,
+once the reads look right. The **elaichi-automations** and **elaichi-data**
+skills carry the detail.
 
 ## What to check when it does not work
 
 | Symptom | First thing to check |
 |---|---|
-| The client shows no tools at all | Was **Run tools** granted on the consent screen? |
-| The client shows Elaichi's own operations but nothing else | Same — or nothing is connected yet |
-| One expected tool is missing | Connection status first, restrictions second |
+| The client shows no tools at all | The person's role may lack `tool:execute` (Guest, Billing Admin and Auditor do) |
+| The client shows Elaichi's own operations but nothing else | **Run your connected tools** was not granted, or nothing they can use is connected and active yet |
+| One expected tool is missing | Connection status first, restrictions second. A tool that deletes also needs **Delete** |
 | A newly connected app has not appeared | Most clients cache the tool list. Start a new conversation, or reconnect |
-| A call is refused after consent | The scope it needed was not granted. Reconnect and widen it |
+| A call is refused after consent | The scope it needed was not granted. Connect the client again and tick it — Settings → Connected apps cannot add a scope |
 
 Longer version in the **elaichi-clients** skill.

@@ -1,6 +1,6 @@
 ---
 name: elaichi-api
-description: Write code against the Elaichi control-plane API at api.elaichi.ai — API tokens and the organization header, the cursor list envelope, error shapes, the can_* capability fields, strict CRUD conventions, rate limits, and where the OpenAPI schema lives.
+description: Write code against the Elaichi REST API at api.elaichi.ai — API tokens and what they cannot do, the organization header, the cursor list envelope and server-side search, error codes, can_* capability fields, URL conventions, rate limits, and the OpenAPI schema. Use for scripts, integrations, provisioning, or a UI over Elaichi.
 whenToUse: Writing or reviewing code that calls api.elaichi.ai — scripts, integrations, provisioning, or a UI over Elaichi. Read before constructing the first request.
 ---
 
@@ -13,15 +13,22 @@ https://api.elaichi.ai
 A machine-readable description is served live, unauthenticated:
 
 ```
-GET https://api.elaichi.ai/schema/openapi.json
-GET https://api.elaichi.ai/schema/openapi.yml
+GET https://api.elaichi.ai/openapi.json        (also /openapi.yaml)
+GET https://api.elaichi.ai/schema/openapi.json (also /schema/openapi.yml)
 ```
 
-**Treat that schema as the contract.** It is a deliberate subset: endpoints the
-console uses internally are excluded, and their URLs are explicitly not
-stable. If a path is not in the schema, do not build on it.
+**Treat that schema as the contract.** Every route the server mounts falls in
+one of three groups:
 
-Paths are unversioned — `/connection`, not `/v1/connection`.
+| Group | In the schema? | Build on it? |
+|---|---|---|
+| **Published** | Yes | Yes. This is the API. |
+| **Internal** — the console's own screens, browser redirects, inbound webhooks, staff tools | No | No. Its URLs can change without notice. |
+| **Invite-only** — automations, approvals, collections, dashboards and public links, knowledge, web access, apps, spend | No, not yet | Only if the organization has the feature, and expect changes. See [Endpoints](./references/endpoints.md#invite-only-families-not-in-the-schema). |
+
+Paths are unversioned — `/connection`, not `/v1/connection`. An unknown path
+asked for with `Accept: text/markdown` answers a short Markdown page that
+points at the schema, instead of JSON.
 
 ## Authentication
 
@@ -29,56 +36,59 @@ Paths are unversioned — `/connection`, not `/v1/connection`.
 Authorization: Bearer elch_{org_id}_{64 hex}
 ```
 
-Create a token at **Settings → API tokens** in
-[app.elaichi.ai](https://app.elaichi.ai) (needs `api_token:create`). **The raw
-value is shown exactly once** and is never retrievable afterwards.
+A person creates a token at **Settings → API tokens** in
+[app.elaichi.ai](https://app.elaichi.ai). It needs `api_token:create` (the
+built-in Member role has it) and a fresh re-verification (passkey, two-factor
+code or emailed code) at that moment. **The raw value is shown exactly once.**
 
-Two things about tokens that shape how you use them:
+What a token is:
 
-- **A token has no scopes.** It authenticates *as the person who created it*,
-  with their live permissions. Change their roles and what the token can do
-  changes immediately. Remove them and it stops working.
-- **A token is bound to one organization**, which is why the org id is in the
-  token itself.
+- **It has no scopes.** It acts *as the person who created it*, with their
+  live permissions. Change their role and the token changes at once. Remove
+  them and it stops working.
+- **It is bound to one organization.** The org id is inside the token.
+- **It cannot manage tokens.** Every `/api-token` route refuses a token with
+  `403`. Listing, minting, renaming and revoking tokens happen in the app.
 
-Revocation is immediate. Renaming is allowed; there is no way to read a token
-back.
+### Things only a person in the browser can do
+
+Some actions refuse any token with `403 forbidden` ("This action needs an
+interactive browser session"). The right answer is to tell the person to do it
+in the app. Do not look for a way around it.
+
+- Anything under `/api-token` and `/scim-token`.
+- Resolving an access request (`POST /access-request/:id/resolve`).
+- Scheduling the organization's deletion (`DELETE /organization/:id`), and
+  changing whether the organization requires two-factor sign-in.
+- Approving an AI client on the consent screen.
+- Changing payment settings (invite-only spend controls).
+
+A token never gets `428 step_up_required`. That code goes to a browser session
+that must re-verify first. Some routes ask the browser to re-verify but let a
+token through: invites, changing a member's role, deleting a role or team,
+org domains, group mappings, creating or editing an SSO connection. That is
+deliberate — getting a token already cost a re-verification.
+
+There is no supported way to get a browser session outside the browser. Do not
+try to mint, borrow or replay one.
 
 ## The organization header
-
-Org-scoped routes need to know which organization you mean:
 
 ```
 X-Organization-Id: org_…
 ```
 
-With an API token the header is **optional** — the token already names an
-organization. If you send it anyway it must match, or you get `403`.
+With an API token the header is **optional** — the token already names the
+organization. If you send it, it must match, or you get `403`.
+`/organization/:id/*` routes take the org from the path instead.
 
-Two exceptions: `/organization/:id/*` routes take the org from the path, and
-`/oauth/grant*` routes take a required `?organization_id=` query parameter
-instead.
-
-You must be an active member of the organization you name.
-
-### There is no second way in
-
-The console signs a person in with a browser cookie, and `400
-missing_organization_header` is what that path returns without the header. It
-is not an integration path: **there is no supported way to obtain a session
-outside the browser**, none is documented, and nothing here should try to
-mint, borrow, or replay one. An API token is the whole programmatic surface.
-
-A handful of actions go further and require a **human session** — a real
-person, signed in to [app.elaichi.ai](https://app.elaichi.ai), re-verified at
-the moment they act. Deleting an organization, revoking an API token,
-approving an MCP client's consent. A token can never satisfy those, and the
-correct answer when one is needed is to tell the person to do it in the app.
+An organization without an active plan answers `403 subscription_required` on
+its product routes. A feature the plan does not include answers
+`403 feature_not_available`, with `feature` and `plan` in the error.
 
 ## The list envelope
 
-**Every endpoint returning an array uses the same shape.** No exceptions worth
-coding around.
+**Every endpoint returning an array uses the same shape.**
 
 ```json
 {
@@ -90,24 +100,31 @@ coding around.
 
 | Parameter | Behavior |
 |---|---|
-| `limit` | Default **50**, maximum **200**. Above 200 is clamped, not rejected. Zero or negative is a `400`. |
+| `limit` | Default **50**, maximum **200**. Above 200 is clamped, not rejected. Zero, negative or not a number is a `400`. |
 | `cursor` | Opaque. Round-trip it untouched. An empty string means "first page". |
 | `q` | Free-text search, up to 200 characters. Whitespace-only is ignored. |
 
-**Page until `next_cursor` is null.** That is the only termination condition —
-a short page is not the last page.
+**Page until `next_cursor` is null.** That is the only stop condition. A short
+page, or an empty one, is not the last page.
 
-Two rules that prevent the most common bug against this API:
+How `q` matches, on every route that takes it: each word must appear somewhere
+in the searched fields, in any order. If that finds nothing at all, a second
+pass also accepts one typo in words of five letters or more. So `slakc` finds
+Slack.
 
-- **Never search, filter, sort or count client-side over a paginated list.**
-  You would be operating on the pages you happen to have fetched. `q` and
-  filters go to the server, which applies them in SQL *before* paging.
-- **Changing `q` starts a new result set.** Drop the cursor and request page
-  one again.
+Two rules that prevent the most common bugs:
 
-Cursors are keyset-based on id, so they are stable as rows are added. A few
-in-memory lists use an offset cursor instead, which can skew by a row if the
-underlying set changes between pages.
+- **Never search, filter, sort or count in your code over a paginated list.**
+  You would see only the pages you fetched. `q` and filters go to the server,
+  which applies them before paging. Counts come from server fields, never
+  `result.length`.
+- **Changing `q` or a filter starts a new result set.** Drop the cursor and ask
+  for page one. Some cursors are bound to the query they came from and answer
+  `400` if replayed under another one.
+
+Most cursors are keyed on id, so they stay stable as rows are added. A few
+lists the server builds in memory use an offset cursor, which can shift by one
+row if the set changes between pages.
 
 ## Errors
 
@@ -126,56 +143,72 @@ underlying set changes between pages.
 
 | Code | HTTP | Meaning |
 |---|---|---|
-| `validation_error` | 400 | A field failed validation — including a bad `limit`, over-long `q`, or malformed `cursor` |
+| `validation_error` | 400 | A field failed validation — including a bad `limit`, a long `q`, or a malformed `cursor` |
 | `bad_request` | 400 | Malformed request |
-| `missing_organization_header` | 400 | `X-Organization-Id` absent on an org-scoped route |
+| `missing_organization_header` | 400 | No `X-Organization-Id` on an org-scoped route (browser sessions only) |
 | `unauthorized` | 401 | Missing or invalid credential |
-| `permission_required` | 403 | RBAC denial. `details.required_permissions` lists every permission that would satisfy it — **any one** is enough |
-| `forbidden` | 403 | Allowed to authenticate, not allowed to do this |
-| `not_found` | 404 | No such resource — **or one deliberately concealed from you** |
-| `conflict` | 409 | Clashes with current state |
-| `step_up_required` | 428 | The person must re-verify themselves in the app. An API token can never satisfy it |
-| `rate_limited` | 429 | Over the window. See `Retry-After` |
-| `internal_error` | 500 | Server-side failure |
+| `permission_required` | 403 | Role denial. `details.required_permissions` lists every permission that would do — **any one** is enough |
+| `forbidden` | 403 | Not allowed — including "needs an interactive browser session" |
+| `subscription_required` | 403 | The organization has no active plan |
+| `feature_not_available` | 403 | The plan does not include this feature |
+| `not_found` | 404 | No such resource — **or one deliberately hidden from you** |
+| `conflict` | 409 | Clashes with current state. Many routes use a more specific 409 code |
+| `payload_too_large` | 413 | Body too big |
+| `step_up_required` | 428 | Browser sessions only: re-verify first |
+| `rate_limited` | 429 | Over the limit. See `Retry-After` |
+| `internal_error` | 500 | Server failure |
+| `platform_*_stopped` | 503 | Elaichi paused sign-ups, new connections or MCP platform-wide |
+| `clove_timeout`, `saffron_timeout` | 504 | An internal service did not answer in time. Nothing changed. Retry |
 
 Two habits:
 
-- **Show `error.message` unchanged.** It is written for a person and already
-  names the permission in their own vocabulary. Do not rewrite it into "403
-  Forbidden".
+- **Show `error.message` unchanged.** It is written for a person and names the
+  permission in their words. Do not rewrite it as "403 Forbidden".
 - **Treat a `404` on something you believe exists as "not yours".** Elaichi
-  conceals resources you hold no grant on rather than confirming they exist.
+  hides resources you hold no grant on rather than confirming they exist.
 
-`X-Request-Id` is exposed on responses. Log it — it is what support will ask
-for.
+Every response carries `X-Request-Id` (`req_…`). Log it — support will ask for
+it.
 
 ## Capability fields
 
-**Authorization is computed on the server and shipped as an explicit field.**
-Read it; never re-derive it from `owner_user_id` and a permission list. A
-client-side guess is either too permissive (an action that 403s, which the user
-cannot explain) or too strict (an action they were allowed to take), and it
-cannot see server-only context at all.
+**The server computes what the caller may do and ships it as a field.** Read
+it. Never rebuild it from `owner_user_id` and a permission list. A guess is
+either too loose (a button that 403s) or too strict (a hidden action the
+person was allowed to take), and it cannot see server-only facts.
 
 | Field | Answers |
 |---|---|
-| `can_use` | May the caller exercise this — run a toolbox's tools, stamp from a template |
-| `can_share` | May the caller grant new shares |
+| `can_use` | May the caller use it — run a toolbox's tools, pin a connection, stamp a template, connect through a custom connector |
+| `can_share` | May the caller add grantees |
 | `can_manage` | May the caller change this resource's own settings |
-| `can_transfer` | May the caller give it away or delete it. There is no `can_delete` — both are owner-only and share this flag |
-| `can_revoke_share` | May the caller revoke an existing share |
+| `can_transfer` | May the caller give it away. Usually also "may delete" — both are owner-only |
+| `can_revoke_share` | May the caller remove an existing grant |
 | `can_see_shares` | May the caller be told *who* it is shared with |
 
-`can_manage` is the one name for "may mutate this resource's settings" across
-every resource type. There is no `can_edit` or `can_update`.
+`can_manage` is the one name for "may change its settings" on every resource.
+There is no `can_edit` or `can_update`.
 
-Alongside them, `access_via` reports **how** the caller reaches a resource —
-`owner`, `direct`, `team`, or `org`, broadest source winning — with
-`access_via_team` when it is a team. It is **omitted entirely** when nothing
-reaches the caller; absence means "no source to name", never "not permitted".
+Some resources add fields for questions only they have. Same rule: read them.
+Connections carry `can_reconnect`, `can_refresh_credentials` and (on the
+detail) `can_run_post_install`. Connectors carry `can_delete`,
+`can_configure_oauth_app` and `can_fork`. Roles carry `can_grant`. Toolbox
+entries carry `can_repin`.
 
-Command responses carry the same `can_*` fields as list rows, so a freshly
-created row does not lose its actions until the next reload.
+Beside them, not instead of them:
+
+- `access_via` says **how** the caller reaches a row — `owner`, `direct`,
+  `team` or `org` (broadest wins), with `access_via_team` for a team. It is
+  **omitted** when nothing reaches the caller. Absence means "no source to
+  name", never "not permitted".
+- `restricted` / `restricted_by` (`role`, `user` or `null`) say an admin's
+  restriction blocks this for the caller. That is a different gate from
+  `can_use`, with a different fix (an access request).
+- A `shares` array being present is not permission to show it. Use
+  `can_see_shares`.
+
+Command responses (create, update, transfer, reconnect) carry the same `can_*`
+fields as list rows, so a freshly changed row keeps its actions.
 
 ## URL conventions
 
@@ -185,22 +218,17 @@ created row does not lose its actions until the next reload.
 | Action | `POST /resource/:id/<verb>` | `verify`, `reconnect`, `execute`, `transfer`, `test` |
 | Nested collection | `/resource/:id/<collection>[/:childId]` | `/team/:id/member`, `/toolbox/:id/share` |
 
-Three rules follow, and they make the API predictable enough to guess
-correctly:
-
-- **Ordinary fields update through `PATCH /resource/:id`** with a body where
-  every field is optional. `null` clears a nullable field; omitting everything
-  returns the record unchanged. There are **no attribute subpaths** — no
-  `PATCH /org-domain/:id/default-role`.
+- **Ordinary fields update through `PATCH /resource/:id`.** Every field is
+  optional. `null` clears a nullable field. There are **no attribute
+  subpaths** — no `PATCH /org-domain/:id/default-role`.
 - **`POST /:id/<verb>` is only for things that *do* something**, not for
   editing a field.
-- **Unbounded child collections are never embedded in a parent row.** A row
-  carries a count and a small preview; the collection has its own paginated,
-  searchable endpoint. A team row carries member counts and a preview; the
-  roster is `GET /team/:id/member`.
-
-That last one is worth designing around: if you find yourself wanting the full
-set of something from a list response, the endpoint for it exists.
+- **No row embeds an unbounded child list.** A row carries a count and a small
+  preview. The full set has its own paginated, searchable endpoint — a team
+  row has counts and a preview, the roster is `GET /team/:id/member`.
+- **Every `POST /…/share` takes one grantee or many.** Send `grantees` (up to
+  50) with one `level` to share with several at once. Refused grantees come
+  back in `rejected`; the rest are granted.
 
 ## Rate limits
 
@@ -209,43 +237,45 @@ set of something from a list response, the endpoint for it exists.
 | REST API | **600 requests / 60s** | The API token |
 | MCP endpoint | **120 requests / 60s** | The OAuth access token |
 
-Over the limit: `429`, code `rate_limited`, and a `Retry-After` header in
-seconds. Honor it.
+Over the limit: `429`, code `rate_limited`, and `Retry-After` in seconds.
+Honor it.
 
-There is no public idempotency key. Design writes so a retry after a timeout is
-safe to reason about.
+The published API has no idempotency key. Design writes so a retry after a
+timeout is safe to reason about — re-read before you repeat a write.
 
 ## Ids
 
-TypeIDs: `{prefix}_{26 characters}`, the suffix a UUIDv7 in lowercase Crockford
-base32. Opaque to you, but chronologically sortable within a prefix — which is
-why cursors keyset on them.
+TypeIDs: `{prefix}_{26 characters}`. Opaque to you, but sortable by time
+within a prefix, which is why cursors use them.
 
 Common prefixes: `org`, `usr`, `team`, `role`, `conn` (connection), `tbx`
-(toolbox), `tpl` (template), `syn` (synthetic tool), `acl`, `rstr`
+(toolbox), `tpl` (template), `syn` (synthetic tool), `acl` (a grant), `rstr`
 (restriction), `inv` (invite), `atok` (API token), `aud` (audit event), `areq`
-(access request). The full table is in
-[Conventions](../elaichi-conventions/SKILL.md).
+(access request), `file`. Invite-only resources add `auto` (automation),
+`coll` (collection), `dash` (dashboard), `kbs` (knowledge base) and `bndl`
+(app). The full table is in [Conventions](../elaichi-conventions/SKILL.md).
 
-Three id-shaped things are **not** TypeIDs, because they embed an org id:
+Connectors are named by **slug** (`hubspot`), not an id.
+
+Three id-shaped things are **not** TypeIDs, because they carry an org id:
 `elch_…` (API token), `einv_…` (invite), `escim_…` (SCIM token). All three are
-`{prefix}_{orgId}_{secret}` — the org id routes the request, and the secret is
-only ever compared as a hash.
+`{prefix}_{orgId}_{secret}`.
 
-Dynamic toolbox ids are not TypeIDs either — `global:{userId}` and
-`connection:{connectionId}`. They are computed, read-only, and every lifecycle
-call refuses them by name.
+The automatic toolboxes have computed ids — `global:{userId}` (listed as "All
+tools") and one `connection:{connectionId}` per active connection. They are
+read-only, and every change, share or transfer call refuses them.
 
 ## References
 
 | Document | Topics |
 |---|---|
-| [Endpoints](./references/endpoints.md) | The published surface by resource area, with the permission each needs |
-| [Patterns](./references/patterns.md) | Paging correctly, searching server-side, reading capability fields, handling errors and retries |
+| [Endpoints](./references/endpoints.md) | Every published route by area, with the permission each needs, plus the invite-only families |
+| [Patterns](./references/patterns.md) | Paging, server-side search, capability fields, error handling, retries, and tokens in code |
 
 ## Companion skills
 
 - **elaichi-conventions** — the same base facts, condensed, for always-on
   context.
 - **elaichi-governance** — what each permission in an error means.
+- **elaichi-connections** — the connect flow behind `POST /connection`.
 - **elaichi-mcp** — the same operations reached as MCP tools instead.

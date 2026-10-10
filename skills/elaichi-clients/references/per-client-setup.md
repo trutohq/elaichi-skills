@@ -1,8 +1,8 @@
 # Setting up each client
 
-The endpoint is the same everywhere — the same URL for every organization and
-every person. Copy it from **Connect your AI client** in
-[app.elaichi.ai](https://app.elaichi.ai) and paste it exactly as given. Which
+The endpoint is the same everywhere — the same URL for every organization,
+every person and every client. Copy it from the **Connect** row in the sidebar
+of [app.elaichi.ai](https://app.elaichi.ai) and paste it exactly as given. Which
 organization and whose access a call runs under come from the OAuth grant, not
 from the address.
 
@@ -20,7 +20,8 @@ each person's tools still follow their own access.
 
 1. Open **Settings → Connectors**.
 2. Choose **Add custom connector** and paste the endpoint.
-3. Sign in to Elaichi and approve what the connector can do.
+3. Sign in to Elaichi, pick the organization, and approve what the connector
+   can do.
 
 Leave **OAuth Client ID** and **Client Secret** empty under Advanced settings.
 
@@ -28,7 +29,8 @@ Claude reaches the endpoint from Anthropic's cloud, not from the user's
 computer, so it must be reachable on the public internet. A `localhost`
 address will not work.
 
-To disconnect: remove the connector in Claude, or revoke the grant in Elaichi.
+To disconnect for certain, revoke the grant in Elaichi under Settings →
+Connected apps. Removing the connector in Claude hides it there.
 
 Guide: [elaichi.ai/docs/guides/mcp-servers/claude](https://elaichi.ai/docs/guides/mcp-servers/claude)
 
@@ -50,11 +52,19 @@ on first contact.
 
 ChatGPT cannot reach a local MCP server; use the hosted endpoint.
 
-ChatGPT prompts for confirmation on write actions based on the user's
-permissions. **Treat that as a convenience, not the security boundary** — the
-scopes granted on Elaichi's consent screen are the real one.
+ChatGPT may ask for confirmation before an action, depending on its own app
+permission settings. **Treat that as a convenience, not the security
+boundary** — the scopes granted on Elaichi's consent screen are the real one.
+Every connected-app call goes through `execute_tool` or `run_code`, which are
+marked as able to change things, so a "read actions only" setting in ChatGPT
+does not make connected apps read-only.
 
-To disconnect: remove the app in ChatGPT, or revoke the grant in Elaichi.
+Because connected tools are reached through `search_tools` and `execute_tool`
+rather than listed one by one, apps connected in Elaichi later are reachable
+without re-scanning tools in ChatGPT.
+
+To disconnect for certain, revoke the grant in Elaichi under Settings →
+Connected apps.
 
 Guide: [elaichi.ai/docs/guides/mcp-servers/chatgpt](https://elaichi.ai/docs/guides/mcp-servers/chatgpt)
 
@@ -88,9 +98,32 @@ alongside them.
 Setting this up on a laptop does not set it up on a desktop — repeat it on each
 machine and sign in on each.
 
-To disconnect: remove the entry and reload, or revoke the grant in Elaichi.
+To disconnect: remove the entry and reload, and revoke the grant in Elaichi
+under Settings → Connected apps.
 
 Guide: [elaichi.ai/docs/guides/mcp-servers/cursor](https://elaichi.ai/docs/guides/mcp-servers/cursor)
+
+## Other MCP clients
+
+Elaichi works with any MCP client that can add a **remote MCP server over
+HTTP with OAuth**. What the client must support:
+
+- **Dynamic client registration** — leave client ID and secret empty.
+- **PKCE with S256** and the authorization-code flow, finished in a browser
+  where the person signs in to Elaichi.
+- Refreshing its token: an access token lasts an hour, and a client that goes
+  30 days without refreshing has to connect again.
+
+Add the endpoint as the server's URL, using the client's own steps for a
+remote or HTTP server, then sign in and approve on the consent screen. Clients
+that read a JSON config usually take the same `url` entry Cursor does. Test it
+once with the first prompt below; the client's own documentation is the
+authority on where its configuration lives.
+
+There is no way to connect without a person: no device-code flow, no
+client-credentials flow, and an API token does not work on the MCP endpoint.
+For a server-side script, use the REST API with an API token instead (the
+**elaichi-api** skill).
 
 ## After any of them
 
