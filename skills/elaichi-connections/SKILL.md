@@ -1,208 +1,241 @@
 ---
 name: elaichi-connections
-description: Connect and look after the accounts Elaichi runs tools against — the connect flow, sharing versus ownership, connection status and reconnecting, transferring before someone leaves, and authoring or forking a custom connector.
-whenToUse: Someone is connecting a product account, sharing one with a team, reconnecting a broken connection, transferring ownership, offboarding a member, or building a custom connector.
+description: Connect and look after the accounts Elaichi runs tools against — connect Salesforce, Slack or any app, share versus own, connection status and reconnecting, transferring before someone leaves, what offboarding does to connections, custom connectors, your own OAuth app, and bringing your own remote MCP server.
+whenToUse: Someone is connecting an app account, sharing one with a team, fixing a broken or blocked connection, transferring ownership, offboarding a member, setting up an OAuth app for a connector, adding a remote MCP server, or building a custom connector.
 ---
 
 # Connections and connectors
 
-A **connector** is a product Elaichi knows how to talk to. A **connection** is
-one authorized account for that product — "my Jira", "our shared HubSpot".
+A **connector** is an app Elaichi knows how to talk to. A **connection** is one
+signed-in account for that app — "my Jira", "our shared HubSpot".
 
-Credentials live in a vault and are only decrypted when a tool runs. Nothing in
-Elaichi's own database holds them, no API returns one, and no operation
-anywhere accepts one as input.
+Credentials live in a vault and are only opened when a tool runs. No API
+returns one, and no operation anywhere accepts one as input. That is why an
+agent never asks a person for a password, API key or token.
 
 ## Connecting an account
 
-**Connections → Add connection.**
+**Connections → Add connection.** (A connector's page, and each row on the
+Connectors page, also has a **Connect** button that starts the same flow.)
 
-1. Search or filter by category, then pick the product.
-2. Optionally use **Share with** to add a member, a team, or everyone, each
-   with a level. Leave it empty to keep it private.
-3. Choose **Connect**. The product's own authorization flow opens in an in-app
-   window; OAuth products open a consent popup inside it.
-4. Sign in with the product and approve what it asks for.
+1. Search or filter by category, then pick the app.
+2. Optionally use **Share with** to add people, teams or everyone. Leave it
+   empty to keep the connection private.
+3. Choose **Connect**. The app's sign-in opens — inside Elaichi, or in a new
+   browser window for a plain OAuth sign-in. Allow pop-ups.
+4. Sign in to the app and approve what it asks for.
 
 When it finishes you see **Connection added** and the row goes **Active**.
 
-Browsing first is often worth it: **Connectors → the product → Tools** shows
-what it exposes before you authorize anything. But connecting always starts
-from **Connections → Add connection**.
+**Every active connection gets its own automatic toolbox**, named after the
+connection, and works through the MCP endpoint straight away. There is nothing
+to publish first.
 
-**Every active connection immediately gets its own toolbox**, under Toolboxes,
-named after the connection. It works through the MCP endpoint straight away —
-there is nothing to publish and no shared toolbox to build first.
+### When Connect is blocked
+
+| What you see | Why | Fix |
+|---|---|---|
+| The app is listed with a shield icon | An admin's restriction blocks it for you | Click the icon to ask an admin for access. See **elaichi-governance** |
+| "Ask an admin to add the OAuth app first" | The app needs the organization's own OAuth app, and none is set up | Someone with `connector:manage` adds it on the connector's page (below) |
+| A custom connector with no Connect button | It is shared with you at `view` only | Ask its owner for `use` |
+
+### Your own OAuth app ("BYOA")
+
+Some catalog connectors have no OAuth app Elaichi can sign in with. Their
+connector rows say `byoa: true`, and connecting answers
+`409 oauth_app_required` until the organization adds its own.
+
+On the connector's page, someone with `connector:manage` (Org Admin and Org
+Owner by default) enters the client id and secret. The secret is write-only —
+nobody can read it back, and leaving it blank on a later save keeps the stored
+one. Removing the app falls back to Elaichi's default. A custom connector has
+no such setting: its owner puts OAuth details in the connector itself with
+**Edit**.
 
 ## Owner and access are two different things
 
-**The owner** is whoever connected the account. There is no ownership choice at
-connect time, and ownership is **always one person** — never a team, never the
-organization.
+**The owner** is whoever connected the account. Ownership is **always one
+person** — never a team, never the organization.
 
-**Access** is a list of grants, and a new connection starts with none. It is
+**Access** is a list of grants. A new connection starts with none, so it is
 **private to its owner** until someone shares it.
 
 | Level | What the grantee can do |
 |---|---|
-| **View** | See it and its configuration. Cannot run it. |
-| **Use** | See it and run it. |
-| **Edit** | Change its settings and who it is shared with. |
+| **View** | See it exists and how it is set up. Cannot run it. |
+| **Use** | Also run its tools and pin it into their own toolboxes. |
+| **Edit** | Also rename it, reconnect it, change its setup values, and share it (with `connection:share`). |
 
-Grantees are a member, a team, or everyone at the organization. Add them in the
-**Share with** step, or later from **Manage access**.
+Deleting and transferring stay with the owner, whatever grant anyone holds.
 
-**Private really means private.** No organization-wide permission reaches an
-unshared connection — not `connection:view`, not `connection:manage`, not Org
-Owner. That is a deliberate boundary, and it is the reason offboarding
-sometimes cannot be finished by an admin alone.
-
-Permissions to create and share:
+**Private really means private.** No org-wide permission reaches an unshared
+connection — not `connection:manage`, not Org Owner. An admin who was not
+granted it gets "not found". That is deliberate.
 
 | Permission | Allows |
 |---|---|
-| `connection:create` | Connect an account for your own use |
-| `connection:share` | Share one with a team or with everyone |
-| `connection:manage` | Reconnect, edit or delete a connection you own or hold `edit` on |
+| `connection:create` | Connect an account for yourself |
+| `connection:share` | Share a connection, or connect one already shared |
 
-The built-in **Member** role holds all three of these: a Member can connect an
-account **and** share it with a team or the whole organization. Sharing is not
-an admin-only act.
-
-Administrators can also restrict connectors per role or per person, and a
-restricted connector is blocked **at connect time** — see
-**elaichi-governance**.
+The built-in **Member** role holds both. Sharing is not an admin-only act.
+Everything else — renaming, reconnecting, deleting — is decided by ownership
+and grants, not by a permission.
 
 ## Connection status
 
 | Status | What happened | Tools? | What to do |
 |---|---|---|---|
 | `active` | Working | Yes | Nothing |
-| `pending` | The authorization window was opened but never finished | **No** | Give the owner the connect link again. Only the owner can finish a pending connection |
-| `needs_reauth` | The product expired or revoked the access | **No** | **Reconnect** — it returns a fresh link |
-| `disconnected` | The underlying account is gone | **No** | Reconnect, or delete it |
-| `post_install_error` | The credential works, but a connector setup step failed | **No** | Read the recorded error and clear it. Only `active` contributes tools, so the connection advertises nothing until it gets back there |
+| `pending` | Sign-in was started but never finished | No | Only the **owner** can finish it — **Reconnect** gives them a fresh link |
+| `needs_reauth` | The app expired or revoked access | No | **Reconnect account** |
+| `disconnected` | The account behind it is gone | No | Reconnect, or delete it |
+| `post_install_error` | Signed in, but the connector's setup step failed | No | Read the error, fix the cause, then **Finish setup** |
 
-**Only `active` contributes tools.** Anything else — including
-`post_install_error`, where the credential itself is live — disappears from
-tool lists rather than appearing and failing, which is why "my tool is
-missing" so often turns out to be this.
+**Only `active` contributes tools.** Anything else disappears from tool lists
+rather than appearing and failing. That is why "my tool is missing" so often
+turns out to be this. Token refresh is automatic for working connections.
 
-Token refresh for working connections is automatic. You only reconnect when
-the status asks.
+Two more states sit beside `status`:
 
-**Reconnect** is on the row — inline when the status needs it, otherwise in the
-⋮ menu. It re-runs the authorization and rebinds the **same** connection
-record, preserving ownership, grants, and every toolbox pointing at it.
+- **Blocked** (`connector_not_shared: true`). The custom connector it was made
+  through is no longer shared with the connection's owner. Calls are refused
+  and reconnecting cannot help. The connector's owner has to share it again
+  (at `use`).
+- **App unavailable** (`available: false`). Elaichi removed the connector from
+  the catalog. The connection is kept and works again if the connector
+  returns.
 
-One trap when diagnosing: a connection's tool list filters by **restriction,
-not by status**, so a `pending` connection still answers with the connector's
-full catalog. Status comes from the connection itself and nowhere else.
+**Reconnect** re-runs the sign-in and rebinds the **same** connection. The id,
+owner, grants and every toolbox pointing at it are kept. Show the button when
+the row says `can_reconnect`, not by reading `status` yourself.
+
+One trap when diagnosing: a catalog connection's tool list filters by
+**restriction**, not status, so a `pending` one still answers with the
+connector's full tool list. Read `status` from the connection itself.
 
 ## Transferring a connection
 
 **Transfer hands a connection to a colleague without signing in again.** It
-changes who owns it and **nothing else** — every existing grant survives
-untouched, and credentials are never re-entered.
+changes the owner and **nothing else** — every grant survives and no
+credential is re-entered.
 
-**Manage access → the transfer icon next to Owner → pick a member → Transfer.**
-Any other active member of the organization can be the target. There is no
-"organization" or "team" option, because ownership is always one person.
+**Manage access → Transfer ownership… → pick a member.** Only the owner can
+do it, and the new owner must be an active member.
 
-Sharing is a separate, deliberate act. A transfer never widens access on your
-behalf.
+Three things to know:
 
-Two things to know:
+- **The tools still run as the original account.** The vault still holds the
+  person who signed in (`connected_by_user_id` never changes). If calls should
+  run as the new owner's own account, they connect a new one.
+- **Every toolbox entry the old owner pinned stops working**, for everyone,
+  unless the old owner keeps access. **Keep my access** (on by default in the
+  app) gives them an ordinary `use` grant in the same step, which keeps those
+  entries working. The preview shows how many toolboxes would break first.
+- Sharing is separate. A transfer never widens access.
 
-- The outgoing owner keeps nothing unless a grant already covered them. They
-  can opt to retain a `use` grant in the same operation — an ordinary, visible,
-  revocable one.
-- **Every toolbox entry the outgoing owner pinned to that connection stops
-  resolving**, for everyone, because its delegator no longer has the access it
-  rode on. Re-pinning fixes it. The transfer response tells you how many
-  entries are affected, and a preview is available beforehand.
+## When someone leaves
 
-**Transfer personal connections that should outlive one person, early.** A
-shared team account owned by someone who later leaves is the single most
-expensive thing to unpick here.
+**Removing a member deletes every connection they own** — private and shared
+alike. A connection is one person's own login, and it never becomes a
+colleague's because its owner left. Offboarding cannot transfer connections.
 
-## Offboarding someone
+So the rule is: **transfer anything that should outlive one person, early,
+while they are still here.** A shared team account owned by someone who later
+leaves is the most expensive thing to untangle.
 
-Removing a member runs a preflight over their whole estate — connections,
-synthetic tools, toolboxes and templates — and each blocking row must be
-resolved before the removal goes through.
+What offboarding *can* do is keep tools working. For each connection being
+deleted, the admin may pick a **replacement**: another active connection to the
+same app that the admin can use. Toolbox entries, automation steps and other
+people's synthetic tools are moved onto it before the old one is deleted.
+Without a replacement, everything that used the connection stops.
 
-Two things block it, both for the same reason — delete and transfer are
-owner-only, so a row left pointing at a departed member can never be moved or
-removed again:
+Removal also needs a decision for every **shared** toolbox, template and other
+shared item they own (hand it to a person or a team, or delete it), and a new
+owner for every custom connector they own. Private items default to delete.
+Their synthetic tools are deleted.
 
-- **A private connection** that a toolbox visible beyond the member still
-  references. This is the hard case: nobody but the owner can transfer or
-  delete a private connection, and the owner is the person leaving.
-- **Any shared toolbox or template.** "Leave it" is not a neutral outcome
-  there.
+The whole flow lives in **Settings → People → remove member**. An agent should
+run the offboarding preview (`elaichi__member__offboarding`) and hand off to
+the app — the MCP `member.delete` refuses while the member owns anything,
+because it cannot pick replacements.
 
-The preflight also reports, as a **non-blocking warning**, toolbox entries
-where the departing member is the recorded **delegator**. Those pins rode on
-their access and go unmet once they leave. Mention them — nobody else will
-notice until an agent quietly stops working.
-
-Full decision table, including the default for every kind of row and how to
-hand everything to one successor at once:
-[Connection lifecycle](./references/lifecycle.md#offboarding-decision-table).
-
-The whole flow lives in **Settings → People → remove member**. An agent driving
-this over MCP should run the offboarding preview first, every time, and hand
-off to the app the moment anything is marked as needing resolution.
+Full decision table: [Connection lifecycle](./references/lifecycle.md#offboarding-decision-table).
 
 ## Deleting
 
-Permanent, and it **immediately breaks every toolbox using the connection**.
-The vault account goes with it.
-
-Prefer transfer whenever a shared toolbox still needs the account. Delete only
-what is genuinely unused or replaced.
+Owner only, permanent, and it **breaks every toolbox entry using the
+connection**. The vault account goes with it. Prefer transfer whenever a
+shared toolbox still needs the account.
 
 ## Custom connectors
 
-An organization can go beyond the catalog. Both paths need `connector:create`.
+An organization can go beyond the catalog. All of this needs
+`connector:create` (Org Admin and Org Owner by default) and the custom
+connectors plan feature. **Connectors → New connector** offers:
 
-**Author from scratch** — Connectors → **New connector**. JSON config: base
-URL, auth format, credentials, resources and methods. Validation returns
-path-qualified errors rather than a single "invalid".
-
-**Fork a catalog connector**, including its documentation, and change what you
-need.
+- **Build from config** — JSON config: base URL, sign-in, resources and
+  methods. Validation names the exact path that failed.
+- **Add remote MCP server** — see below.
+- **Fork** a catalog connector from its page, including its documentation.
 
 A connector's **documented methods are exactly its tools.** A method with a
-description is a tool; a method without one is not. The documentation editor
-is therefore not an afterthought — it is where tools come from.
+description is a tool; one without is not.
 
-Custom connectors are private to the organization, work everywhere a catalog
-one does, and are still subject to restrictions. They can be shared at `view`
-or `edit`. Deletion is refused while connections still use them.
+The person who creates it is its **owner**. It is private until shared:
 
-**Pull from upstream.** A fork records its lineage, so later you can review
-what changed upstream: new tools, safe updates, config diffs, conflicts, and
-removals. New tools and non-conflicting fixes are selected by default;
-conflicts and destructive removals are not. Apply is selective. Forks made
-before lineage existed can be linked to an upstream first.
+| Level | Lets them |
+|---|---|
+| `view` | See it |
+| `use` | Also connect their own accounts through it |
+| `edit` | Also change it and share it (with `connector:share`) |
 
-Note for anyone setting policy: `connector:create` is the one permission
-Elaichi marks high-trust. Restrictions bind a connector's slug and its declared
-lineage, not the host it dials — so a new connector aimed at a blocked API is
-not caught by them.
+**Share at `use` so people can connect.** Delete and transfer are the owner's.
+Delete is refused while any connection still uses it.
+
+**Pull from upstream.** A fork remembers where it came from, so later you can
+review what changed upstream — new tools, safe updates, conflicts, removals —
+and apply only what you pick. A fork made before lineage existed can be linked
+to its upstream first.
+
+`connector:create` is marked high-trust. Restrictions bind a connector's slug
+and its declared lineage, not the host it calls — so a new connector aimed at
+a blocked API is not caught by them.
+
+### Remote MCP servers (bring your own)
+
+A team can add an MCP server that speaks Streamable HTTP as its own connector.
+**Connectors → New connector → Add remote MCP server**, then the server URL and
+a name. Elaichi detects an OAuth sign-in from the server itself. **Advanced
+settings** covers the rest: your own OAuth client, or an API token or custom
+sign-in form. A server that needs no sign-in at all must be marked that way on
+purpose — detection never picks it.
+
+- The URL is fixed once created. To point somewhere else, create a new
+  connector.
+- Members connect with **their own** sign-in, and each connection lists the
+  tools **its own** credentials can see. Tools appear when someone connects.
+- A new tool is usable at once. Its tier (read, write or destructive) is the
+  server's own label, and a tool the server did not label is treated as
+  destructive. A manager (`edit` on the connector) can turn any tool off for
+  every connection on the connector's Tools tab.
+- Restrictions, approvals and the audit log apply exactly as for any
+  connector. Remote MCP connectors cannot be forked.
+- An organization can hold up to 25.
+
+Elaichi also publishes some vendors' own remote MCP servers in the catalog for
+every organization. Those connect like any catalog connector.
 
 ## References
 
 | Document | Topics |
 |---|---|
-| [Connection lifecycle](./references/lifecycle.md) | Status in depth, reconnecting, refreshing, transfer mechanics, the delegation breakage a transfer causes, and the full offboarding decision table |
+| [Connection lifecycle](./references/lifecycle.md) | Status in depth, reconnect and repair actions, transfer mechanics, offboarding decisions, and connecting from an agent |
 
 ## Companion skills
 
 - **elaichi-toolboxes** — turning a connection's tools into something an agent
   picks well from.
-- **elaichi-governance** — restricting which connectors can be connected at all.
-- **elaichi-mcp** — connecting an account from an agent, and the `connection`
-  argument.
+- **elaichi-governance** — restrictions, access requests, and who may connect
+  what.
+- **elaichi-mcp** — the `connection` argument and diagnosing a missing tool.
+- **elaichi-api** — the REST routes behind all of this.

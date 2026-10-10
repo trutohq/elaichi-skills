@@ -4,12 +4,12 @@
     "name": "Elaichi",
     "url": "https://elaichi.ai"
   },
-  "description": "Official agent skills for Elaichi — how to find a connected tool, pick the right account, curate toolboxes, reason about access, and call the control-plane API.",
+  "description": "Official agent skills for Elaichi — how to find a connected tool, pick the right account, curate toolboxes, build workflows, dashboards and knowledge bases, reason about access, and call the control-plane API.",
   "plugins": [
     {
       "name": "elaichi",
       "source": "./",
-      "description": "Official Elaichi plugin: skills for the MCP endpoint, toolboxes, connections, governance, and the control-plane API."
+      "description": "Official Elaichi plugin: skills for the MCP endpoint, toolboxes, connections, governance, automations, data, and the control-plane API."
     }
   ]
 }
