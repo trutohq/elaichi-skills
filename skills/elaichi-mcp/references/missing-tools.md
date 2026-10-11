@@ -8,7 +8,7 @@ What makes this hard: **only an `active` connection contributes tools.**
 Every other status — even `post_install_error`, where the credential itself
 works — leaves them absent from the list entirely, not present-and-failing.
 
-A restriction is different now. A restricted tool is never *callable*, but it
+A restriction is different. A restricted tool is never *callable*, but it
 is not hidden: `search_tools` names it, flagged `restricted`, and the list
 operations count it.
 

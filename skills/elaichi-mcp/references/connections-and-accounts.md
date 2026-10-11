@@ -149,9 +149,9 @@ Levels run `view < use < edit`, with owner above all three:
 - **edit** — change its settings, and change its grants
 - **owner** — delete it, or transfer it
 
-No organization-wide permission reaches a private connection. That is why
-offboarding can neither transfer nor delete a departing member's private
-connection: only its owner ever could, and the owner is the person leaving.
+No organization-wide permission reaches a private connection. Offboarding
+cannot transfer one either: removing a member deletes every connection they
+own, private ones included. The admin can only pick a replacement for each.
 
 Sharing a **toolbox** at `use` is a different and more common mechanism. It
 delegates *running* the tools over whichever connections that toolbox's
