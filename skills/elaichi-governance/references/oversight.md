@@ -69,7 +69,7 @@ consistent: a new one can take a moment to appear.
 ## Logging destinations
 
 **Settings → Logging**, `logging:manage`. Forwards audit and tool-call events to
-your own log service. It needs the **Black** plan, which is not on sale yet.
+your own log service. It needs the **Black** plan, which is not on sale.
 
 - Each destination can filter by type: `tool_call`, `auth`, `admin`.
 - **Only Datadog delivers today.** Splunk HEC and Microsoft Sentinel are listed

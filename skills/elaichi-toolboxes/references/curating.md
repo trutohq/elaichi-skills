@@ -12,7 +12,8 @@ hundred methods adds two hundred candidates to a model's choice, and accuracy
 drops well before that.
 
 Five to fifteen well-named tools is a good toolbox. Forty is usually two
-toolboxes. A toolbox holds at most 200 entries.
+toolboxes. A toolbox holds at most 1,000 entries; over MCP, one
+`set_entries` call sends at most 200.
 
 Find tool names from the account you will pin:
 

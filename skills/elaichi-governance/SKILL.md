@@ -1,6 +1,6 @@
 ---
 name: elaichi-governance
-description: Decide and explain who can reach what in Elaichi — the eight built-in roles and 58 permissions, custom roles, restrictions that allow or block connectors and tools, access requests, approvals, the audit log, SSO, SCIM, verified domains and offboarding. Use for "why was this refused", "block a tool", "what can this role do", "who did this" or "remove a member".
+description: Decide and explain who can reach what in Elaichi — the eight built-in roles and 58 permissions, custom roles, restrictions that allow or block connectors and tools, access requests, approvals, the audit log, SSO, SCIM, verified domains and offboarding, and explaining why an action was refused.
 whenToUse: Someone asks who can do what, why an action was refused, how to block or allow a connector or tool, what a role grants, how access requests or approvals work, how to read the audit log, how to set up SSO, SCIM or domains, or how to offboard someone.
 ---
 
@@ -138,7 +138,7 @@ scopes. Details: [Oversight](./references/oversight.md#approvals).
   back from the newest, and say that is what you did.
 
 Forwarding to Datadog (**Settings → Logging**) needs the Black plan, which is
-not on sale yet. Slack and email notifications (**Settings → Notifications**)
+not on sale. Slack and email notifications (**Settings → Notifications**)
 work on every plan. Details: [Oversight](./references/oversight.md).
 
 ## SSO, SCIM, domains and offboarding
