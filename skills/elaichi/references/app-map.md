@@ -151,7 +151,7 @@ sections are `/settings?tab=<value>`.
 | Assistant | `assistant` | Model providers and models for the Elaichi Agent. Agent organizations only | [Assistant settings](/guides/settings/assistant) |
 | Slack | `slack` | Connect a Slack workspace so people can tag `@Elaichi`. Agent organizations only | — |
 | Notifications | `notifications` | Post events to Slack or email | [Send event notifications](/guides/settings/notifications) |
-| Logging | `logging` | Forward audit events to Datadog, Splunk or Microsoft Sentinel. A Black feature, so it shows a lock on Gold | [Forward audit events](/guides/settings/logging) |
+| Logging | `logging` | Forward audit events to Datadog (Splunk and Microsoft Sentinel are listed as coming soon). A Black feature, so it shows a lock on Gold | [Forward audit events](/guides/settings/logging) |
 | Security | `security` | Your own two-factor and passkeys | [Secure your account](/guides/settings/security) |
 | Connected apps | `connected-apps` | The AI clients you authorized, what they reach, and which toolboxes each may use (one app at `/settings/connected-apps/<id>`) | [Connected apps](/guides/settings/connected-apps) |
 | Files | — | Files your tool calls produced (`/settings/files`) | — |
