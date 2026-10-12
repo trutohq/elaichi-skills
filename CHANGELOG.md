@@ -12,6 +12,12 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+### Changed
+
+- `elaichi-clients` and `elaichi-mcp` (scopes and refusals): a two-factor
+  refusal is fixed by setting up two-factor and trying again. The client no
+  longer needs to be connected again (elaichi#808).
+
 ## [0.2.0] — 2026-10-10
 
 Every skill re-checked against the product as it runs today, and two new
