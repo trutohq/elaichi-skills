@@ -206,7 +206,7 @@ Work down this list. The first match is usually the answer.
 | **A call is refused, naming a scope** | The grant was never given it. Connect the client again and tick it — Settings → Connected apps cannot add a scope. |
 | **A call is refused, naming a permission or `tool:execute`** | Reconnecting will not help. An admin changes the role. |
 | **Every call fails with `subscription_required`** | The organization has no active plan; it is paused until someone subscribes. |
-| **Refused because the organization requires two-factor** | Set up two-factor in Elaichi (Settings → Security), then connect the client again. |
+| **Refused because the organization requires two-factor** | Set up two-factor in Elaichi (Settings → Security), then try again. No need to connect the client again. |
 | **Every call fails "no longer an active member"** | The person was removed or suspended. An admin restores them. |
 | **The client asks to sign in again** | The grant was revoked, or the client went 30 days without refreshing. Connect again. |
 | **Sign-in says the organization requires SSO** | Use the company's SSO sign-in, then approve. |

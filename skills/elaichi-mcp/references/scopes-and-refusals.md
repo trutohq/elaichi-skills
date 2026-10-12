@@ -114,7 +114,7 @@ There are five kinds. Each has one right move.
 | Scope | Names a scope, e.g. `mcp:destructive` | Tell the user to connect Elaichi again from their AI client and allow it. Never an access request. |
 | Restriction | `structuredContent.error` holds the restriction | Offer `elaichi__access_request__create` with its `request_access.arguments`. |
 | Step-up | Says the app must confirm it is them, and names a screen | Send them to that screen. More scope will not help. |
-| Two-factor | Says the org requires two-factor | They set up two-factor, then connect the app again. |
+| Two-factor | Says the org requires two-factor | They set up two-factor, then try again. No reconnect needed. |
 
 Two rules cover all five:
 
