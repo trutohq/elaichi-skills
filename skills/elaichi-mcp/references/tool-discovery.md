@@ -80,8 +80,6 @@ an admin.
   `elaichi__synthetic_tool__list` and run one with
   `elaichi__synthetic_tool__execute`. One **is** searchable when it is an entry
   of a toolbox this grant reaches.
-- **A deleting tool, when the grant has no `mcp:destructive`.** It is left out
-  of the index. Calling it by name gets a scope refusal.
 
 ### Ranking
 
@@ -222,7 +220,7 @@ small sample. `restricted` lists each restriction a call hit, with its
 `request_access`, even when the program caught the error.
 
 Every call goes through the same gates as `execute_tool`: the same
-permissions, restrictions, `mcp:destructive` for a deleting tool, and audit.
+permissions, restrictions and audit. A deleting tool needs no scope beyond `mcp:tools`.
 Confirm with the user before a program writes, sends or deletes anything.
 
 If `run_code` is refused for a rate or daily limit, do the step with

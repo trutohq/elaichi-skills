@@ -14,6 +14,11 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- Scopes (`elaichi-clients`, `elaichi-conventions`, `elaichi-mcp`,
+  `elaichi-governance`, `elaichi`): "Run your connected tools" (`mcp:tools`)
+  runs every connected tool, deletes included. "Delete data and remove access"
+  (`mcp:destructive`) covers Elaichi's own data only. A deleting tool is no
+  longer left out of `search_tools` for a missing Delete scope (elaichi#826).
 - `elaichi-clients` and `elaichi-mcp` (scopes and refusals): a two-factor
   refusal is fixed by setting up two-factor and trying again. The client no
   longer needs to be connected again (elaichi#808).
