@@ -135,8 +135,8 @@ status leaves them absent, not present-and-failing.
    many were held back. `elaichi__connector__get` `restricted: true` means the
    whole connector is blocked. Never subtract from `tool_count` — it counts
    what the provider offers, not what this user may run.
-4. **Is it a scope gap?** No `mcp:tools` means no connected tools at all. A
-   tool that deletes also needs `mcp:destructive`.
+4. **Is it a scope gap?** No `mcp:tools` means no connected tools at all.
+   With it, every tool runs, deletes included.
 5. **Were you looking in `tools/list`?** Call `search_tools`.
 
 Full version, with the trap at each rung:

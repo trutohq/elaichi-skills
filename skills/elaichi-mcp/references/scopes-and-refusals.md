@@ -21,14 +21,14 @@ Elaichi's own consent screen. Only `mcp:read` is granted by default.
 |---|---|---|
 | `mcp:read` | Read your organization's data | Everything the user can already see: people, teams, roles, connections, toolboxes, templates, restrictions, settings, and the audit log. **Never secret values.** Also files and withdraws the user's own access requests. |
 | `mcp:write` | Create and change data | Create and change teams, roles, toolboxes, templates, synthetic tools, connections and org settings, and share them. Implies `mcp:read`. |
-| `mcp:destructive` | Delete data and remove access | Delete toolboxes, templates, connections and the rest; take back shares; transfer a connection; **delete inside connected apps**. Implies `mcp:read`. Never a default, never implied by anything. |
-| `mcp:tools` | Run your connected tools | Run the tools from the toolboxes chosen on that screen. Also files and withdraws the user's own access requests. |
+| `mcp:destructive` | Delete data and remove access | Delete toolboxes, templates, connections and the rest; take back shares; transfer a connection. Elaichi's own data only. Implies `mcp:read`. Never a default, never implied by anything. |
+| `mcp:tools` | Run your connected tools | Run the tools from the toolboxes chosen on that screen, **deletes in the connected apps included**. Also files and withdraws the user's own access requests. |
 
 Two rules people miss:
 
-- **A connected tool that deletes needs `mcp:destructive` on top of
-  `mcp:tools`.** Without it the tool is left out of `search_tools`, and a call
-  by name gets a scope refusal. A synthetic tool is charged for its worst step.
+- **A connected tool that deletes needs only `mcp:tools`.** `mcp:destructive`
+  is for Elaichi's own operations. A delete is still marked destructive in
+  the tool's hints, and a synthetic tool is marked by its worst step.
 - **`mcp:tools` alone holds neither `mcp:read` nor `mcp:write`.** It runs
   connected tools; it does not reach most `elaichi__*` operations.
 

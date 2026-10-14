@@ -18,7 +18,7 @@ is `elaichi__connection__list_tools`, and `automation.run.get` is
 |---|---|
 | Role has no `tool:execute` | **Nothing** is listed — no operation and no connected tool. Guest, Auditor and Billing Admin lack it. |
 | Role lacks the operation's permission | Not listed. |
-| Scope | `read` and `sensitive_read` need `mcp:read`. `write` needs `mcp:write`. `destructive` needs `mcp:destructive`. An operation that runs a connected tool also needs `mcp:tools`. |
+| Scope | `read` and `sensitive_read` need `mcp:read`. `write` needs `mcp:write`. `destructive` needs `mcp:destructive`. An operation that runs a connected tool also needs `mcp:tools`, and a delete in the connected app needs nothing more. |
 | Automations off for the org | Every operation marked **(A)** below is hidden. They come back when the plan includes automations **and** an admin turns on "Automations and everything they use" in Settings → Organization. |
 | Apps feature dormant | `bundle.*` is hidden unless Apps is switched on, on top of **(A)**. |
 | MCP Apps not negotiated | `canvas.upsert_widget` is hidden. |
@@ -114,9 +114,8 @@ share and delete refuse them.
 There is no transfer for a toolbox or template here. `connection.transfer` is
 the only transfer on MCP.
 
-`toolbox.execute` and `synthetic_tool.execute` are charged by the tool they
-actually run: one that deletes in the third-party app needs `mcp:destructive`
-too. A synthetic tool is charged for its worst step.
+`toolbox.execute` and `synthetic_tool.execute` need `mcp:write` and
+`mcp:tools`. A tool that deletes in the third-party app needs nothing more.
 
 ## Access requests, feedback, governance reads
 

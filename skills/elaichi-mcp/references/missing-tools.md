@@ -83,9 +83,6 @@ not "how many are restricted" and must never be reported as one. Use
 
 - **No `mcp:tools` on the grant:** no connected tool is offered at all, and
   `search_tools` and `execute_tool` are not even in `tools/list`.
-- **A deleting tool without `mcp:destructive`:** the tool is left out of
-  `search_tools`. Calling it by name gets a scope refusal naming
-  `mcp:destructive`.
 - **An `elaichi__*` operation the role allows but the scope does not:** it is
   not listed, and the server `instructions` name it under "Permitted by your
   role, withheld by this connection's scope".

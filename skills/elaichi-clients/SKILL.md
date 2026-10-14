@@ -79,8 +79,8 @@ for:
 |---|---|---|
 | **Read your organization's data** | `mcp:read` | Everything you can already see in Elaichi. Never secret values. Open its **Details** once: it also covers the audit log, pending invitations, SSO and SCIM settings, verified domains and your API token list (never values). |
 | **Create and change data** | `mcp:write` | Create and change teams, roles, toolboxes, templates and connections, invite people, and share access |
-| **Delete data and remove access** | `mcp:destructive` | Permanently delete and remove people, inside connected apps too. Cannot be undone |
-| **Run your connected tools** | `mcp:tools` | Run tools from the toolboxes chosen in the next step. A tool that deletes also needs Delete |
+| **Delete data and remove access** | `mcp:destructive` | Permanently delete data and remove people in Elaichi. Cannot be undone |
+| **Run your connected tools** | `mcp:tools` | Run tools from the toolboxes chosen in the next step, deleting in your connected apps included |
 
 Every requested scope **starts ticked except Delete**, which always takes a
 deliberate click. A client that asks for no scope at all gets Read only.
@@ -200,7 +200,7 @@ Work down this list. The first match is usually the answer.
 | **Only `elaichi__…` operations, no `search_tools`** | Either **Run your connected tools** was not granted — connect the client again and tick it — or the grant reaches no active connected tool yet: nothing connected, or every account `pending` or `needs_reauth`. (Restricted tools still bring `search_tools`, which names them.) Connect or reconnect an app in Elaichi. |
 | **Chose "Only the ones I pick" and tools vanished** | A picked toolbox was deleted or the person lost access to it. Settings → Connected apps → the app → **Manage toolboxes**. |
 | **`search_tools` and `execute_tool` show up** | Nothing is wrong. Ask the client to search for the tool by name. |
-| **One expected tool is missing** | Connection status first, restrictions second. A tool that deletes is left out unless the grant has **Delete** as well as Run your connected tools. Work the ladder in [Diagnosing a missing tool](../elaichi-mcp/references/missing-tools.md). |
+| **One expected tool is missing** | Connection status first, restrictions second. A tool that deletes is not left out for a missing Delete scope: Run your connected tools covers it. Work the ladder in [Diagnosing a missing tool](../elaichi-mcp/references/missing-tools.md). |
 | **Expected Elaichi operations are missing** | The grant lacks the scope they need (Create and change, or Delete), or the person's role lacks the permission. Connect again for a scope; ask an admin for a permission. |
 | **A newly connected app has not appeared** | Most clients cache the tool list. Start a new conversation, reconnect the connector, or re-scan tools. |
 | **A call is refused, naming a scope** | The grant was never given it. Connect the client again and tick it — Settings → Connected apps cannot add a scope. |
