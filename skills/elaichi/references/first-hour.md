@@ -133,7 +133,7 @@ skills carry the detail.
 |---|---|
 | The client shows no tools at all | The person's role may lack `tool:execute` (Guest, Billing Admin and Auditor do) |
 | The client shows Elaichi's own operations but nothing else | **Run your connected tools** was not granted, or nothing they can use is connected and active yet |
-| One expected tool is missing | Connection status first, restrictions second. A tool that deletes also needs **Delete** |
+| One expected tool is missing | Connection status first, restrictions second. Run your connected tools covers deletes in the apps too |
 | A newly connected app has not appeared | Most clients cache the tool list. Start a new conversation, or reconnect |
 | A call is refused after consent | The scope it needed was not granted. Connect the client again and tick it — Settings → Connected apps cannot add a scope |
 

@@ -252,7 +252,7 @@ an exact account name or `conn_…` id beyond that. **Never guess it. Ask.**
 | `mcp:read` | Read your organization's data | Reads, including sensitive ones like the audit log |
 | `mcp:write` | Create and change data | Creates and changes; implies read |
 | `mcp:destructive` | Delete data and remove access | Deletes, removals, revokes; implies read. Never pre-ticked |
-| `mcp:tools` | Run your connected tools | Connected tools, from all of them or chosen toolboxes. A tool that deletes needs `mcp:destructive` too |
+| `mcp:tools` | Run your connected tools | Connected tools, from all of them or chosen toolboxes. Includes tools that delete in those apps. `mcp:destructive` is for Elaichi's own data |
 | `openid`, `email` | Confirm who you are, See your email address | Identity only; reach nothing in the organization |
 
 A client that asks for no scope gets `mcp:read` only. A grant's scopes never
