@@ -156,8 +156,8 @@ Their synthetic tools are deleted.
 
 The whole flow lives in **Settings → People → remove member**. An agent should
 run the offboarding preview (`elaichi__member__offboarding`) and hand off to
-the app — the MCP `member.delete` refuses while the member owns anything,
-because it cannot pick replacements.
+the app — `member.delete` is not on the MCP tool list, and only the app can
+pick replacements.
 
 Full decision table: [Connection lifecycle](./references/lifecycle.md#offboarding-decision-table).
 

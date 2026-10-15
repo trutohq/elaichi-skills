@@ -120,8 +120,10 @@ Not a connected tool, but the same question. In order:
    show them.
 2. **Step-up operations** (`invite.create`, `invite.delete`,
    `member.set_roles`, `member.delete`, `role.delete`, `team.delete`) are
-   refused on every AI surface. The server `instructions` list them under
-   "Only in the Elaichi app". Send the person to the screen the refusal names.
+   not on the MCP tool list at any scope, and the Elaichi agent refuses them
+   too. The server `instructions` list them under "Only in the Elaichi app".
+   Called by name, one answers with the screen and the steps. Send the person
+   there.
 3. **App-only and never-exposed operations** — API tokens, approving access
    requests, writes to restrictions, SSO, SCIM, domains or logging — are not on
    MCP at all. See

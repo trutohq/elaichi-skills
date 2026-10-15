@@ -80,7 +80,7 @@ session go one at a time.
   the owner's access. Check `can_continue` first.
 - `automation.session.close` closes one, so the next trigger for that key
   opens a fresh session. Nothing running is canceled. Needs Manage.
-- `automation.session.messages` answers `session_transcript_unavailable`
+- `automation.session.list_messages` answers `session_transcript_unavailable`
   today. That is not an empty conversation: never say it was. Use
   `automation.session.runs` or the `console_url` instead.
 
