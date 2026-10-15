@@ -18,7 +18,7 @@ connector.
 connects to it individually once it exists, and signs in as themselves — so
 each person's tools still follow their own access.
 
-1. Open **Settings → Connectors**.
+1. Open **Customize → Connectors**.
 2. Choose **Add custom connector** and paste the endpoint.
 3. Sign in to Elaichi, pick the organization, and approve what the connector
    can do.
