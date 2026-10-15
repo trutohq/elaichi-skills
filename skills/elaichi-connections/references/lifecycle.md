@@ -168,5 +168,5 @@ person, and the connection leaves their own list.
 **Offboarding.** Run `elaichi__member__offboarding` first, every time. Report
 which connections will be deleted, what uses each one, and the replacement
 candidates. Name the delegated entries. Then send the person to
-**Settings → People** to finish — the MCP `member.delete` refuses while the
-member owns anything, because it cannot choose replacements or hand-overs.
+**Settings → People** to finish — `member.delete` is not on the MCP tool
+list, and only the app can choose replacements and hand-overs.
