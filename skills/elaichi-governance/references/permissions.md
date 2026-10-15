@@ -195,7 +195,8 @@ about two minutes.
   cannot be deleted until the mapping changes.
 - Over MCP and in the Elaichi agent, roles can be created and edited, but
   assigning a role to a person (`member.set_roles`) and deleting a role are
-  refused: they need a person to confirm it is them in the console.
+  not available: they need a person to confirm it is them in the console.
+  Over MCP they are not on the tool list.
 
 ## Sharing grants, and how they combine with permissions
 

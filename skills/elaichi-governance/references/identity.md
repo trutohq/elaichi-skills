@@ -113,8 +113,9 @@ will break, by name. It lists, without changing anything:
   someone re-pins them.
 - **Credentials.** How many API tokens and AI client logins removal revokes.
 
-`elaichi__member__delete` refuses while any of that is unresolved, and it is
-refused on every AI surface anyway. The removal itself is done in the app.
+Removal refuses while any of that is unresolved, and no AI surface can do it
+anyway: over MCP `member.delete` is not on the tool list. The removal itself is
+done in the app.
 
 SCIM never removes anyone: it suspends. Removal is always this admin action.
 

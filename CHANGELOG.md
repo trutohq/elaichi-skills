@@ -14,6 +14,13 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `elaichi-mcp`, `elaichi-governance`, `elaichi-connections`: the six step-up
+  operations (`invite.create`, `invite.delete`, `member.set_roles`,
+  `member.delete`, `role.delete`, `team.delete`) are no longer on the MCP tool
+  list at any scope. The server `instructions` still name them under "Only in
+  the Elaichi app" (elaichi#832).
+- `elaichi-automations`, `elaichi-mcp`: `automation.session.messages` is
+  renamed `automation.session.list_messages` (elaichi#832).
 - Scopes (`elaichi-clients`, `elaichi-conventions`, `elaichi-mcp`,
   `elaichi-governance`, `elaichi`): "Run your connected tools" (`mcp:tools`)
   runs every connected tool, deletes included. "Delete data and remove access"
