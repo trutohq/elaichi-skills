@@ -119,7 +119,7 @@ Full steps and plan requirements in
 | Client | Where | Note |
 |---|---|---|
 | **Claude** | Settings → Connectors → **Add custom connector**, paste the endpoint | On Team and Enterprise, **only an Owner** can add it. Everyone else then connects to it as themselves. |
-| **ChatGPT** | Settings → Apps → developer mode → **Create**, paste the endpoint, **Scan tools** | Business, Enterprise or Edu. Web only. |
+| **ChatGPT** | Plugins → **Add** → **Add custom MCP server**, name it Elaichi, paste the endpoint, then **Create as a plugin** | On Pro you add it yourself. On Business an admin adds it for the workspace. |
 | **Cursor** | An entry in `~/.cursor/mcp.json` | Per machine. No `type`, no `auth` block, no command. |
 | **Any other MCP client** | Add a remote (HTTP) MCP server with the endpoint URL | Needs dynamic client registration, PKCE and a browser sign-in. Test it. |
 
@@ -202,7 +202,7 @@ Work down this list. The first match is usually the answer.
 | **`search_tools` and `execute_tool` show up** | Nothing is wrong. Ask the client to search for the tool by name. |
 | **One expected tool is missing** | Connection status first, restrictions second. A tool that deletes is not left out for a missing Delete scope: Run your connected tools covers it. Work the ladder in [Diagnosing a missing tool](../elaichi-mcp/references/missing-tools.md). |
 | **Expected Elaichi operations are missing** | The grant lacks the scope they need (Create and change, or Delete), or the person's role lacks the permission. Connect again for a scope; ask an admin for a permission. |
-| **A newly connected app has not appeared** | Most clients cache the tool list. Start a new conversation, reconnect the connector, or re-scan tools. |
+| **A newly connected app has not appeared** | Most clients cache the tool list. Start a new conversation, reconnect the connector, or re-scan tools. In ChatGPT, select **Refresh tools**. |
 | **A call is refused, naming a scope** | The grant was never given it. Connect the client again and tick it — Settings → Connected apps cannot add a scope. |
 | **A call is refused, naming a permission or `tool:execute`** | Reconnecting will not help. An admin changes the role. |
 | **Every call fails with `subscription_required`** | The organization has no active plan; it is paused until someone subscribes. |
@@ -211,7 +211,7 @@ Work down this list. The first match is usually the answer.
 | **The client asks to sign in again** | The grant was revoked, or the client went 30 days without refreshing. Connect again. |
 | **Sign-in says the organization requires SSO** | Use the company's SSO sign-in, then approve. |
 | **"Add custom connector" is missing in Claude** | On Team or Enterprise only an Owner can add one. Ask an Owner to add it, then connect to it as yourself. |
-| **ChatGPT sign-in loops or never returns** | Turn developer mode on under Settings → Apps → Advanced Settings. If it is already on, the plan does not include it — Business, Enterprise or Edu is required. |
+| **ChatGPT sign-in loops or never returns** | The plan may not include custom MCP servers. On Business, an admin adds it for the workspace. |
 | **Cursor never shows the server** | Invalid JSON, usually a trailing comma or a missing brace. Check the file parses, then reload the window. |
 | **Cursor shows no sign-in prompt** | Cursor did not reload. Reload the window, then open MCP settings to trigger the connection. |
 

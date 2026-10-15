@@ -36,16 +36,18 @@ Guide: [elaichi.ai/docs/guides/mcp-servers/claude](https://elaichi.ai/docs/guide
 
 ## ChatGPT
 
-Business, Enterprise or Edu. MCP support is **web only** today.
+On Pro you add it yourself. On Business an admin adds it for the workspace.
 
-Developer mode must be on for the account — on Business plans only admins and
-owners can turn it on. On Enterprise and Edu an admin can also grant it through
-**Permissions & Roles → Connected Data**.
+1. In ChatGPT, open **Plugins** from the left bar. That opens Customize.
+2. Select **Add**, then **Add custom MCP server**.
+3. Name it Elaichi, paste the endpoint, and leave Authentication on OAuth.
+4. Tick "I understand and want to continue", then select **Create as a plugin**.
+5. Select **Continue to Elaichi**, sign in, and approve what the plugin can do.
 
-1. Open **Settings → Apps** and turn on developer mode (under **Advanced
-   Settings**).
-2. Choose **Create**, paste the endpoint, then run **Scan tools**.
-3. Sign in to Elaichi and approve what the app can do.
+After that, the plugin is listed under **Plugins → Personal** with a **Try in
+chat** button. Its settings page has **Refresh tools** and a Permission choice.
+
+Video walkthrough: https://youtu.be/uiFFrOK7ShY
 
 No client ID or secret is requested — Elaichi registers ChatGPT automatically
 on first contact.
@@ -61,7 +63,7 @@ does not make connected apps read-only.
 
 Because connected tools are reached through `search_tools` and `execute_tool`
 rather than listed one by one, apps connected in Elaichi later are reachable
-without re-scanning tools in ChatGPT.
+without selecting Refresh tools in ChatGPT.
 
 To disconnect for certain, revoke the grant in Elaichi under Settings →
 Connected apps.
@@ -138,4 +140,5 @@ the client with no further setup there — same endpoint, more behind it — and
 the reverse holds: disconnect in Elaichi and it disappears from the client.
 
 Most clients cache the tool list at startup, so a new app may need a new
-conversation, a reload, or a re-scan before it shows up.
+conversation, a reload, or a tool refresh before it shows up. In ChatGPT, select
+**Refresh tools**.
