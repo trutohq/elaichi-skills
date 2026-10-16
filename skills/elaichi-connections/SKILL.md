@@ -21,11 +21,18 @@ Connectors page, also has a **Connect** button that starts the same flow.)
 1. Search or filter by category, then pick the app.
 2. Optionally use **Share with** to add people, teams or everyone. Leave it
    empty to keep the connection private.
-3. Choose **Connect**. The app's sign-in opens — inside Elaichi, or in a new
-   browser window for a plain OAuth sign-in. Allow pop-ups.
-4. Sign in to the app and approve what it asks for.
+3. Choose **Connect**. For an app such as Notion, Elaichi first asks how you
+   want to sign in: choose **OAuth 2.0** (the other choice is an API key). The
+   app's sign-in then opens — inside Elaichi, or in a new browser window for a
+   plain OAuth sign-in. Allow pop-ups.
+4. Sign in to the app and approve what it asks for (for Notion: **Select
+   pages**, then **Allow access**).
 
 When it finishes you see **Connection added** and the row goes **Active**.
+If the sign-in window closes early, the row shows **Awaiting sign-in**: choose
+**Finish sign-in**. If it shows **Needs sign-in**, choose **Reconnect**.
+
+Video walkthrough: https://youtu.be/2_YiQw2kpm8
 
 **Every active connection gets its own automatic toolbox**, named after the
 connection, and works through the MCP endpoint straight away. There is nothing
