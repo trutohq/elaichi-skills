@@ -76,9 +76,12 @@ Any recent version with MCP support. Cursor reads a file on the machine, so
 this is **per machine**, and optionally per project. There is nothing
 account-level to configure.
 
-1. Open `~/.cursor/mcp.json` for everywhere, or `.cursor/mcp.json` inside a
-   repository for that project only.
-2. Add an entry under `mcpServers`:
+1. In Cursor, open **Customize**, then **MCPs**.
+2. Select **New MCP Server**. That opens `~/.cursor/mcp.json`, which applies
+   everywhere. For one project only, use `.cursor/mcp.json` inside the
+   repository instead.
+3. Add an entry named `elaichi` under `mcpServers`, with one field, `url`, set
+   to the Elaichi endpoint. Save the file.
 
    ```json
    {
@@ -90,7 +93,12 @@ account-level to configure.
    }
    ```
 
-3. Reload Cursor, sign in to Elaichi, and approve the access.
+4. Elaichi is listed under **Needs Attention** as "Needs authentication".
+   Select **Authenticate**.
+5. Elaichi's sign-in and consent screen opens in the browser and names Cursor
+   as the requesting app. Pick the organization, choose what Cursor may do and
+   which tools it may use, then select **Allow access**. The browser shows
+   "Authorization complete" and may ask to open Cursor. Select **Open Cursor**.
 
 There is **no `type` field, no command to run, and no `auth` block.** Cursor
 detects the transport from the endpoint, and dynamic client registration
@@ -104,6 +112,8 @@ To disconnect: remove the entry and reload, and revoke the grant in Elaichi
 under Settings → Connected apps.
 
 Guide: [elaichi.ai/docs/guides/mcp-servers/cursor](https://elaichi.ai/docs/guides/mcp-servers/cursor)
+
+Video walkthrough: https://youtu.be/EwleY4bw0HQ
 
 ## Other MCP clients
 

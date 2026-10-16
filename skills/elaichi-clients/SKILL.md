@@ -120,7 +120,7 @@ Full steps and plan requirements in
 |---|---|---|
 | **Claude** | Customize → Connectors → **Add custom connector**, paste the endpoint | On Team and Enterprise, **only an Owner** can add it. Everyone else then connects to it as themselves. |
 | **ChatGPT** | Plugins → **Add** → **Add custom MCP server**, name it Elaichi, paste the endpoint, then **Create as a plugin** | On Pro you add it yourself. On Business an admin adds it for the workspace. |
-| **Cursor** | An entry in `~/.cursor/mcp.json` | Per machine. No `type`, no `auth` block, no command. |
+| **Cursor** | Customize → MCPs → **New MCP Server**, add an `elaichi` entry with the endpoint as `url`, then **Authenticate** | Per machine. No `type`, no `auth` block, no command. [Video](https://youtu.be/EwleY4bw0HQ) |
 | **Any other MCP client** | Add a remote (HTTP) MCP server with the endpoint URL | Needs dynamic client registration, PKCE and a browser sign-in. Test it. |
 
 Cursor, in full:
@@ -212,8 +212,8 @@ Work down this list. The first match is usually the answer.
 | **Sign-in says the organization requires SSO** | Use the company's SSO sign-in, then approve. |
 | **"Add custom connector" is missing in Claude** | On Team or Enterprise only an Owner can add one. Ask an Owner to add it, then connect to it as yourself. |
 | **ChatGPT sign-in loops or never returns** | The plan may not include custom MCP servers. On Business, an admin adds it for the workspace. |
-| **Cursor never shows the server** | Invalid JSON, usually a trailing comma or a missing brace. Check the file parses, then reload the window. |
-| **Cursor shows no sign-in prompt** | Cursor did not reload. Reload the window, then open MCP settings to trigger the connection. |
+| **Cursor never shows the server** | Invalid JSON, usually a trailing comma or a missing brace. Check the file is valid JSON. |
+| **Cursor shows no sign-in prompt** | Elaichi has not been authenticated yet. Open Customize → MCPs, find Elaichi under **Needs Attention**, and select **Authenticate** again. |
 
 ## Disconnecting
 

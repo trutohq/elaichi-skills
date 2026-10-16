@@ -70,7 +70,7 @@ https://github.com/trutohq/elaichi-skills
 ```
 
 This pulls in both the skills and the always-applied `elaichi` rule, but not
-the MCP server — connect that separately from **Cursor Settings → MCP**.
+the MCP server — connect that separately from **Customize → MCPs** in Cursor.
 
 ### Any agent (via `npx skills`)
 

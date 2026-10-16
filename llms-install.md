@@ -51,8 +51,12 @@ Or install this repo's plugin, which bundles the server along with the skills:
 
 ## Cursor
 
-**Cursor Settings → MCP → Add**, transport **Streamable HTTP**, URL
-`https://api.elaichi.ai/mcp`. Cursor prompts for the OAuth sign-in.
+**Customize → MCPs → New MCP Server** opens `~/.cursor/mcp.json`. Add an
+`elaichi` entry with one field, `url`, set to `https://api.elaichi.ai/mcp`, and
+save. Elaichi then shows under Needs Attention as "Needs authentication".
+Select **Authenticate** to finish the OAuth sign-in in the browser.
+
+Video walkthrough: https://youtu.be/EwleY4bw0HQ
 
 ## After it connects
 
