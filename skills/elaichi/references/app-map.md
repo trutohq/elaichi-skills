@@ -176,7 +176,7 @@ sections are `/settings?tab=<value>`.
 | Copy your endpoint | The **Connect** row in the sidebar | [How it works](/guides/mcp-servers/how-it-works) |
 | Add it to Claude | Claude → Customize → Connectors → **Add custom connector** | [Claude](/guides/mcp-servers/claude) |
 | Add it to ChatGPT | ChatGPT → Plugins → **Add** → **Add custom MCP server** | [ChatGPT](/guides/mcp-servers/chatgpt) |
-| Add it to Cursor | `~/.cursor/mcp.json` | [Cursor](/guides/mcp-servers/cursor) |
+| Add it to Cursor | Cursor → Customize → MCPs → **New MCP Server** | [Cursor](/guides/mcp-servers/cursor) |
 | Review, narrow or revoke an authorized client | Settings → Connected apps | [Connected apps](/guides/settings/connected-apps) |
 
 Other MCP clients and the full steps: the **elaichi-clients** skill.
