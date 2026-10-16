@@ -200,9 +200,20 @@ large connector's whole schema set.
 
 ## Files
 
-A tool's file argument takes a `file_id`. Get one from
-`elaichi__file__upload_request` (the user uploads from their machine; you never
-see the bytes) or `elaichi__file__create` (text you wrote). See
+A tool's file argument takes a `file_id`. Take one the first way that works:
+
+1. One an earlier tool returned, or the file downloaded from the app it lives
+   in (Drive, Gmail, Slack, Dropbox: its download tool returns a `file_…`).
+2. Text or data you wrote: `elaichi__file__create`.
+3. A file on the user's machine or attached in chat: the client uploads it
+   automatically. With a shell, `elaichi__file__upload_link`; in ChatGPT,
+   `elaichi__file__import_attachment`.
+4. A public web address: `elaichi__file__import_url`.
+5. Only when none of those is available or they failed:
+   `elaichi__file__upload_request`, which has the user pick the file on a page.
+
+Use a tool only if it is in `tools/list`; if it is not, go to the next option.
+You never see the bytes of an uploaded file. See
 [Tool discovery](./references/tool-discovery.md#files-in-and-out).
 
 ## Cards (MCP Apps clients)

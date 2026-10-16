@@ -139,13 +139,19 @@ Approving or denying an access request is not on MCP at all
 
 ## Files
 
-- `file.upload_request` — ask the user to upload files from their machine. Returns an `upload_page_url`.
-- `file.upload_request_get` — poll until `status` is `confirmed`; it lists each `file_id`.
 - `file.create` — save text or base64 you wrote as a file (up to 1 MiB, kept 7 days).
+- `file.upload_link` — upload a file on the user's machine with curl (needs a shell). Declare `filename`, `size_bytes` and `sha256`; run the returned `curl`.
+- `file.import_attachment` — ChatGPT only: import the files the user attached in chat.
+- `file.import_url` — fetch one public https address into a file; the user approves the exact URL.
+- `file.upload_request` — last resort: the user signs in, picks files and confirms on a page. Returns an `upload_page_url`.
+- `file.upload_request_get` — poll until `status` is `confirmed`; it lists each `file_id`.
 - `file.get` — is this file id usable now?
 
-Pass a `file_id` to a connected tool's file argument. See
-[Tool discovery](./tool-discovery.md#files-in-and-out).
+Pass a `file_id` to a connected tool's file argument. The order to try these in
+is in [Tool discovery](./tool-discovery.md#files-in-and-out): automatic upload
+first, the manual page last. `file.upload_link`, `file.import_attachment` and
+`file.import_url` may not be on every server yet; use one only if it is in
+`tools/list`.
 
 ## Automations (A)
 

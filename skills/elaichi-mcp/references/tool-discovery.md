@@ -165,15 +165,38 @@ that app — see [Connections and accounts](./connections-and-accounts.md).
 
 ## Files in and out
 
-**Sending a file to a tool.** A tool's file argument takes a `file_id`:
+**Sending a file to a tool.** A tool's file argument takes a `file_id`. Try
+these in order and stop at the first that works. The user should not have to do
+anything by hand unless every automatic option is gone.
 
-- For a file on the user's machine, call `elaichi__file__upload_request` with
-  a short `purpose`. Give the user its `upload_page_url`. They sign in, pick
-  the files and press Confirm; the request lapses after 10 minutes. Poll
-  `elaichi__file__upload_request_get` until `status` is `confirmed`, then pass
-  each `file_id`. You never see the bytes.
-- For text you wrote yourself (a CSV, a note), call `elaichi__file__create`
-  (up to 1 MiB; kept 7 days). Never paste a user's own file into it.
+1. **A `file_…` you already have.** An earlier tool result returned one, or
+   download the file from the app it lives in (Drive, Gmail, Slack, Dropbox:
+   its download tool returns a `file_id`).
+2. **Text you wrote** (a CSV, a note): `elaichi__file__create`, up to 1 MiB,
+   kept 7 days. Never paste a user's own file into it.
+3. **A file on the user's machine, or attached in chat.** The client uploads
+   it by itself, so the bytes never pass through you.
+   - With a shell: call `elaichi__file__upload_link` with the file's
+     `filename`, `size_bytes` and `sha256` (`wc -c`, `sha256sum`). It returns a
+     `curl` command: put the real path in it and run it. Success means the file
+     is stored; pass its `file_id`. The link works once, for 10 minutes, and
+     only for that size and hash.
+   - In ChatGPT: call `elaichi__file__import_attachment`. ChatGPT fills in the
+     files the user attached; do not write those fields yourself.
+4. **A public web address:** `elaichi__file__import_url` with the exact `url`.
+   The user approves that address each time. Use it only for an address they
+   gave you; it sends no sign-in, so a private link fails.
+5. **Last resort,** when none of the above is available or they failed (no
+   shell, curl cannot reach Elaichi, a link that needs a sign-in):
+   `elaichi__file__upload_request` with a short `purpose`. Give the user its
+   `upload_page_url`. They sign in, pick the files and press Confirm; the
+   request lapses after 10 minutes. Poll `elaichi__file__upload_request_get`
+   until `status` is `confirmed`, then pass each `file_id`.
+
+`upload_link`, `import_attachment` and `import_url` are new and may not be on
+every server yet. Check that the tool is in `tools/list` before you plan around
+it, and fall through to the next option when it is not; do not promise a user a
+tool that is absent.
 
 **Getting a file back.** A download or export tool saves the file and returns
 `file_id`, `filename`, `mime`, `size_bytes`, a `url` the user opens, and a
