@@ -14,6 +14,13 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `elaichi-mcp`: a tool's file argument now teaches one source order. A
+  `file_…` already in hand or downloaded from the app, then `file.create` for
+  text you wrote, then the client's automatic upload (`file.upload_link` with a
+  shell, `file.import_attachment` in ChatGPT), then `file.import_url` for a
+  public address, and the manual `file.upload_request` page only as a last
+  resort. The three newer tools are described as "use only if listed in
+  `tools/list`, else fall through" (elaichi#847, elaichi#848).
 - `elaichi-mcp`, `elaichi-governance`, `elaichi-connections`: the six step-up
   operations (`invite.create`, `invite.delete`, `member.set_roles`,
   `member.delete`, `role.delete`, `team.delete`) are no longer on the MCP tool
