@@ -32,8 +32,6 @@ When it finishes you see **Connection added** and the row goes **Active**.
 If the sign-in window closes early, the row shows **Awaiting sign-in**: choose
 **Finish sign-in**. If it shows **Needs sign-in**, choose **Reconnect**.
 
-Video walkthrough: https://youtu.be/2_YiQw2kpm8
-
 **Every active connection gets its own automatic toolbox**, named after the
 connection, and works through the MCP endpoint straight away. There is nothing
 to publish first.

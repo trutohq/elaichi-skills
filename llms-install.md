@@ -56,8 +56,6 @@ Or install this repo's plugin, which bundles the server along with the skills:
 save. Elaichi then shows under Needs Attention as "Needs authentication".
 Select **Authenticate** to finish the OAuth sign-in in the browser.
 
-Video walkthrough: https://youtu.be/EwleY4bw0HQ
-
 ## After it connects
 
 The person needs an Elaichi account and at least one connected application.

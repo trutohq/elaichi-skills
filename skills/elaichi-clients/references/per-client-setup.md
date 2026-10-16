@@ -47,8 +47,6 @@ On Pro you add it yourself. On Business an admin adds it for the workspace.
 After that, the plugin is listed under **Plugins → Personal** with a **Try in
 chat** button. Its settings page has **Refresh tools** and a Permission choice.
 
-Video walkthrough: https://youtu.be/uiFFrOK7ShY
-
 No client ID or secret is requested — Elaichi registers ChatGPT automatically
 on first contact.
 
@@ -112,8 +110,6 @@ To disconnect: remove the entry and reload, and revoke the grant in Elaichi
 under Settings → Connected apps.
 
 Guide: [elaichi.ai/docs/guides/mcp-servers/cursor](https://elaichi.ai/docs/guides/mcp-servers/cursor)
-
-Video walkthrough: https://youtu.be/EwleY4bw0HQ
 
 ## Other MCP clients
 

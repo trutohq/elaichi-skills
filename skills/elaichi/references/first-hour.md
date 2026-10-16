@@ -23,7 +23,6 @@ because it is the fastest way to find out what your team actually needs.
 Connections → **Add connection** → search for a product you use → **Connect**
 → choose **OAuth 2.0** when asked → sign in with it and approve what it asks
 for. (Connectors is the browse-only catalog; the Connect button is not there.)
-Video walkthrough: https://youtu.be/2_YiQw2kpm8
 
 Then decide who reaches it. The default is **just you**. A shared inbox,
 helpdesk or CRM usually wants the whole organization or one team; a personal
