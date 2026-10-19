@@ -2,8 +2,8 @@
 
 ## The audit log
 
-**Governance → Audit logs.** Append-only. Every organization on Gold or Black
-has it.
+**Governance → Audit logs.** Append-only. Every organization has it, on
+every plan.
 
 **Everyone can read it, at one of two scopes.** The response says which in
 `scope`:
@@ -69,7 +69,7 @@ consistent: a new one can take a moment to appear.
 ## Logging destinations
 
 **Settings → Logging**, `logging:manage`. Forwards audit and tool-call events to
-your own log service. It needs the **Black** plan, which is not on sale.
+your own log service. It needs the **Black** plan; on Personal and Gold the tab shows a lock.
 
 - Each destination can filter by type: `tool_call`, `auth`, `admin`.
 - **Only Datadog delivers today.** Splunk HEC and Microsoft Sentinel are listed

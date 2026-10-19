@@ -61,7 +61,9 @@ Video walkthrough: https://youtu.be/EwleY4bw0HQ
 ## After it connects
 
 The person needs an Elaichi account and at least one connected application.
-A free 14-day trial is at https://app.elaichi.ai/signup — no credit card.
+Sign-up is at https://app.elaichi.ai/signup. A new workspace gets a 14-day
+Black trial with no credit card, then the free Personal plan (one person, 10
+connections, 1,000 tool calls a month) unless it buys Gold or Black.
 
 The endpoint advertises two tools rather than hundreds: `search_tools` to find
 what is available across everything the organization has connected, and
@@ -72,6 +74,9 @@ search, not a guess at a tool name.
 
 - **No tools listed.** The account has no connected applications yet, or the
   person's role restricts all of them. Connect one at https://app.elaichi.ai.
+- **A call is refused as over the plan limit.** The Personal plan allows 1,000
+  connected-tool calls a month. Tell the person, and send them to Settings →
+  Billing at https://app.elaichi.ai; do not retry.
 - **A tool is missing.** It may be restricted for that person's role. A
   restricted tool is never advertised, so it will not appear in a search.
 - **The browser window never opens.** The client is treating this as a local

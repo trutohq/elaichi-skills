@@ -156,6 +156,9 @@ Because every call travels through Elaichi:
 - **58 permissions, 8 predefined roles** plus unlimited custom roles, per-tool
   restrictions, and an append-only audit log — all of it applying over MCP too
 - **SSO, SCIM and directory group mapping**
+- **Three plans** — Personal (free, for one person), Gold and Black, each
+  including the one before; every new workspace starts on a 14-day Black trial.
+  See [elaichi.ai/pricing](https://elaichi.ai/pricing/)
 
 ## Resources
 

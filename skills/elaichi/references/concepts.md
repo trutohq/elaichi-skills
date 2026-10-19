@@ -220,9 +220,10 @@ take a moment to appear.
 
 ## The automation platform
 
-Early access, by invitation, behind one switch in Settings → Organization →
-Automations. Everything below is absent from the app and from MCP while the
-switch is off.
+Part of the Black plan (the 14-day trial included), behind one switch in
+Settings → Organization → Automations that new organizations start with on.
+Everything below is absent from the app and from MCP on Personal and Gold, and
+while the switch is off.
 
 **Automation.** Also called a workflow. A published definition with a trigger
 and steps. Triggers: run by hand, a repeating schedule, once at a set time, a

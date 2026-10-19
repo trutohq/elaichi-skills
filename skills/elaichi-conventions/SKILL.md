@@ -108,10 +108,10 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 | `validation_error`, `bad_request`, `missing_organization_header` | 400 |
 | `unauthorized` | 401 |
 | `permission_required`, `forbidden` | 403 |
-| `subscription_required` (no active Gold or Black plan), `feature_not_available` (not on this plan), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
-| `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the automation platform is not offered, turned off, or paused) | 403 |
+| `subscription_required` (the plan is on hold; contact support@elaichi.ai), `feature_not_available` (not on this plan; the message names the plan that unlocks it), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
+| `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the plan has no automation platform (Black has it), it is switched off, or it is paused) | 403 |
 | `not_found` | 404 |
-| `conflict` | 409 |
+| `conflict`, `plan_limit_reached` (a Personal plan limit: `details.limit` is `members`, `connections`, `connectors` or `tool_calls`, with `max` and `plan`) | 409 |
 | `payload_too_large` | 413 |
 | `step_up_required` | 428 |
 | `rate_limited` | 429 |
@@ -121,6 +121,12 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 
 Many routes use a more specific code than these; branch on the ones you know
 and show the message for the rest.
+
+Plan refusals are about the organization, not the person: relay the message,
+link **Settings → Billing**, do not retry. Over MCP, a connected-tool call past
+Personal's monthly limit (1,000, resetting on the 1st, UTC) is an error result
+with a "See plans" card, not an HTTP error; tell the person and link the plan
+page.
 
 `permission_required` carries `details.required_permissions` — **any one** of
 them suffices. Show `error.message` unchanged; it is written for a person and

@@ -9,9 +9,9 @@ guide for that screen yet.
 
 **An area you lack permission for is hidden, not disabled.** If a screen is
 missing for one person and present for another, that is roles — check
-Settings → People. Rows marked *automation platform* appear only where the
-organization was invited and an admin turned it on in Settings → Organization
-→ Automations.
+Settings → People. Rows marked *automation platform* appear only on a Black
+organization (the 14-day trial counts) whose Settings → Organization →
+Automations switch is on. New organizations start with it on.
 
 ## Getting around
 
@@ -41,11 +41,10 @@ list: Connections, Connectors, Toolboxes, Governance, Settings.
 | Choose model providers and models | Settings → **Assistant** | [Assistant settings](/guides/settings/assistant) |
 | Let people tag `@Elaichi` in Slack | Settings → **Slack** | — |
 
-The Agent is only in organizations that have it (early access, by
-invitation). Everywhere else, the Agent row and these two Settings tabs are
-hidden for everyone, whatever their role. The way to drive Elaichi with AI
-there is the person's own client over the MCP endpoint — see the
-**elaichi-clients** skill.
+The Agent is part of Black. On Personal and Gold, the Agent row and these two
+Settings tabs are hidden for everyone, whatever their role. The way to drive
+Elaichi with AI there is the person's own client over the MCP endpoint — see
+the **elaichi-clients** skill.
 
 ## Connections
 
@@ -106,7 +105,7 @@ detail.
 A public dashboard link opens at `https://app.elaichi.ai/p/<token>` with no
 sign-in.
 
-Some invited organizations also see **Apps** (`/apps`): packages of
+Some organizations also see **Apps** (`/apps`): packages of
 automations, toolboxes, collections and dashboards that others install as their
 own copies. It sits behind a switch of its own.
 
@@ -144,14 +143,14 @@ sections are `/settings?tab=<value>`.
 |---|---|---|---|
 | Organization | `organization` | Name, logo, slug, data region, organization id; the org's two-factor requirement and Elaichi support access; the Automations switch where offered; deleting the organization | [Organization profile](/guides/settings/organization-profile) |
 | People | — | Its own pages, above | [Invite and manage people](/guides/members/invite-and-manage-people) |
-| Billing | `plan` | Trial, subscription, payment | [Manage billing](/guides/settings/billing) |
+| Billing | `plan` | The three plans, the trial countdown, Personal's limits as they fill, subscription and payment, upgrade from Gold to Black | [Manage billing](/guides/settings/billing) |
 | SSO and SCIM | `sso` | SAML or OIDC, enforcing it, SCIM users and groups, group-to-role mapping | [Set up single sign-on](/guides/settings/single-sign-on), [SCIM provisioning](/guides/sso/scim-provisioning) |
 | Domains | `domains` | Prove you own an email domain so colleagues auto-join | [Verify a domain](/guides/settings/verify-a-domain) |
 | API tokens | `tokens` | Tokens for scripts and integrations | [Create API tokens](/guides/settings/api-tokens) |
-| Assistant | `assistant` | Model providers and models for the Elaichi Agent. Agent organizations only | [Assistant settings](/guides/settings/assistant) |
-| Slack | `slack` | Connect a Slack workspace so people can tag `@Elaichi`. Agent organizations only | — |
+| Assistant | `assistant` | Model providers and models for the Elaichi Agent. Black only | [Assistant settings](/guides/settings/assistant) |
+| Slack | `slack` | Connect a Slack workspace so people can tag `@Elaichi`. Black only | — |
 | Notifications | `notifications` | Post events to Slack or email | [Send event notifications](/guides/settings/notifications) |
-| Logging | `logging` | Forward audit events to Datadog (Splunk and Microsoft Sentinel are listed as coming soon). A Black feature, so it shows a lock on Gold | [Forward audit events](/guides/settings/logging) |
+| Logging | `logging` | Forward audit events to Datadog (Splunk and Microsoft Sentinel are listed as coming soon). A Black feature, so it shows a lock on Personal and Gold | [Forward audit events](/guides/settings/logging) |
 | Security | `security` | Your own two-factor and passkeys | [Secure your account](/guides/settings/security) |
 | Connected apps | `connected-apps` | The AI clients you authorized, what they reach, and which toolboxes each may use (one app at `/settings/connected-apps/<id>`) | [Connected apps](/guides/settings/connected-apps) |
 | Files | — | Files your tool calls produced (`/settings/files`) | — |

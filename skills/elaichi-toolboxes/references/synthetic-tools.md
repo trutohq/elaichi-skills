@@ -8,7 +8,7 @@ Where: **Toolboxes → Synthetic tools → New synthetic tool**. Over MCP:
 `elaichi__synthetic_tool__create`, `__validate`, `__update`, `__execute`.
 
 Creating one needs `toolbox:create`, and running one needs `tool:execute`. Both
-Gold and Black include synthetic tools.
+Gold and Black include synthetic tools; the free Personal plan does not.
 
 ## Who can do what
 

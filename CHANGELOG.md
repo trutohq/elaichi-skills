@@ -14,6 +14,22 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- Plans (`elaichi`, `elaichi-conventions`, `elaichi-api`, `elaichi-clients`,
+  `elaichi-mcp`, `elaichi-connections`, `elaichi-toolboxes`,
+  `elaichi-governance`, `elaichi-automations`, `elaichi-data`,
+  `llms-install.md`): there are three cumulative plans, **Personal** (free, one
+  person: 1 member, 10 connections across 3 connectors, 1,000 connected-tool
+  calls a month), **Gold** and **Black**. Black is on sale and self-serve, and
+  the automation platform, approvals, collections, dashboards, knowledge bases,
+  the Elaichi Agent, BYOK and logging destinations are Black features, no
+  longer "early access, by invitation". Every new workspace starts on a 14-day
+  Black trial with Black's free usage as a hard stop, then moves to Personal.
+  `subscription_required` now means the plan is on hold; `plan_limit_reached`
+  (409) is added, and `feature_not_available` names the plan that unlocks the
+  feature. Over MCP a call past Personal's monthly limit is an error result
+  with a "See plans" card: tell the person, link the plan page, do not retry
+  (a sixth kind of refusal in `elaichi-mcp`).
+
 - `elaichi-mcp`, `elaichi-governance`, `elaichi-connections`: the six step-up
   operations (`invite.create`, `invite.delete`, `member.set_roles`,
   `member.delete`, `role.delete`, `team.delete`) are no longer on the MCP tool
