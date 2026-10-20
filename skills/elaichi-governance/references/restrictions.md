@@ -7,7 +7,8 @@ that *kind of thing* at all.
 
 Where: **Governance → Restrictions**. Reading needs `restriction:view`. Writing
 needs `restriction:manage`, and a rule aimed at one member also needs
-`restriction:override`. Restrictions are on Gold and Black.
+`restriction:override`. Writing them needs Gold or Black. On Personal a
+restriction written earlier keeps applying, and removing it always works.
 
 **No AI surface can change a restriction.** MCP clients and the Elaichi agent
 can read them (`elaichi__restriction__list`, `__get`) with `restriction:view`,

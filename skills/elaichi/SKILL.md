@@ -64,9 +64,9 @@ you can do *through* it.
 
 ### The automation platform words
 
-Some organizations also have the automation platform. It is early access, by
-invitation, and appears only where an admin has turned it on (see
-[Plans](#plans)).
+Black organizations also have the automation platform (see [Plans](#plans)).
+An organization on Personal or Gold does not, and its sidebar and MCP tool list
+show none of it.
 
 | Word | What it means |
 |---|---|
@@ -77,7 +77,7 @@ invitation, and appears only where an admin has turned it on (see
 | **Collection** | Shared tables of records that automations write and people read. |
 | **Dashboard** | Charts and tables over collections and tools. If an admin allows it, a copy can be shared outside the company as a **public link**. |
 | **Knowledge base** | Short documents that agents and automations search in plain language. |
-| **Elaichi Agent** | The chat inside the app (**Agent** in the sidebar), and `@Elaichi` in Slack. Only in organizations that have it. |
+| **Elaichi Agent** | The chat inside the app (**Agent** in the sidebar), and `@Elaichi` in Slack. A Black feature. |
 
 Automation versus synthetic tool: an automation runs **by itself** on a
 trigger; a synthetic tool runs **when an agent calls it**.
@@ -102,7 +102,7 @@ Full walkthrough: [Getting started](https://elaichi.ai/docs/getting-started).
 
 | Sidebar area | What is there |
 |---|---|
-| **Agent** | The in-app chat. Only where the organization has the Elaichi Agent. |
+| **Agent** | The in-app chat. Black only. |
 | **Approvals** | Runs waiting on *you* to approve a step. Automation platform only. |
 | **Connections** | The accounts you have authorized, their health, sharing, transfer |
 | **Connectors** | The product catalog, plus custom connectors you build, fork, or add from a remote MCP server |
@@ -140,48 +140,56 @@ number from memory — it moves.
 
 ## Plans
 
-There are two plans, **Gold** and **Black**. There is no free plan.
+There are three plans, each including the one before: **Personal**, **Gold**
+and **Black**. Link [elaichi.ai/pricing](https://elaichi.ai/pricing/) for the
+current detail; prices below are US-dollar list prices, and visitors in some
+countries see a regional price.
 
-**Gold** is the plan you can buy today. Its US-dollar list price is $15 per user
-per month, or $10 per user per month billed annually. Visitors in some
-countries see a regional price, so link
-[elaichi.ai/pricing](https://elaichi.ai/pricing/) rather than promise one
-number. Every new organization starts with a 14-day Gold trial, and no card is
-needed to start it.
+**Personal** is free and for one person: toolboxes over MCP. It allows 1
+member, 10 connections across at most 3 connectors, and 1,000 connected-tool
+calls a calendar month (UTC; the count resets on the 1st). Nothing is shared
+and there is no governance, and no synthetic tools, custom connectors,
+automations, collections, dashboards, knowledge bases or Elaichi Agent. Removing
+an old share or restriction always works.
 
-**Gold covers everything a team needs day to day** — the MCP endpoint, custom
-roles, restrictions, synthetic tools, custom connectors, and enterprise
-identity: SAML and OIDC single sign-on, SCIM provisioning, and group-to-role
-mapping.
+**Gold** is $15 per user per month, or $10 per user per month billed annually.
+It adds sharing, governance (custom roles, restrictions, SAML and OIDC single
+sign-on, SCIM provisioning, group-to-role mapping), synthetic tools and custom
+connectors.
 
-**Black is not on sale.** It adds:
+**Black** is on sale and self-serve: $24 per seat per month, or $18 per seat
+per month billed annually, in US dollars with regional discounts. It adds:
 
-- customer-managed encryption keys in AWS KMS
+- the automation platform: automations (workflows), approvals, webhooks,
+  collections, dashboards, knowledge bases, web access and spend controls
+- the Elaichi Agent, in the app and in Slack
+- customer-managed encryption keys (BYOK) in AWS KMS
 - forwarding the audit log to your own tooling (Settings → Logging)
-- the automation platform: automations, approvals, collections, dashboards,
-  knowledge bases, web access and spend controls
-- the Elaichi Agent
 
-The automation platform and the Elaichi Agent are **early access, by
-invitation**: on for some organizations, not for sale. In an invited
-organization, someone who can manage the organization turns the platform on in
-**Settings → Organization → Automations**. Until then its sidebar rows do not
-appear, and its MCP operations are not listed.
+Black also bills usage beyond a monthly free allowance of 1,000 run minutes and
+1 GB-month of storage: $0.02 a run minute and $5 a GB-month. Buying Black charges immediately. A paid Gold
+organization upgrades to Black in **Settings → Billing**; one paying in another
+currency writes to support@elaichi.ai.
+
+**Every new organization starts on a 14-day Black trial**, no card needed. Its
+free usage is a hard stop: runs pause at 1,000 minutes and collection writes
+stop at 1 GB until someone buys Black. When the trial ends without a purchase,
+the organization moves to **Personal**.
 
 Three things to get right when somebody asks:
 
 - **Enterprise identity is Gold, not Black.** SSO, SCIM and group mappings are
   the ones most often misattributed upward. Do not send someone to Black for
   them.
-- **Never give Black, automations or dashboards a date, and never call them
-  generally available.** If the person's own sidebar shows them, their
-  organization was invited — help them use it with
-  [elaichi-automations](../elaichi-automations/SKILL.md) or
-  [elaichi-data](../elaichi-data/SKILL.md).
-- **Never say "free plan" or "downgraded".** When a trial ends without a
-  subscription, the organization **pauses**. Nothing is deleted:
-  connections, roles and the audit log stay exactly where they were, and
-  subscribing picks up where the trial stopped.
+- **Moving to Personal deletes nothing.** Connections, members, roles and the
+  audit log stay where they were. The organization just cannot add past a
+  Personal limit or make new shares, and buying Gold or Black lifts that.
+- **A refusal names the plan.** `feature_not_available` says which plan unlocks
+  the feature, and `plan_limit_reached` names the Personal limit (`members`,
+  `connections`, `connectors` or `tool_calls`). Relay it, point to
+  **Settings → Billing**, and do not work around it. Only an organization
+  *on hold* answers `subscription_required`; send that to
+  support@elaichi.ai.
 
 An organization's **data region** — United States, European Union, or
 Asia-Pacific — is chosen when it is created and cannot be changed afterwards.

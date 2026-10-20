@@ -205,7 +205,8 @@ Work down this list. The first match is usually the answer.
 | **A newly connected app has not appeared** | Most clients cache the tool list. Start a new conversation, reconnect the connector, or re-scan tools. In ChatGPT, select **Refresh tools**. |
 | **A call is refused, naming a scope** | The grant was never given it. Connect the client again and tick it — Settings → Connected apps cannot add a scope. |
 | **A call is refused, naming a permission or `tool:execute`** | Reconnecting will not help. An admin changes the role. |
-| **Every call fails with `subscription_required`** | The organization has no active plan; it is paused until someone subscribes. |
+| **Every call fails with `subscription_required`** | The organization's plan is on hold. Contact support@elaichi.ai. |
+| **Tool calls fail saying the monthly limit is used up** | The organization is on the free Personal plan, which allows 1,000 connected-tool calls a month (UTC; resets on the 1st). The refusal comes with a "See plans" card. Tell the person, link Settings → Billing at app.elaichi.ai, and do not retry. Gold and Black have no such limit. |
 | **Refused because the organization requires two-factor** | Set up two-factor in Elaichi (Settings → Security), then try again. No need to connect the client again. |
 | **Every call fails "no longer an active member"** | The person was removed or suspended. An admin restores them. |
 | **The client asks to sign in again** | The grant was revoked, or the client went 30 days without refreshing. Connect again. |

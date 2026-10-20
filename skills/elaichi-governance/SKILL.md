@@ -45,7 +45,7 @@ Two sit off the chain, both free seats:
 | **Auditor** | Read-only oversight: restrictions, SSO, logging, the whole audit log. |
 
 - **One role per person.** To combine two roles, build a custom role
-  (`role:manage`; Gold and Black both include custom roles).
+  (`role:manage`; custom roles need Gold or Black, not Personal).
 - **You cannot grant a role or permission you do not hold yourself.** The
   backend enforces it whatever the screen drew.
 - **Org Owner cannot be removed from its last holder.**
@@ -137,8 +137,7 @@ scopes. Details: [Oversight](./references/oversight.md#approvals).
 - Over MCP, `elaichi__audit__list` has no actor, action or date filter. Page
   back from the newest, and say that is what you did.
 
-Forwarding to Datadog (**Settings → Logging**) needs the Black plan, which is
-not on sale. Slack and email notifications (**Settings → Notifications**)
+Forwarding to Datadog (**Settings → Logging**) needs the Black plan. Slack and email notifications (**Settings → Notifications**)
 work on every plan. Details: [Oversight](./references/oversight.md).
 
 ## SSO, SCIM, domains and offboarding
@@ -146,7 +145,7 @@ work on every plan. Details: [Oversight](./references/oversight.md).
 - **Verified domains** (**Settings → Domains**, `org:manage`): prove an email
   domain by DNS TXT record. New users on it can auto-join, and it can route to
   an SSO connection.
-- **SSO** (**Settings → SSO and SCIM**, `sso:manage`): SAML or OIDC. **Enforced**
+- **SSO** (**Settings → SSO and SCIM**, `sso:manage`; Gold or Black): SAML or OIDC. **Enforced**
   SSO refuses every other sign-in method for addresses on its verified domain.
   Removing the domain switches enforcement off.
 - **SCIM**: your directory creates and updates members. **Deactivating a user
@@ -175,6 +174,11 @@ When relaying one:
    this layer exists to prevent.
 4. **A "not found" may mean "not yours" rather than "gone".** Resources you have
    no grant on are hidden, not refused, on purpose.
+5. **A plan refusal is not a permission gap.** `feature_not_available` names
+   the plan that unlocks the feature (sharing, custom roles, restrictions, SSO
+   and SCIM need Gold or Black; logging needs Black), and `plan_limit_reached`
+   names a Personal limit. No role change fixes either. Say which plan, and
+   point to Settings → Billing.
 
 Expect this in the UI, because it looks inconsistent until you know the rule.
 An action you could **never** take on a resource is **absent**, not greyed: a

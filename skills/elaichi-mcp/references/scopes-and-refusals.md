@@ -106,7 +106,7 @@ A refused call comes back as a tool result with `isError: true`. Its first
 text block is the whole answer, written for the person: **display the message
 unchanged.** It already names what was missing in their words.
 
-There are five kinds. Each has one right move.
+There are six kinds. Each has one right move.
 
 | Kind | How you know | The right move |
 |---|---|---|
@@ -115,8 +115,9 @@ There are five kinds. Each has one right move.
 | Restriction | `structuredContent.error` holds the restriction | Offer `elaichi__access_request__create` with its `request_access.arguments`. |
 | Step-up | Says the app must confirm it is them, and names a screen | Send them to that screen. More scope will not help. |
 | Two-factor | Says the org requires two-factor | They set up two-factor, then try again. No reconnect needed. |
+| Plan limit | Says the monthly tool-call limit is used up and when it resets; the result carries a "See plans" card | Tell the person and link the plan page. Never an access request, never a retry. |
 
-Two rules cover all five:
+Two rules cover all six:
 
 1. **You cannot grant any of them.** Relay the exact name and stop.
 2. **Do not look for another route to the same effect.** That is the failure
@@ -163,6 +164,20 @@ For a **permission** gap, `access_request.create` takes `reason: "permission"`
 and the exact permission the refusal named — but only on a connection with
 `mcp:write`. A read-only or tools-only connection may file `"restriction"`
 requests alone. Never use `reason: "scope"`.
+
+### Plan limit: "See plans"
+
+The free Personal plan allows 1,000 connected-tool calls a calendar month
+(UTC). Past it, a call that would reach a connected app is an error result
+rather than an HTTP error. Its text says the allowance is used up and when it
+resets (the 1st), and its card links the plan page (Settings → Billing).
+Nobody can approve a used-up allowance, so the card has no "ask an admin"
+action. Say so plainly, link the plan page, and stop: the same call, a
+different tool or `run_code` all count against the same limit. Gold and Black
+have no tool-call limit, and a call Elaichi refuses before it runs (a
+restriction, a missing account) does not count. Elaichi's own administration
+operations are not counted; `elaichi__toolbox__execute` and each step of a
+synthetic tool are, because they run a connected tool.
 
 ### Step-up: "Only in the Elaichi app"
 

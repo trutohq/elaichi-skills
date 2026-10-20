@@ -116,8 +116,8 @@ Also page. A result whose `matched` is larger than its page carries
 Not a connected tool, but the same question. In order:
 
 1. **Automations, collections, dashboards and knowledge** are hidden unless
-   the org has automations on. That is not a scope gap; more scope will not
-   show them.
+   the org is on Black (the trial counts) and has automations switched on.
+   That is not a scope gap; more scope will not show them.
 2. **Step-up operations** (`invite.create`, `invite.delete`,
    `member.set_roles`, `member.delete`, `role.delete`, `team.delete`) are
    not on the MCP tool list at any scope, and the Elaichi agent refuses them
