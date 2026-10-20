@@ -12,6 +12,18 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+### Added
+
+- `elaichi-clients`: Microsoft Copilot is a supported client, reached
+  through a Copilot Studio agent that has Elaichi's endpoint as an MCP tool
+  (OAuth, dynamic discovery) and is published to Microsoft Copilot. A row
+  in the per-client table, a full section in **Setting up each client**, and a
+  troubleshooting row. It shows as unverified. GitHub Copilot (VS Code) is
+  also documented there, with its own row, section and two troubleshooting
+  rows. The works-with lists in `elaichi`, `elaichi-conventions`,
+  `elaichi-mcp`, `elaichi-toolboxes`, `elaichi-governance` and the Cursor rule
+  now name Microsoft Copilot.
+
 ### Changed
 
 - Plans (`elaichi`, `elaichi-conventions`, `elaichi-api`, `elaichi-clients`,

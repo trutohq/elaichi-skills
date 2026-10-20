@@ -18,7 +18,7 @@ Two things carry the product, and most AI tooling offers only one of them:
   for.
 
 The reach is delivered over MCP. One org-wide endpoint, authorized with OAuth,
-works with Claude, ChatGPT, Cursor and any other MCP client. **MCP is how the
+works with Claude, ChatGPT, Cursor, Microsoft Copilot and any other MCP client. **MCP is how the
 product is delivered, not what the product is** — so a question about Elaichi
 is usually a question about access, not about a protocol.
 
@@ -93,7 +93,7 @@ trigger; a synthetic tool runs **when an agent calls it**.
    fewer, better-named tools with some inputs locked down.
 3. **Connect your AI client.** Click **Connect** (labeled **Connect an AI
    client** when the automation platform is on) under the sidebar's list, copy
-   the MCP endpoint, and add it to Claude, ChatGPT, Cursor or another MCP
+   the MCP endpoint, and add it to Claude, ChatGPT, Cursor, Microsoft Copilot or another MCP
    client.
 
 Full walkthrough: [Getting started](https://elaichi.ai/docs/getting-started).
@@ -200,7 +200,7 @@ The API host is the same either way.
 | The question is about | Load |
 |---|---|
 | Acting through an attached Elaichi MCP server — searching for a tool, running one, reading a refusal | [elaichi-mcp](../elaichi-mcp/SKILL.md) |
-| Setting up Claude, ChatGPT, Cursor or another MCP client, and why a client shows no tools | [elaichi-clients](../elaichi-clients/SKILL.md) |
+| Setting up Claude, ChatGPT, Cursor, Microsoft Copilot or another MCP client, and why a client shows no tools | [elaichi-clients](../elaichi-clients/SKILL.md) |
 | Connecting an account, connection health, transfer, offboarding, custom and remote MCP connectors | [elaichi-connections](../elaichi-connections/SKILL.md) |
 | Toolboxes, templates, stamping, frozen parameters, delegation, toolbox skills, synthetic tools | [elaichi-toolboxes](../elaichi-toolboxes/SKILL.md) |
 | Automations and workflows: triggers, steps, approvals, runs, sessions, webhooks, web access, spend limits | [elaichi-automations](../elaichi-automations/SKILL.md) |
