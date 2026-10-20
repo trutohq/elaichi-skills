@@ -2,7 +2,7 @@
 
 Every published route, by area. The authoritative version is
 `https://api.elaichi.ai/openapi.json` — if a route is not there, it is internal
-or invite-only, and its URL is not a stable contract.
+or Black-plan only, and its URL is not a stable contract.
 
 Every list endpoint takes `limit` and `cursor` and returns
 `{ result, next_cursor, prev_cursor }`. Many take `q`.
@@ -44,7 +44,7 @@ DELETE /organization/:id/logo                    remove the logo              or
 DELETE /organization/:id                         schedule deletion            org:delete, browser session + re-verify
 POST   /organization/:id/restore                 cancel a scheduled deletion  org:manage
 GET    /organization/:id/security-summary        how many members lack a second factor   org:manage
-GET    /organization/:id/entitlements            effective plan and feature map
+GET    /organization/:id/entitlements            effective plan, feature map, and Personal's limits (`used` / `max` / `reached`)
 GET    /organization/:id/billing                 subscription state           billing:view
 POST   /organization/:id/billing/checkout        a checkout session           billing:manage
 POST   /organization/:id/billing/portal          a customer portal link       billing:manage
@@ -174,7 +174,7 @@ GET    /connector/:slug/share                    list grants                  ow
 DELETE /connector/:slug/share/:aclId             revoke a grant               connector:share + edit
 ```
 
-All of these need the `custom_connectors` plan feature. A custom connector is
+All of these need the `custom_connectors` plan feature (Gold or Black). A custom connector is
 private until shared; `use` is what lets someone connect an account through
 it. Delete is refused while any connection still uses it.
 
@@ -365,7 +365,7 @@ POST   /notification-destination/:id/test        send a test notification     no
 ```
 
 Logging destinations forward the audit log to your own tools (Datadog today)
-and need the Black plan. Notification destinations send Slack or email alerts
+and need the Black plan (the trial included). Notification destinations send Slack or email alerts
 about your organization and are on every plan. Adding Slack through "Add to
 Slack" is a browser flow and is not in the API.
 
@@ -395,11 +395,11 @@ DELETE /mcp                                      405 Method Not Allowed
 **`POST` is the only MCP surface.** There is no stream channel and no session
 to end. See the **elaichi-mcp** skill.
 
-## Invite-only families (not in the schema)
+## Black-plan families (not in the schema)
 
-These are built and running for organizations that have the feature, and they
-answer an API token there. They are **not in the published schema yet**, so
-expect changes. An organization without the feature gets
+These are built and running for Black organizations (the 14-day trial
+included), and they answer an API token there. They are **not in the published
+schema yet**, so expect changes. An organization on Personal or Gold gets
 `403 automations_not_available` (or `automations_disabled` when an admin
 turned it off, `apps_not_available` for apps). For most work, the MCP
 operations (`elaichi__automation__*`,

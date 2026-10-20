@@ -15,6 +15,12 @@ Asia-Pacific — at create time. **It cannot be changed afterwards**: it is not
 a field on the organization update, so moving means a new organization. Pick
 the one your data should live in.
 
+A new organization starts on a **14-day Black trial**, no card needed. After it
+the organization moves to the free **Personal** plan (one person, 10
+connections across 3 connectors, 1,000 tool calls a month) unless someone buys
+Gold or Black. Nothing is deleted when that happens. Settings → Billing shows
+the countdown; the **elaichi** skill's Plans section has what each plan holds.
+
 ## 2. Connect one account and prove the loop
 
 Do not start with governance. Start by making one thing work end to end,
@@ -57,7 +63,8 @@ being told to stop it will report success while a sign-in sits unanswered.
 
 ## 4. Decide two things before you invite anyone
 
-Both are much cheaper to decide now than to unpick later.
+Sharing and restrictions need Gold or Black, and Personal has one member, so
+this and the next step assume a trial or a paid plan. Both are much cheaper to decide now than to unpick later.
 
 **Which connections are shared, and at what scope.** A connection shared with
 the organization is reachable by everyone in it. A connection left private is
@@ -115,12 +122,14 @@ Then choose how to hand it out:
 | Require two-factor for everyone | Settings → Organization → Security | One switch, and it covers every member |
 | Notifications | Settings → Notifications | Know when a connection breaks, not when someone complains |
 
-## 8. If your organization was invited to the automation platform
+## 8. If your organization is on Black
 
-The platform is early access, by invitation. In an invited organization,
-someone who can manage the organization turns it on in **Settings →
-Organization → Automations**. Automations, Approvals, Dashboards, Collections
-and Knowledge then appear in the sidebar.
+The automation platform comes with Black, trial included, and a new
+organization has it switched on. If it was switched off, someone who can manage
+the organization turns it on in **Settings → Organization → Automations**.
+Automations, Approvals, Dashboards, Collections and Knowledge then appear in
+the sidebar. On Personal or Gold they do not, and the way in is Settings →
+Billing.
 
 Start small: one automation that reads, on a schedule, writing to one
 collection. Add writes, and the approval in front of anything that deletes,
@@ -135,6 +144,7 @@ skills carry the detail.
 | The client shows Elaichi's own operations but nothing else | **Run your connected tools** was not granted, or nothing they can use is connected and active yet |
 | One expected tool is missing | Connection status first, restrictions second. Run your connected tools covers deletes in the apps too |
 | A newly connected app has not appeared | Most clients cache the tool list. Start a new conversation, or reconnect |
+| A tool call or an add is refused with `plan_limit_reached` | The Personal plan's member, connection, connector or monthly tool-call limit. Settings → Billing shows how full each is, and buying Gold or Black lifts them |
 | A call is refused after consent | The scope it needed was not granted. Connect the client again and tick it — Settings → Connected apps cannot add a scope |
 
 Longer version in the **elaichi-clients** skill.

@@ -56,7 +56,7 @@ That is why removing one asks for the same confirmation as verifying one.
 ## Single sign-on
 
 **Settings → SSO and SCIM**. Reading needs `sso:view`, changing needs
-`sso:manage`. SAML and OIDC. Gold and Black both include SSO.
+`sso:manage`. SAML and OIDC. SSO needs Gold or Black; Personal does not include it.
 
 An SSO connection has three switches, all off by default:
 

@@ -15,21 +15,25 @@ People often say "workflow". In Elaichi the word is **automation**.
 
 ## First: check that automations are on
 
-Automations are in early access. They are on only for some organizations, and
-only when an organization admin has turned them on.
+Automations are part of the **Black** plan, and a new organization has them
+for its 14-day Black trial. The free Personal plan and Gold do not include them.
+They also need an organization admin's switch to be on, which new organizations
+start with.
 
-- **Off means hidden.** When automations are off, no `elaichi__automation__*`
-  operation is in your tool list at all. That is not a permission gap or a bug.
-  Tell the person plainly that automations are not available for their
-  organization, and point them to their admin or to support@elaichi.ai.
-- **Never promise a date**, and never describe automations as generally
-  available.
+- **Off means hidden.** When automations are off or not in the plan, no
+  `elaichi__automation__*` operation is in your tool list at all. That is not a
+  permission gap or a bug. Tell the person plainly which it is: on Personal or
+  Gold they need Black (Settings → Billing); on Black an admin turns the switch
+  on.
 - A refusal names the reason in `error.code`: `automations_not_available` (the
-  organization does not have them), `automations_disabled` (it has them, but an
-  admin has not turned them on) or `automations_kill_switch` (paused for
-  everyone for a while).
+  plan does not include them), `automations_disabled` (it does, but an admin
+  has them switched off) or `automations_kill_switch` (paused for everyone for
+  a while).
 - An admin turns them on in **Settings → Organization → Automations**. That one
   switch also covers approvals, dashboards, collections and knowledge.
+- **During the trial, usage stops at Black's free allowance:** runs pause at
+  1,000 run minutes a month, and collection writes stop at 1 GB, until someone
+  buys Black. Say so rather than calling it a fault.
 
 ## Automation, synthetic tool, or just run the tool?
 

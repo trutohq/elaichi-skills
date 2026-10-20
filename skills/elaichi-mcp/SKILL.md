@@ -177,6 +177,7 @@ written for the person. Show it as it is. Then:
 | A scope (`mcp:destructive`) | The user connects Elaichi again from their AI client and allows it on the consent screen. |
 | A restriction (`structuredContent.error`, or a `restricted` search row) | Offer to ask an admin: `elaichi__access_request__create` with `request_access.arguments`, copied exactly. If `pending_request_id` is set, they already asked. |
 | "Only in the Elaichi app" (step-up) | Send them to the screen it names. More scope will not help. |
+| A plan limit (the monthly tool-call limit is used up; a "See plans" card, `reason: "plan_limit"`) | Tell the person and link the plan page (Settings → Billing). Nobody can approve a used-up allowance, and a retry cannot work: it resets on the 1st (UTC). |
 
 You cannot grant any of these. **Do not look for another route to the same
 effect** — working around governance is the one thing this endpoint exists to
@@ -290,7 +291,7 @@ arguments. People can also write to support@elaichi.ai.
 | [Tool discovery](./references/tool-discovery.md) | `search_tools` arguments and result fields, ranking, restricted rows, `execute_tool`, files, `run_code` |
 | [Connections and accounts](./references/connections-and-accounts.md) | The `connection` argument, account labels, the account picker, `elaichi://` resources, status values, connecting |
 | [Diagnosing a missing tool](./references/missing-tools.md) | The five-rung ladder with the trap at each rung, and missing `elaichi__*` operations |
-| [Scopes and refusals](./references/scopes-and-refusals.md) | OAuth scopes, toolbox selection, the five kinds of refusal, restrictions and access requests, step-up, rate limits |
+| [Scopes and refusals](./references/scopes-and-refusals.md) | OAuth scopes, toolbox selection, the six kinds of refusal, restrictions and access requests, step-up, rate limits |
 | [Control-plane operations](./references/operations-catalog.md) | Every `elaichi__*` operation by area, and what is never on MCP |
 
 ## Companion skills

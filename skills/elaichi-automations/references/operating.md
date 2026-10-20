@@ -134,6 +134,11 @@ raised, or fails with `usage_limit_reached`.
 - Limits are changed in **Governance → Spend** in the console. No operation
   changes them.
 
+The plan sets a floor under these. Black includes 1,000 run minutes and 1
+GB-month of storage a month; beyond that a paid Black organization is billed
+$0.02 per run minute and $5 per GB-month. A trial has no billing, so it stops at
+the allowance instead until Black is bought.
+
 ## Who may do what
 
 Sharing levels on an automation are `view`, `use` and `edit`. The owner holds

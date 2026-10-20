@@ -180,8 +180,8 @@ hold no grant on. More in
 
 ## Custom roles
 
-`role:manage`, plus a plan with custom roles (Gold and Black both include
-them). Build from the catalog above. Edits reach everyone holding the role within
+`role:manage`, plus a plan with custom roles (Gold or Black; Personal has
+only the predefined roles). Build from the catalog above. Edits reach everyone holding the role within
 about two minutes.
 
 - **You cannot grant a role or a permission you do not hold yourself.** The

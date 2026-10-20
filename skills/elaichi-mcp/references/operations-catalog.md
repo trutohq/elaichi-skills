@@ -19,7 +19,7 @@ is `elaichi__connection__list_tools`, and `automation.run.get` is
 | Role has no `tool:execute` | **Nothing** is listed — no operation and no connected tool. Guest, Auditor and Billing Admin lack it. |
 | Role lacks the operation's permission | Not listed. |
 | Scope | `read` and `sensitive_read` need `mcp:read`. `write` needs `mcp:write`. `destructive` needs `mcp:destructive`. An operation that runs a connected tool also needs `mcp:tools`, and a delete in the connected app needs nothing more. |
-| Automations off for the org | Every operation marked **(A)** below is hidden. They come back when the plan includes automations **and** an admin turns on "Automations and everything they use" in Settings → Organization. |
+| Automations off for the org | Every operation marked **(A)** below is hidden. They come back when the plan includes automations (Black, trial included) **and** an admin turns on "Automations and everything they use" in Settings → Organization. Personal and Gold never list them. |
 | Apps feature dormant | `bundle.*` is hidden unless Apps is switched on, on top of **(A)**. |
 | MCP Apps not negotiated | `canvas.upsert_widget` is hidden. |
 | Step-up | Marked **(S)**. **Not listed at any scope**; a call by name is refused with the steps to do it in the app. See below. |

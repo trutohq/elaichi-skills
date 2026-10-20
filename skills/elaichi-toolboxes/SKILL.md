@@ -133,6 +133,10 @@ Writing good names and descriptions: [Curating a toolbox](./references/curating.
 
 ## What sharing at `use` actually does
 
+Sharing needs Gold or Black. On the free Personal plan a toolbox serves only
+its owner over MCP, and a share is refused with `feature_not_available`
+naming Gold; removing an old share always works.
+
 **Sharing a toolbox at `use` delegates execution.** The recipient runs its
 tools over the connections its entries pin, **without any grant on those
 connections**. They never see a credential, cannot reach the account anywhere
@@ -161,6 +165,8 @@ not whoever shared the toolbox:
 | owner | Also delete and transfer |
 
 ## Synthetic tools
+
+Gold and Black include synthetic tools; Personal does not.
 
 Several calls chained into one, so the agent sees one decisive tool instead of
 orchestrating three. *Look the customer up in the CRM, then open a ticket for

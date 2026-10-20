@@ -38,6 +38,7 @@ to publish first.
 | The app is listed with a shield icon | An admin's restriction blocks it for you | Click the icon to ask an admin for access. See **elaichi-governance** |
 | "Ask an admin to add the OAuth app first" | The app needs the organization's own OAuth app, and none is set up | Someone with `connector:manage` adds it on the connector's page (below) |
 | A custom connector with no Connect button | It is shared with you at `view` only | Ask its owner for `use` |
+| `409 plan_limit_reached` with `details.limit` `connections` or `connectors` | The free Personal plan holds 10 connections across at most 3 connectors, and another account on a connector already in use only counts against the 10 | Delete one the person no longer uses, or buy Gold or Black in Settings → Billing |
 
 ### Your own OAuth app ("BYOA")
 
@@ -58,7 +59,9 @@ no such setting: its owner puts OAuth details in the connector itself with
 person** — never a team, never the organization.
 
 **Access** is a list of grants. A new connection starts with none, so it is
-**private to its owner** until someone shares it.
+**private to its owner** until someone shares it. Sharing needs Gold or Black:
+on Personal the **Share with** step is refused with `feature_not_available`,
+though an old grant can always be removed.
 
 | Level | What the grantee can do |
 |---|---|
@@ -171,7 +174,7 @@ shared toolbox still needs the account.
 
 An organization can go beyond the catalog. All of this needs
 `connector:create` (Org Admin and Org Owner by default) and the custom
-connectors plan feature. **Connectors → New connector** offers:
+connectors plan feature (Gold or Black). **Connectors → New connector** offers:
 
 - **Build from config** — JSON config: base URL, sign-in, resources and
   methods. Validation names the exact path that failed.

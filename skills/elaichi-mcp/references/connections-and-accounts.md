@@ -121,7 +121,11 @@ Read `elaichi__connector__get` before you create anything:
 
 `connection.create` makes the connection **private** by default. Pass
 `shares` only when the user asked for a shared account; that also needs
-`connection:share`.
+`connection:share` and a Gold or Black plan. On the free Personal plan a
+`shares` list is refused with `feature_not_available`, and
+`connection.create` itself is refused with `plan_limit_reached` once the
+organization holds 10 connections or would add a fourth connector. Relay the
+message and link Settings → Billing.
 
 `connect_url` is a one-time sign-in session, not a credential. It carries no
 token, so it is safe to show and must not be redacted. A client with MCP Apps

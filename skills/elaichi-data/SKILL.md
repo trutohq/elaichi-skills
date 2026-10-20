@@ -20,19 +20,19 @@ it, and a **knowledge base** holds the text an agent answers from.
 
 ## Before anything: is it on for this organization?
 
-These three features are part of Elaichi's automation platform. It is **not
-generally available**. It is turned on only for some organizations, together
-with automations.
+These three features are part of Elaichi's automation platform, which comes
+with the **Black** plan (the 14-day trial included) and is switched on together
+with automations. Personal and Gold do not include them.
 
 - When it is off, every `elaichi__collection__*`, `elaichi__dashboard__*` and
   `elaichi__knowledge__*` tool is hidden from `tools/list`, and the console
   shows no Knowledge, Dashboards or Collections in the sidebar.
-- A refusal with `automations_not_available` means the organization does not
-  have it. Say it is not available for their organization yet, and that they
-  can write to support@elaichi.ai. `automations_disabled` means an admin has
-  it switched off. `automations_kill_switch` means it is down for a short time.
-- **Never give a date** for when it will be available, and never describe it
-  as available to everyone.
+- A refusal with `automations_not_available` means the organization's plan
+  does not include it. Say it needs Black, and point them to Settings →
+  Billing. `automations_disabled` means an admin has it switched off.
+  `automations_kill_switch` means it is down for a short time.
+- During the trial, collection writes stop at 1 GB of storage until Black is
+  bought; beyond Black's free 1 GB-month, storage bills at $5 per GB-month.
 
 ## Pick the right one
 
