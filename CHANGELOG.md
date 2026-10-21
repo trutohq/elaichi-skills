@@ -26,6 +26,18 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `elaichi` (app map): the screen "Settings → Assistant" is now **Settings →
+  AI models** (still `/settings?tab=assistant`). An organization adds keys for
+  several AI providers there, and every model it adds can be picked in the
+  Elaichi Agent and in each workflow agent step. Both rows now link to the new
+  guide, [Get an AI provider key](/guides/settings/ai-provider-keys), instead of
+  the draft `/guides/settings/assistant` page.
+- `elaichi-automations`: an `agent` step's `model` is a ref,
+  `<provider>:<model id>`, listed by `automation.options` with
+  `target: { kind: "step_model" }`. A step that leaves `model` out follows the
+  organization default as it is when the step runs. A pinned model that is
+  removed later runs on the default and records an `agent_model_fallback` run
+  warning (elaichi#880).
 - Plans (`elaichi`, `elaichi-conventions`, `elaichi-api`, `elaichi-clients`,
   `elaichi-mcp`, `elaichi-connections`, `elaichi-toolboxes`,
   `elaichi-governance`, `elaichi-automations`, `elaichi-data`,
