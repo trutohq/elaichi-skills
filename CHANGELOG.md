@@ -38,6 +38,10 @@ Dates are `YYYY-MM-DD`.
   organization default as it is when the step runs. A pinned model that is
   removed later runs on the default and records an `agent_model_fallback` run
   warning (elaichi#880).
+- `elaichi-api`: the Automations row lists `GET /automation/models`, the AI
+  models an agent step can use (`automation:create` or `automation:manage`).
+  The `/assistant/models` and `/assistant/providers` routes are not listed:
+  that file calls the in-app agent's `/assistant/*` internal.
 - Plans (`elaichi`, `elaichi-conventions`, `elaichi-api`, `elaichi-clients`,
   `elaichi-mcp`, `elaichi-connections`, `elaichi-toolboxes`,
   `elaichi-governance`, `elaichi-automations`, `elaichi-data`,
