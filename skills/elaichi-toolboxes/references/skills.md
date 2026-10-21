@@ -2,7 +2,7 @@
 
 A skill is markdown the owner of a toolbox or template writes to tell agents
 what it is for and how to use its tools well. Any agent that reaches the
-toolbox can read it: an MCP client (Claude, ChatGPT, Cursor and others), the
+toolbox can read it: an MCP client (Claude, ChatGPT, Cursor, Microsoft Copilot and others), the
 Elaichi agent in the console or in Slack, and the next person who edits it.
 
 It is guidance, not a permission. It cannot grant access, and every limit
