@@ -1,6 +1,6 @@
 ---
 name: elaichi-clients
-description: Connect Claude, ChatGPT, Cursor or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one.
+description: Connect Claude, ChatGPT, Cursor, Microsoft Copilot or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one.
 whenToUse: Someone is setting up an AI client against Elaichi, pasting the MCP endpoint, editing mcp.json, choosing scopes or toolboxes on the consent screen, or reporting that their client connected but shows no tools, is missing one, or was refused.
 ---
 
@@ -121,6 +121,8 @@ Full steps and plan requirements in
 | **Claude** | Customize → Connectors → **Add custom connector**, paste the endpoint | On Team and Enterprise, **only an Owner** can add it. Everyone else then connects to it as themselves. |
 | **ChatGPT** | Plugins → **Add** → **Add custom MCP server**, name it Elaichi, paste the endpoint, then **Create as a plugin** | On Pro you add it yourself. On Business an admin adds it for the workspace. |
 | **Cursor** | Customize → MCPs → **New MCP Server**, add an `elaichi` entry with the endpoint as `url`, then **Authenticate** | Per machine. No `type`, no `auth` block, no command. [Video](https://youtu.be/EwleY4bw0HQ) |
+| **Microsoft Copilot** | Copilot Studio → your agent → **Tools** → **Add a tool** → **New tool** → **Model Context Protocol**, Server URL the endpoint, **OAuth 2.0** → **Dynamic discovery** → **Create**. Then **Create a new connection**, sign in, **Add to agent**. Publish the agent to Microsoft Copilot | Per agent, not per person. Keep end-user credentials so each person signs in as themselves. Shows as unverified: sign-in goes through Copilot Studio's shared host. |
+| **GitHub Copilot (VS Code)** | Command Palette → **MCP: Add Server** → **HTTP**, paste the endpoint, name it `elaichi`, choose **Global** → **Copilot Global**, then sign in when prompted | Per machine. Not a verified client: the consent screen shows the name it registered, marked self-reported. Not the same as Microsoft Copilot, which is the next row. |
 | **Any other MCP client** | Add a remote (HTTP) MCP server with the endpoint URL | Needs dynamic client registration, PKCE and a browser sign-in. Test it. |
 
 Cursor, in full:
@@ -215,6 +217,9 @@ Work down this list. The first match is usually the answer.
 | **ChatGPT sign-in loops or never returns** | The plan may not include custom MCP servers. On Business, an admin adds it for the workspace. |
 | **Cursor never shows the server** | Invalid JSON, usually a trailing comma or a missing brace. Check the file is valid JSON. |
 | **Cursor shows no sign-in prompt** | Elaichi has not been authenticated yet. Open Customize → MCPs, find Elaichi under **Needs Attention**, and select **Authenticate** again. |
+| **Microsoft Copilot agent never calls Elaichi tools** | In Copilot Studio, check the agent's **Tools** page lists Elaichi and its connection is signed in, then publish again. Teams keeps a published agent cached: in Teams, sign out and back in or refresh the browser, and say **Start over** in an old chat. Also check the agent is published to Microsoft Copilot (**Channels** → **Teams and Microsoft Copilot**). |
+| **GitHub Copilot does not list the server, or it cannot start** | In VS Code, check the endpoint, then which configuration file holds the entry (the same server ID must not be used twice in one destination). Run **MCP: List Servers**, select Elaichi and choose **Show Output**. |
+| **GitHub Copilot connects but shows no Elaichi tools** | Confirm the server is enabled, then open **Chat: Open Customizations** → **Tools** and check Elaichi's tools are ticked. After a fix, run **Restart Server** and retry. |
 
 ## Disconnecting
 
@@ -227,7 +232,7 @@ depends on the client.
 
 | Document | Topics |
 |---|---|
-| [Setting up each client](./references/per-client-setup.md) | Claude, ChatGPT, Cursor and other MCP clients in full, with plan requirements and the exact configuration each needs |
+| [Setting up each client](./references/per-client-setup.md) | Claude, ChatGPT, Cursor, Microsoft Copilot and other MCP clients in full, with plan requirements and the exact configuration each needs |
 
 ## Companion skills
 

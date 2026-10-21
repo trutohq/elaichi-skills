@@ -46,7 +46,7 @@ Rows written through Elaichi's operations also carry `metadata.surface`: `app`
 standing grant), `console` (a person in the console) or `api` (an organization
 API token).
 
-**A tool call from Claude, ChatGPT, Cursor or another MCP client is recorded as
+**A tool call from Claude, ChatGPT, Cursor, Microsoft Copilot or another MCP client is recorded as
 `actor_kind: "user"` with surface `mcp`** and the client's id. So when someone
 asks whether their admin can see what an agent did: yes, as the person whose
 client did it, with the client named.
@@ -98,7 +98,7 @@ approver.
 
 | Caller | The approval |
 |---|---|
-| **An MCP client** (Claude, ChatGPT, Cursor and others) | The scopes the person granted on Elaichi's consent screen are the standing approval. Elaichi adds no per-call prompt over MCP. Any per-call confirmation is the client's own. |
+| **An MCP client** (Claude, ChatGPT, Cursor, Microsoft Copilot and others) | The scopes the person granted on Elaichi's consent screen are the standing approval. Elaichi adds no per-call prompt over MCP. Any per-call confirmation is the client's own. |
 | **The Elaichi agent** | Writes stop at an approval card (Deny, Always allow, Allow once). Deletes ask every time. In Slack, the card goes to the requester's direct message with only Approve and Deny. |
 | **An automation** | A destructive step must have an `approve` step before it. Approvers decide in the **Approvals** inbox, by email, or in Slack; a gated destructive step is approved in the console only. See [elaichi-automations](../../elaichi-automations/SKILL.md). |
 
