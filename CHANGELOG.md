@@ -38,6 +38,17 @@ Dates are `YYYY-MM-DD`.
   organization default as it is when the step runs. A pinned model that is
   removed later runs on the default and records an `agent_model_fallback` run
   warning (elaichi#880).
+- `elaichi-mcp`: a trimmed `search_tools` schema now names what it left out.
+  Optional parameters lose their descriptions first, and any dropped are listed
+  by name in `x_truncated.omitted_properties`. Elaichi checks only required
+  arguments, so the old line saying a missing optional one gets a validation
+  error naming it was wrong, and is gone. A query that is a tool's exact name
+  returns its whole schema. A `detail: "summary"` row can be called with its
+  `required` keys (elaichi#895).
+- `elaichi-mcp`: results are also kept under 30,000 characters by shortening
+  long prose. Rows, ids, links and cursors are never cut, `elaichi_note` says
+  what happened, and `run_code` still reads a connected app's result whole
+  (elaichi#895).
 - `elaichi-api`: the Automations row lists `GET /automation/models`, the AI
   models an agent step can use (`automation:create` or `automation:manage`).
   The `/assistant/models` and `/assistant/providers` routes are not listed:

@@ -43,15 +43,20 @@ connection reaches: …"). Read it before you guess at an app name.
 | `note` | Why an empty result is empty, or that a very long query was cut. |
 
 A callable row's `input_schema` is the contract for the `execute_tool` call.
-Read it; do not assume the usual arguments. A large schema may arrive trimmed:
-it then carries `x_truncated`, every **required** property is still there, and
-a call missing an optional one gets a validation error naming it.
+Read it; do not assume the usual arguments. A large schema may arrive trimmed,
+and then carries `x_truncated`. Every **required** property is still there.
+Optional ones may have lost their descriptions (`descriptions_removed: true`),
+and any left out are named in `omitted_properties`. Elaichi checks only
+required arguments, so an omitted one you pass by name reaches the app as
+given. To see one tool's whole schema, search with its exact name as the query.
 
 ### `detail: "summary"`
 
-Rows come back with `name`, `description`, `required` and `connector` only, so
-you can skim many tools cheaply. **You cannot call a tool from a summary row.**
-Search again without `detail` before you call one.
+Rows come back with `name`, `description`, `required` and `connector` (plus
+`connections_key` for a tool that reaches several accounts), so you can skim
+many tools cheaply. You can call a tool from a summary row with its `required`
+keys. To see its optional parameters, search again without `detail`, or with
+the tool's exact name.
 
 ### `toolbox`: search one toolbox
 
