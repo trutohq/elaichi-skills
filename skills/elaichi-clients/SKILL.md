@@ -77,9 +77,9 @@ for:
 
 | On the consent screen | In an error | What it allows |
 |---|---|---|
-| **Read your organization's data** | `mcp:read` | Everything you can already see in Elaichi. Never secret values. Open its **Details** once: it also covers the audit log, pending invitations, SSO and SCIM settings, verified domains and your API token list (never values). |
-| **Create and change data** | `mcp:write` | Create and change teams, roles, toolboxes, templates and connections, invite people, and share access |
-| **Delete data and remove access** | `mcp:destructive` | Permanently delete data and remove people in Elaichi. Cannot be undone |
+| **Read your organization's data** | `mcp:read` | Everything you can already see in Elaichi. Never secret values. Open its **Details** once: it also covers the audit log, pending invitations, SSO and SCIM settings, verified domains and log-forwarding destinations. |
+| **Create and change data** | `mcp:write` | Create and change teams, roles, toolboxes, templates and connections, and share access. Inviting people and changing a member's roles stay in the Elaichi web app |
+| **Delete data and remove access** | `mcp:destructive` | Permanently delete data and remove access in Elaichi. Cannot be undone. Removing someone from your organization, deleting a team or role, and revoking an invitation or API token stay in the Elaichi web app |
 | **Run your connected tools** | `mcp:tools` | Run tools from the toolboxes chosen in the next step, deleting in your connected apps included |
 
 Every requested scope **starts ticked except Delete**, which always takes a
