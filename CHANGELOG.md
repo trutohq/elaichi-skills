@@ -26,6 +26,13 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `elaichi-clients` (consent screen table): the three scope rows now quote
+  Elaichi's corrected consent copy. An AI client cannot invite anyone, change
+  a member's roles, remove someone from the organization, delete a team or
+  role, or revoke an invitation or API token, and cannot read the API token
+  list: those are step-up gated or app only on MCP, so the screen no longer
+  promises them and the table says they stay in the Elaichi web app.
+
 - `elaichi` (app map): the screen "Settings → Assistant" is now **Settings →
   AI models** (still `/settings?tab=assistant`). An organization adds keys for
   several AI providers there, and every model it adds can be picked in the
