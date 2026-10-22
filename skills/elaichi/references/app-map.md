@@ -38,7 +38,7 @@ list: Connections, Connectors, Toolboxes, Governance, Settings.
 | Task | Where | Guide |
 |---|---|---|
 | Chat with the Elaichi Agent | **Agent** (`/assistant`), or **⌘⇧A** | [Using the assistant](/guides/assistant/using-the-assistant) |
-| Choose model providers and models | Settings → **Assistant** | [Assistant settings](/guides/settings/assistant) |
+| Add AI provider keys and choose models | Settings → **AI models** | [Get an AI provider key](/guides/settings/ai-provider-keys) |
 | Let people tag `@Elaichi` in Slack | Settings → **Slack** | — |
 
 The Agent is part of Black. On Personal and Gold, the Agent row and these two
@@ -147,7 +147,7 @@ sections are `/settings?tab=<value>`.
 | SSO and SCIM | `sso` | SAML or OIDC, enforcing it, SCIM users and groups, group-to-role mapping | [Set up single sign-on](/guides/settings/single-sign-on), [SCIM provisioning](/guides/sso/scim-provisioning) |
 | Domains | `domains` | Prove you own an email domain so colleagues auto-join | [Verify a domain](/guides/settings/verify-a-domain) |
 | API tokens | `tokens` | Tokens for scripts and integrations | [Create API tokens](/guides/settings/api-tokens) |
-| Assistant | `assistant` | Model providers and models for the Elaichi Agent. Black only | [Assistant settings](/guides/settings/assistant) |
+| AI models | `assistant` | AI provider keys and models for the Elaichi Agent and workflow agent steps. Black only | [Get an AI provider key](/guides/settings/ai-provider-keys) |
 | Slack | `slack` | Connect a Slack workspace so people can tag `@Elaichi`. Black only | — |
 | Notifications | `notifications` | Post events to Slack or email | [Send event notifications](/guides/settings/notifications) |
 | Logging | `logging` | Forward audit events to Datadog (Splunk and Microsoft Sentinel are listed as coming soon). A Black feature, so it shows a lock on Personal and Gold | [Forward audit events](/guides/settings/logging) |

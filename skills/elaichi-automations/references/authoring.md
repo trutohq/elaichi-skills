@@ -146,7 +146,15 @@ in total.
 
 An agent's budget defaults to 8 turns, 20 tool calls, 200,000 tokens and 300
 seconds. Publishing one needs the organization's Agent to be on, and its model
-must be one the organization has enabled.
+must be one the organization has added in Settings → **AI models** that can call
+tools.
+
+`model` is a model ref, `<provider>:<model id>`. `automation.options` with
+`target: { "kind": "step_model" }` lists the refs a step can use. A step that
+sets `model` keeps that model, even if the organization default changes later.
+A step that leaves it out follows the organization default as it is when the
+step runs. If a pinned model is removed, the step runs on the default and the
+run records an `agent_model_fallback` warning.
 
 ### Web and other automations
 
