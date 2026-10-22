@@ -78,7 +78,10 @@ Read the result, not just the names:
 - **`next_cursor`** means more matches. A tool not on page one is not ruled
   out.
 - **`toolbox`** narrows a search to one toolbox; **`detail: "summary"`** skims
-  without schemas (search again in full before calling).
+  without schemas. A summary row can be called with its `required` keys.
+- **`x_truncated`** on a schema means it was shortened: optional parameters
+  may lack descriptions, and `omitted_properties` names any left out. Search
+  with the tool's exact name to get its whole schema.
 
 **Pass back exactly the name `search_tools` gave you.** Do not rebuild a name
 from the connector and the verb, and do not tidy one. Names are made unique on
@@ -192,9 +195,17 @@ the restriction object, and step-up:
 
 Results are redacted and capped, and a cap that fires shows in the payload:
 strings at 32,000 characters (ending `…[truncated: kept N of M chars]`),
-arrays at 200 items, objects at 200 keys, depth 8. Then the result carries
-`elaichi_truncated: true` as its first key. A vendor's own `truncated` field
-is unrelated.
+arrays at 200 items, objects at 200 keys, depth 8. A whole result is also kept
+under 30,000 characters where it can be: long prose is shortened, and
+`elaichi_note` says so. Links, ids, cursors, tokens and other plain-ASCII
+strings without spaces are never shortened this way, and rows are never
+dropped. A result that is still large carries only the note. Any cut sets
+`elaichi_truncated: true` as the result's first key. A vendor's own
+`truncated` field is unrelated.
+
+To get less, ask for fewer records when the tool has a limit or page argument.
+To read a connected app's result in full, use `run_code`: a program reads it
+whole and returns only what you need.
 
 Page deliberately (`cursor`) and ask narrow questions rather than pulling a
 large connector's whole schema set.
