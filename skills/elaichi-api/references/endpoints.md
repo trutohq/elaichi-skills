@@ -408,7 +408,7 @@ are the steadier way in.
 
 | Family | Root | What is there |
 |---|---|---|
-| Automations | `/automation` | CRUD, `validate`, a draft (`PUT /:id/draft`, `discard`, `publish`), versions and `republish`, `enable` / `disable`, `run`, `dry-run`, runs with steps, progress, transcripts, warnings, `retry`, `cancel`, `config`, `options`, webhook endpoints and samples, runbook sessions, `transfer`, `share` |
+| Automations | `/automation` | CRUD, `validate`, a draft (`PUT /:id/draft`, `discard`, `publish`), versions and `republish`, `enable` / `disable`, `run`, `dry-run`, runs with steps, progress, transcripts, warnings, `retry`, `cancel`, `config`, `options`, `models` (the AI models an agent step's `model` can name; needs `automation:create` or `automation:manage`), webhook endpoints and samples, runbook sessions, `transfer`, `share` |
 | Approvals | `/automation-approval` | the cross-automation queue, one approval, who can approve, `resolve`, `resolve-batch` (up to 50), votes |
 | Slack triggers | `/automation-slack` | workspaces and channels a trigger can use |
 | Collections | `/collection` | CRUD, schema, tables, row `query`, `aggregate`, insert, `upsert`, bulk `update` and `delete`, row history and `restore`, references, `transfer`, `share` |

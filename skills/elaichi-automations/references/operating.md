@@ -28,7 +28,7 @@ them out from other fields.
 | `automation.run.progress` | A run still going: each step's state, loop items settled, which branch arm ran, what a waiting step waits for |
 | `automation.run.get` | How a run ended: status, outcome, the failing step and its error, an output preview. `counts` appear only once it finishes. |
 | `automation.run.list` | Runs, newest first. Filter by `status`, `session_id` or `q`. |
-| `automation.run_warnings` | Warnings one run recorded: a `check` set to warn, a `repeat` that ran out of tries, a settings change mid-run |
+| `automation.run_warnings` | Warnings one run recorded: a `check` set to warn, a `repeat` that ran out of tries, a settings change mid-run, an `agent` step that ran on the default model because its pinned model was removed |
 | `automation.run.transcript` | What one `agent` step said and did. Needs `step_seq`, the step's position in the run (0 is first). |
 
 Run `status`: `queued`, `starting`, `running`, `waiting` (on an approval, a
@@ -104,9 +104,11 @@ A session with no activity for 30 days closes itself.
 - Changing settings on an automation with a write or destructive tier, or a
   webhook or Slack trigger, needs `automation:publish` or `automation:manage`
   as well as edit access, because settings can steer what it does.
-- `automation.options` lists the choices a picker offers for a setting or a
-  run input, as the caller sees them. `target` is `{ kind: "input", property }`
-  or `{ kind: "config", key }`. Search with `q`.
+- `automation.options` lists the choices a picker offers for a setting, a run
+  input or an agent step's model, as the caller sees them. `target` is
+  `{ kind: "input", property }`, `{ kind: "config", key }` or
+  `{ kind: "step_model" }`. Search with `q`. `step_model` and `config` need
+  Manage.
 
 ## Webhooks
 
