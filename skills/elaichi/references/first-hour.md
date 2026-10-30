@@ -17,9 +17,9 @@ the one your data should live in.
 
 A new organization starts on a **14-day Black trial**, no card needed. After it
 the organization moves to the free **Personal** plan (one person, 10
-connections across 3 connectors, 1,000 tool calls a month) unless someone buys
-Gold or Black. Nothing is deleted when that happens. Settings → Billing shows
-the countdown; the **elaichi** skill's Plans section has what each plan holds.
+connections across 3 connectors, 10 synthetic tools, 1,000 tool calls a month)
+unless someone buys Gold or Black. Nothing is deleted when that happens.
+Settings → Billing shows the countdown; the **elaichi** skill's Plans section has what each plan holds.
 
 ## 2. Connect one account and prove the loop
 
@@ -144,7 +144,7 @@ skills carry the detail.
 | The client shows Elaichi's own operations but nothing else | **Run your connected tools** was not granted, or nothing they can use is connected and active yet |
 | One expected tool is missing | Connection status first, restrictions second. Run your connected tools covers deletes in the apps too |
 | A newly connected app has not appeared | Most clients cache the tool list. Start a new conversation, or reconnect |
-| A tool call or an add is refused with `plan_limit_reached` | The Personal plan's member, connection, connector or monthly tool-call limit. Settings → Billing shows how full each is, and buying Gold or Black lifts them |
+| A tool call or an add is refused with `plan_limit_reached` | The Personal plan's member, connection, connector, synthetic tool or monthly tool-call limit. Settings → Billing shows how full each is, and buying Gold or Black lifts them |
 | A call is refused after consent | The scope it needed was not granted. Connect the client again and tick it — Settings → Connected apps cannot add a scope |
 
 Longer version in the **elaichi-clients** skill.
