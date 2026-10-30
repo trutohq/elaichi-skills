@@ -21,7 +21,6 @@ you have not written before.
 | `knowledge_bases` | Knowledge bases an `agent` or `knowledge.*` step uses. At most 5. |
 | `input_schema` | A JSON Schema object for manual-run input — a backfill, a button's form |
 | `config_schema` | Settings the owner may change after publishing, read as `config.<key>` |
-| `web` | `{ domains, methods? }` — the only hosts a `fetch` step or an agent's `web_fetch` may reach. Required for either. At most 20 domains. |
 | `session_key` | JSONata over `{ trigger }` that groups runs into one session (a ticket, a thread). Absent means each run stands alone. |
 | `session_title` | JSONata over `{ trigger }` that names a new session |
 | `output` | JSONata over the run that becomes the run's output |
@@ -62,7 +61,7 @@ Every step takes these, beside its own fields:
 | `error_handling` | `fail` (default), `ignore`, or `ignore_rest` |
 | `retry` | `{ max_attempts (≤ 5), backoff (fixed or exponential), delay_seconds, on: [rate_limited, failed] }` |
 | `timeout_seconds` | At most 300 |
-| `repeat` | `{ until, interval_seconds, max_attempts, on_exhausted }` — polls a read-only `call_tool`, `call_synthetic_tool` or `fetch` until `until` is truthy over `{ output, attempt }`. A write is never repeated. |
+| `repeat` | `{ until, interval_seconds, max_attempts, on_exhausted }` — polls a read-only `call_tool` or `call_synthetic_tool` until `until` is truthy over `{ output, attempt }`. A write is never repeated. |
 
 A step after an `error_handling: ignore` step can test `errors.<key>` in its
 `run_if` to know whether the earlier one failed.
@@ -160,7 +159,6 @@ run records an `agent_model_fallback` warning.
 
 | Type | Key fields | Notes |
 |---|---|---|
-| `fetch` | `url`, `method`, `query`, `headers`, `body`, `response` | Only hosts in `web`. Carries no credentials: auth, cookie and API-key headers are refused — use a connection instead. GET is a read, POST/PUT/PATCH a write, DELETE destructive. Fetched content is untrusted. |
 | `automation.call` | `automation_id`, `input`, `wait_seconds` | Runs another published automation and waits for its output |
 
 ## Expressions
@@ -182,8 +180,8 @@ Each save works out the draft's **tier** from its steps: the worst step wins.
 | Tier | Comes from | Publishing needs |
 |---|---|---|
 | `read` | Reads only | `automation:create` or `automation:manage`, with edit access |
-| `write` | Any write tool, `notify`, or a write `fetch` | Also `automation:publish` (every Member holds it) or `automation:manage` |
-| `destructive` | Any destructive tool or a DELETE `fetch` | The same, and an `approve` step gating each destructive step |
+| `write` | Any write tool or `notify` | Also `automation:publish` (every Member holds it) or `automation:manage` |
+| `destructive` | Any destructive tool | The same, and an `approve` step gating each destructive step |
 | `null` | Elaichi cannot tell yet | Cannot publish. Finish the steps. |
 
 A webhook or Slack trigger also needs `automation:publish` or

@@ -109,7 +109,7 @@ Full walkthrough: [Getting started](https://elaichi.ai/docs/getting-started).
 | **Toolboxes** | Your toolboxes, plus **Templates** and **Synthetic tools** |
 | **Knowledge** | Knowledge bases. Automation platform only. |
 | **Automations**, **Dashboards**, **Collections** | The automation platform, where it is on |
-| **Governance** | Restrictions, the audit log, access requests — and, with the automation platform, web access and spend controls |
+| **Governance** | Restrictions, the audit log, access requests — and, with the automation platform, spend controls |
 | **Settings** | Organization, People, Billing, SSO and SCIM, domains, API tokens, notifications, logging, and your own security, connected apps and files |
 
 Full screen-by-screen list, with paths and guides: [App map](./references/app-map.md).
@@ -161,7 +161,7 @@ connectors.
 per month billed annually, in US dollars with regional discounts. It adds:
 
 - the automation platform: automations (workflows), approvals, webhooks,
-  collections, dashboards, knowledge bases, web access and spend controls
+  collections, dashboards, knowledge bases and spend controls
 - the Elaichi Agent, in the app and in Slack
 - customer-managed encryption keys (BYOK) in AWS KMS
 - forwarding the audit log to your own tooling (Settings → Logging)
@@ -203,7 +203,7 @@ The API host is the same either way.
 | Setting up Claude, ChatGPT, Cursor, Microsoft Copilot or another MCP client, and why a client shows no tools | [elaichi-clients](../elaichi-clients/SKILL.md) |
 | Connecting an account, connection health, transfer, offboarding, custom and remote MCP connectors | [elaichi-connections](../elaichi-connections/SKILL.md) |
 | Toolboxes, templates, stamping, frozen parameters, delegation, toolbox skills, synthetic tools | [elaichi-toolboxes](../elaichi-toolboxes/SKILL.md) |
-| Automations and workflows: triggers, steps, approvals, runs, sessions, webhooks, web access, spend limits | [elaichi-automations](../elaichi-automations/SKILL.md) |
+| Automations and workflows: triggers, steps, approvals, runs, sessions, webhooks, spend limits | [elaichi-automations](../elaichi-automations/SKILL.md) |
 | Collections, dashboards and public links, knowledge bases | [elaichi-data](../elaichi-data/SKILL.md) |
 | Roles, permissions, restrictions, access requests, the audit log, SSO and SCIM | [elaichi-governance](../elaichi-governance/SKILL.md) |
 | Writing code against `api.elaichi.ai` | [elaichi-api](../elaichi-api/SKILL.md) |

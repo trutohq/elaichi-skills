@@ -229,7 +229,7 @@ while the switch is off.
 and steps. Triggers: run by hand, a repeating schedule, once at a set time, a
 webhook, a Slack message, another automation finishing, or a collection row.
 Steps call tools and synthetic tools, transform data, branch and loop, write
-collections, search or write knowledge, fetch from the web, ask an AI agent,
+collections, search or write knowledge, ask an AI agent,
 notify people, and pause for **approval**. Each execution is a **run**. A
 **session** ties related runs of one automation together. Build and run them
 with **elaichi-automations**.
@@ -247,8 +247,6 @@ dashboard can publish a read-only copy to a link anyone can open.
 **Knowledge base.** Short documents searched in plain language by people,
 agents and automation steps. Search is word-based, not semantic.
 
-**Web access** and **spend controls** live under Governance: the first decides
-whether automations may fetch from the public web, the second meters usage and
-sets limits.
+**Spend controls** live under Governance: they meter usage and set limits.
 
 Collections, dashboards and knowledge bases are covered by **elaichi-data**.

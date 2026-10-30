@@ -24,7 +24,7 @@ one of three groups:
 |---|---|---|
 | **Published** | Yes | Yes. This is the API. |
 | **Internal** — the console's own screens, browser redirects, inbound webhooks, staff tools | No | No. Its URLs can change without notice. |
-| **Black-plan** — automations, approvals, collections, dashboards and public links, knowledge, web access, apps, spend | No, not yet | Only if the organization is on Black (trial included), and expect changes. See [Endpoints](./references/endpoints.md#black-plan-families-not-in-the-schema). |
+| **Black-plan** — automations, approvals, collections, dashboards and public links, knowledge, apps, spend | No, not yet | Only if the organization is on Black (trial included), and expect changes. See [Endpoints](./references/endpoints.md#black-plan-families-not-in-the-schema). |
 
 Paths are unversioned — `/connection`, not `/v1/connection`. An unknown path
 asked for with `Accept: text/markdown` answers a short Markdown page that

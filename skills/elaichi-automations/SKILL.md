@@ -161,10 +161,15 @@ Use the vendor's webhook into a `webhook` trigger, or poll on a `cron`.
 | Ask a person | `approve` |
 | Tell people | `notify` (Slack or email), `slack.reply`, `member.lookup`, `file.write` |
 | Think | `agent` (the only step that calls a model), `knowledge.search`, `knowledge.write` |
-| Reach the web or other automations | `fetch`, `automation.call` |
+| Call other automations | `automation.call` |
 
 Reach for `map_fields`, `parallel` and `collection.sync` before a `code` step
 or a hand-built loop.
+
+No step reaches a website: web access was removed. An older automation with a
+`fetch` step, an agent step that lists `web_fetch`, or a `web` block fails
+validation, publishing and every run with `web_access_removed`, naming the
+step. Take it out (use a connected app for the data instead) and publish again.
 
 ## Running and watching
 
