@@ -95,6 +95,15 @@ Dates are `YYYY-MM-DD`.
   refusal is fixed by setting up two-factor and trying again. The client no
   longer needs to be connected again (elaichi#808).
 
+### Removed
+
+- Web access (elaichi#976). `elaichi-automations`: the `fetch` step, an agent
+  step's `web_fetch` and the `web` block are gone; a stored one fails with
+  `web_access_removed`. `elaichi-governance`, `elaichi`, `elaichi-api`,
+  `elaichi-mcp`: the Governance → Web access tab, `/web-access-policy` and the
+  `web_access_policy.get` / `.check` operations are gone. An older `elaichi.web`
+  restriction rule lists as "Web access (removed)" and can be deleted.
+
 ## [0.2.0] — 2026-10-10
 
 Every skill re-checked against the product as it runs today, and two new

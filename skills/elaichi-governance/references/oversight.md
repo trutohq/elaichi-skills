@@ -114,17 +114,14 @@ What an admin can use today to hold AI clients back:
 Every approval decision is audited, and a tool call row says how it was
 approved.
 
-## Web access and spend
+## Spend
 
-Both are Governance tabs that appear only where the organization has
+Spend is a Governance tab that appears only where the organization has
 automations turned on.
 
-**Web access** (**Governance → Web access**) decides which hosts automations may
-fetch from: off (the default), only hosts each automation declares, or an
-allowlist, plus whether write methods are allowed. A block entry always wins.
-Reading needs `restriction:view`, changing needs `restriction:manage`. AI
-surfaces can read it (`elaichi__web_access_policy__get`) and test one URL
-(`__check`), never change it.
+Web access was removed: Elaichi no longer fetches websites, and its
+Governance tab and policy are gone. A restriction rule made earlier for web
+access lists as **Web access (removed)** and can still be deleted.
 
 **Spend** (**Governance → Spend**) has usage meters, usage limits (a hard limit
 plus alert percentages, organization-wide or per automation), and payment
