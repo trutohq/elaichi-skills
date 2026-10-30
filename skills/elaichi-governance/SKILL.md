@@ -193,7 +193,7 @@ a reason**, because hiding it would make a real list look cut short.
 | [Roles and permissions](./references/permissions.md) | All 58 permissions with meanings, the eight roles and what each holds, custom roles, sharing levels, teams |
 | [Restrictions and access requests](./references/restrictions.md) | Layers, allow versus block, the empty-set truth table, enforcement points, what a restricted tool looks like, access grants |
 | [People and identity](./references/identity.md) | App-only actions, joining, verified domains, SSO, SCIM, group mappings, offboarding, support access |
-| [Oversight](./references/oversight.md) | The audit log and `actor_kind`, logging destinations, notifications, approvals, web access, spend |
+| [Oversight](./references/oversight.md) | The audit log and `actor_kind`, logging destinations, notifications, approvals, spend |
 
 ## Companion skills
 

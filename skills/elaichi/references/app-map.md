@@ -99,7 +99,6 @@ detail.
 | Edit a dashboard by hand | `/dashboards/<id>/edit` |
 | Turn public dashboard links on or off | Settings → Organization → Automations → **Public links** |
 | Keep documents agents search | **Knowledge** (`/knowledge` → **New knowledge base**, one at `/knowledge/<id>`) |
-| Decide which web domains automations may fetch | Governance → **Web access** |
 | See usage, set limits and payment controls | Governance → **Spend controls** (Usage, Limits, Payments) |
 
 A public dashboard link opens at `https://app.elaichi.ai/p/<token>` with no
