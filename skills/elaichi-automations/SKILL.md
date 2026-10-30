@@ -39,7 +39,7 @@ start with.
 
 | The person wants | Use |
 |---|---|
-| One answer or one change, now, while they watch | Just run the tool: `search_tools` then `execute_tool` (see **elaichi-mcp**) |
+| One answer or one change, now, while they watch | Just run the tool: `search_tools` then `read_tool` or `execute_tool` (see **elaichi-mcp**) |
 | A reusable action an AI can call on demand, chaining several calls into one | A **synthetic tool** (see **elaichi-toolboxes**). It has no trigger and no schedule. |
 | Something that happens **by itself** — on a schedule, on an event, unattended — or that needs a pause for a person's approval, a message to people, memory across runs, or rows kept in a collection | An **automation** |
 

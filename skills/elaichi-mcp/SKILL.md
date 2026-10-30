@@ -1,6 +1,6 @@
 ---
 name: elaichi-mcp
-description: Use the Elaichi MCP server well — find a connected tool with search_tools, run it with execute_tool or run_code, pick the right account, read a refusal or "restricted" result, ask an admin for access, and work out why a tool is missing. For any MCP client (Claude, ChatGPT, Cursor, Microsoft Copilot and others).
+description: Use the Elaichi MCP server well — find a connected tool with search_tools, run it with read_tool, execute_tool or run_code, pick the right account, read a refusal or "restricted" result, ask an admin for access, and work out why a tool is missing. For any MCP client (Claude, ChatGPT, Cursor, Microsoft Copilot and others).
 whenToUse: An Elaichi MCP server is attached and you need to act on the user's connected apps, or explain why a tool is missing, refused, restricted, or asking which account to use. Read before the first search_tools call.
 ---
 
@@ -21,15 +21,22 @@ connected. It means you have not searched yet.
 
 ```
 search_tools({ query: "create deal" })   →  the names
-execute_tool({ name, arguments })        →  runs one
+read_tool({ name, arguments })           →  runs one, if it only reads
+execute_tool({ name, arguments })        →  runs one, any kind
 ```
+
+Each `search_tools` row says which runner to use: `runner` is `"read_tool"` or
+`"execute_tool"`. Use the one it names. `read_tool` is marked read-only, so
+Claude, ChatGPT and other clients usually run it without asking the person to
+approve each call. `execute_tool` is marked destructive, so most clients ask
+first.
 
 Those meta-tools are the only door to a connected tool. Elaichi's own
 operations (`elaichi__connection__list`, `elaichi__member__get`, …) *are*
 listed one by one, and `search_tools` never returns one.
 
-`search_tools` and `execute_tool` themselves appear only when there is
-something to search. If they are missing, see
+`search_tools`, `read_tool` and `execute_tool` themselves appear only when
+there is something to search. If they are missing, see
 [the missing-tool ladder](#when-an-expected-tool-is-missing).
 
 ## Two namespaces, two costs
@@ -37,7 +44,7 @@ something to search. If they are missing, see
 | Namespace | What it is | What one call costs |
 |---|---|---|
 | `elaichi__*` | Runs Elaichi itself — members, teams, connections, toolboxes, automations, audit | One internal call. Fast and cheap. |
-| Connected tools (via `execute_tool`) | The user's real Slack, Jira, HubSpot, Notion | A restriction check, a credential fetch, sometimes a token refresh, then a live third-party call. Seconds, and it spends the vendor's rate limit. |
+| Connected tools (via `read_tool` or `execute_tool`) | The user's real Slack, Jira, HubSpot, Notion | A restriction check, a credential fetch, sometimes a token refresh, then a live third-party call. Seconds, and it spends the vendor's rate limit. |
 
 `elaichi__toolbox__execute`, `elaichi__synthetic_tool__execute` and
 `elaichi__automation__run` cost the second kind, because they run connected
@@ -288,7 +295,7 @@ arguments. People can also write to support@elaichi.ai.
 
 | Document | Topics |
 |---|---|
-| [Tool discovery](./references/tool-discovery.md) | `search_tools` arguments and result fields, ranking, restricted rows, `execute_tool`, files, `run_code` |
+| [Tool discovery](./references/tool-discovery.md) | `search_tools` arguments and result fields, ranking, restricted rows, `read_tool`, `execute_tool`, files, `run_code` |
 | [Connections and accounts](./references/connections-and-accounts.md) | The `connection` argument, account labels, the account picker, `elaichi://` resources, status values, connecting |
 | [Diagnosing a missing tool](./references/missing-tools.md) | The five-rung ladder with the trap at each rung, and missing `elaichi__*` operations |
 | [Scopes and refusals](./references/scopes-and-refusals.md) | OAuth scopes, toolbox selection, the six kinds of refusal, restrictions and access requests, step-up, rate limits |

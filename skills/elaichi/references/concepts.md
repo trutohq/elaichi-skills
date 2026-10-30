@@ -148,8 +148,8 @@ An MCP client signs in with OAuth and the person approves scopes on Elaichi's
 own consent screen. Every scope the client asked for starts ticked **except
 Delete**, which always takes a deliberate click; a client that asks for no
 scope at all gets Read only. Connected tools are found with `search_tools` and
-run with `execute_tool` (or `run_code`, for a small program that calls
-several). The **elaichi-clients** and **elaichi-mcp** skills carry the detail.
+run with `read_tool` (for a read) or `execute_tool` (or `run_code`, for a small
+program that calls several). The **elaichi-clients** and **elaichi-mcp** skills carry the detail.
 
 ## Role
 
