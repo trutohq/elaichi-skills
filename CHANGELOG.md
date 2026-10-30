@@ -26,6 +26,20 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `read_tool` (`elaichi-mcp`, `elaichi-clients`, `elaichi-conventions`,
+  `elaichi`, `elaichi-automations`, `llms-install.md`, the Cursor rule): a new
+  MCP meta-tool, `read_tool { name, arguments }`, runs a connected tool that only
+  reads. It is marked read-only, so Claude, ChatGPT and other clients usually
+  run it without an approval prompt. The server refuses any `elaichi__*` name, a
+  tool whose tier is not `read` (synthetic tools always), and a read whose
+  arguments could send the connection's credentials to another address; each
+  refusal says to call `execute_tool`. Each `search_tools` row now carries
+  `runner`, `"read_tool"` or `"execute_tool"`. `execute_tool` is unchanged. A
+  client's per-tool permission now sees `read_tool` and `execute_tool` apart, and
+  a "read actions only" setting allows `read_tool` and blocks `execute_tool` and
+  `run_code`, so the ChatGPT note that said it did not make connected apps
+  read-only is gone. Over MCP only: the in-app Elaichi Agent has no `read_tool`
+  (elaichi#972).
 - `elaichi-clients` (consent screen table): the three scope rows now quote
   Elaichi's corrected consent copy. An AI client cannot invite anyone, change
   a member's roles, remove someone from the organization, delete a team or

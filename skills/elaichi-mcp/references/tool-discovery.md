@@ -1,10 +1,10 @@
-# Tool discovery: `search_tools`, `execute_tool`, `run_code`
+# Tool discovery: `search_tools`, `read_tool`, `execute_tool`, `run_code`
 
 Connected tools are never listed in `tools/list`, however few there are. These
 meta-tools are the whole surface.
 
-`search_tools` and `execute_tool` appear in `tools/list` only when there is
-something to search: at least one connected tool, or a restricted one to name.
+`search_tools`, `read_tool` and `execute_tool` appear in `tools/list` only
+when there is something to search: at least one connected tool, or a restricted one to name.
 If they are missing, the grant has no `mcp:tools`, the role has no
 `tool:execute`, or no account contributes tools yet. See
 [Diagnosing a missing tool](./missing-tools.md).
@@ -32,6 +32,7 @@ connection reaches: …"). Read it before you guess at an app name.
 | Field | What it is |
 |---|---|
 | `result` | One ranked list. Callable rows carry `name`, `description`, `input_schema`. Restricted rows carry `name`, `connector_label` and `restricted`, and no schema. |
+| `runner` (per callable row) | `"read_tool"` or `"execute_tool"`: the tool that runs this row. Restricted rows have none. |
 | `toolbox_ids`, `toolbox_count` (per row) | Up to three toolboxes that reach the tool, and how many in all. |
 | `toolboxes` | Each named toolbox's `name` and `has_skill`, stated once. |
 | `skills` | Toolboxes on this page whose owner wrote a skill. **Read the relevant one with `elaichi__toolbox__get_skill` before calling a tool from it.** Once per conversation is enough. |
@@ -42,7 +43,8 @@ connection reaches: …"). Read it before you guess at an app name.
 | `blocked_connections` | Accounts whose connector's owner stopped sharing it. They contribute no tools, and reconnecting will not help. |
 | `note` | Why an empty result is empty, or that a very long query was cut. |
 
-A callable row's `input_schema` is the contract for the `execute_tool` call.
+A callable row's `input_schema` is the contract for the `read_tool` or
+`execute_tool` call.
 Read it; do not assume the usual arguments. A large schema may arrive trimmed:
 it then carries `x_truncated`, every **required** property is still there, and
 a call missing an optional one gets a validation error naming it.
@@ -138,6 +140,31 @@ tool you did not see on page one has not been ruled out.
 Two or three concrete words. Add the app name when the user named one. A
 toolbox's name or the words its owner used to describe it also match.
 
+## `read_tool`
+
+```jsonc
+{
+  "name": "…",        // exact name from search_tools. Required.
+  "arguments": { }    // must satisfy that tool's input_schema. {} if none.
+}
+```
+
+The same input as `execute_tool`, for a tool that only reads. It is marked
+read-only (`readOnlyHint: true`), so Claude, ChatGPT and other clients usually
+run it without an approval prompt. It is listed exactly when `execute_tool` is,
+and only over MCP: the in-app Elaichi Agent has no `read_tool` and no `runner`.
+
+Use it when the row's `runner` is `"read_tool"`. The server enforces the limit,
+whatever the client does. It refuses:
+
+- Any `elaichi__*` name.
+- A connected tool whose tier is not `read`, checked when you call: "This tool
+  changes data. Call it with execute_tool." Synthetic tools are always refused.
+- A read whose arguments could send the connection's credentials to another
+  address: "… so the user must approve it. Call it with execute_tool."
+
+A refusal changes nothing. Call the same tool with `execute_tool`.
+
 ## `execute_tool`
 
 ```jsonc
@@ -187,7 +214,7 @@ When `run_code` is in `tools/list`, it runs a short JavaScript program that
 calls tools, and only what the program returns comes back. Use it for two or
 more dependent calls, loops, or pulling a few fields out of a large result
 (decoding email bodies, counting rows). For one call whose whole result you
-want, use `execute_tool`.
+want, use `read_tool` for a read, else `execute_tool`.
 
 ```js
 // `code` is the body of an async function.
@@ -231,5 +258,6 @@ If `run_code` is refused for a rate or daily limit, do the step with
 | Call | Cost |
 |---|---|
 | `search_tools` | Internal. Cheap. |
+| `read_tool` | The same as `execute_tool`, for a read. |
 | `execute_tool` | Restriction check + credential fetch + possible token refresh + live third-party call. Seconds, and it spends the vendor's rate limit. |
 | `run_code` | One sandbox run, plus the cost of every tool call inside it. |

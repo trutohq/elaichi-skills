@@ -57,12 +57,13 @@ ChatGPT cannot reach a local MCP server; use the hosted endpoint.
 ChatGPT may ask for confirmation before an action, depending on its own app
 permission settings. **Treat that as a convenience, not the security
 boundary** — the scopes granted on Elaichi's consent screen are the real one.
-Every connected-app call goes through `execute_tool` or `run_code`, which are
-marked as able to change things, so a "read actions only" setting in ChatGPT
-does not make connected apps read-only.
+A connected-app read goes through `read_tool`, which is marked read-only, so
+ChatGPT usually runs it without asking. A write goes through `execute_tool` or
+`run_code`, which are marked as able to change things. A "read actions only"
+setting in ChatGPT allows `read_tool` and blocks `execute_tool` and `run_code`.
 
-Because connected tools are reached through `search_tools` and `execute_tool`
-rather than listed one by one, apps connected in Elaichi later are reachable
+Because connected tools are reached through `search_tools`, `read_tool` and
+`execute_tool` rather than listed one by one, apps connected in Elaichi later are reachable
 without selecting Refresh tools in ChatGPT.
 
 To disconnect for certain, revoke the grant in Elaichi under Settings →

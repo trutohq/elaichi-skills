@@ -65,9 +65,10 @@ Sign-up is at https://app.elaichi.ai/signup. A new workspace gets a 14-day
 Black trial with no credit card, then the free Personal plan (one person, 10
 connections, 1,000 tool calls a month) unless it buys Gold or Black.
 
-The endpoint advertises two tools rather than hundreds: `search_tools` to find
+The endpoint advertises three tools rather than hundreds: `search_tools` to find
 what is available across everything the organization has connected, and
-`execute_tool` to run one. So the first call in a new session is usually a
+`read_tool` and `execute_tool` to run one (`read_tool` for a tool that only
+reads). So the first call in a new session is usually a
 search, not a guess at a tool name.
 
 ## If it does not work
