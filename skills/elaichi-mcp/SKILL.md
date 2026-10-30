@@ -28,7 +28,8 @@ execute_tool({ name, arguments })        →  runs one, any kind
 Each `search_tools` row says which runner to use: `runner` is `"read_tool"` or
 `"execute_tool"`. Use the one it names. `read_tool` is marked read-only, so
 Claude, ChatGPT and other clients usually run it without asking the person to
-approve each call. `execute_tool` is marked destructive and always asks.
+approve each call. `execute_tool` is marked destructive, so most clients ask
+first.
 
 Those meta-tools are the only door to a connected tool. Elaichi's own
 operations (`elaichi__connection__list`, `elaichi__member__get`, …) *are*
