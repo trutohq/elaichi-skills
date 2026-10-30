@@ -167,9 +167,10 @@ listed one by one, however few there are. The tool list holds:
 - Elaichi's own `elaichi__…` operations — only those the person's role and the
   grant's scopes allow. Automation, collection, dashboard and knowledge
   operations appear only where the automation platform is on.
-- `search_tools` to find a connected tool and `execute_tool` to run one —
-  only while the grant reaches at least one connected tool, restricted ones
-  included.
+- `search_tools` to find a connected tool, and `read_tool` and `execute_tool`
+  to run one: `read_tool` for a tool that only reads, `execute_tool` for any
+  tool. Each `search_tools` row names the one to use. They appear only while
+  the grant reaches at least one connected tool, restricted ones included.
 - `run_code` — Code Mode, a small JavaScript program that calls several tools
   and returns only what it needs. It is on for every organization; there is no
   client setting for it. Every call inside it passes the same checks as
@@ -188,8 +189,10 @@ text, and nothing is lost that the person needs to act on.
 
 **Client settings are not Elaichi's controls.** No tool name in the list names
 a connected app, so a client's per-tool allow-list or approval can only gate
-`execute_tool`, `run_code` and the two `…__execute` operations as wholes. A
-client's "read actions only" setting does not make connected apps read-only.
+`read_tool`, `execute_tool`, `run_code` and the two `…__execute` operations as
+wholes. `read_tool` is marked read-only, so a client usually runs it without
+asking, while it asks about each `execute_tool` call. A client's "read actions
+only" setting allows `read_tool` and blocks `execute_tool` and `run_code`.
 Per-app and per-tool control lives in Elaichi, as restrictions.
 
 ## Troubleshooting
@@ -201,7 +204,7 @@ Work down this list. The first match is usually the answer.
 | **No tools at all** | The person's role lacks `tool:execute` — Guest, Billing Admin and Auditor do. An admin changes the role. |
 | **Only `elaichi__…` operations, no `search_tools`** | Either **Run your connected tools** was not granted — connect the client again and tick it — or the grant reaches no active connected tool yet: nothing connected, or every account `pending` or `needs_reauth`. (Restricted tools still bring `search_tools`, which names them.) Connect or reconnect an app in Elaichi. |
 | **Chose "Only the ones I pick" and tools vanished** | A picked toolbox was deleted or the person lost access to it. Settings → Connected apps → the app → **Manage toolboxes**. |
-| **`search_tools` and `execute_tool` show up** | Nothing is wrong. Ask the client to search for the tool by name. |
+| **`search_tools`, `read_tool` and `execute_tool` show up** | Nothing is wrong. Ask the client to search for the tool by name. |
 | **One expected tool is missing** | Connection status first, restrictions second. A tool that deletes is not left out for a missing Delete scope: Run your connected tools covers it. Work the ladder in [Diagnosing a missing tool](../elaichi-mcp/references/missing-tools.md). |
 | **Expected Elaichi operations are missing** | The grant lacks the scope they need (Create and change, or Delete), or the person's role lacks the permission. Connect again for a scope; ask an admin for a permission. |
 | **A newly connected app has not appeared** | Most clients cache the tool list. Start a new conversation, reconnect the connector, or re-scan tools. In ChatGPT, select **Refresh tools**. |

@@ -92,7 +92,7 @@ Add `-g` to install globally instead of into the current project.
 | Skill | Description |
 |-------|-------------|
 | [elaichi](./skills/elaichi/SKILL.md) | What Elaichi is, the words it uses, where everything lives in the app, and which skill to load next |
-| [elaichi-mcp](./skills/elaichi-mcp/SKILL.md) | Drive the MCP endpoint — `search_tools`, `execute_tool` and `run_code`, the `connection` argument, scopes and refusals, and the missing-tool ladder |
+| [elaichi-mcp](./skills/elaichi-mcp/SKILL.md) | Drive the MCP endpoint — `search_tools`, `read_tool`, `execute_tool` and `run_code`, the `connection` argument, scopes and refusals, and the missing-tool ladder |
 | [elaichi-clients](./skills/elaichi-clients/SKILL.md) | Connect Claude, ChatGPT, Cursor, Microsoft Copilot or any other MCP client, what to grant on the consent screen, and why a client shows no tools |
 | [elaichi-connections](./skills/elaichi-connections/SKILL.md) | Connect and look after accounts — sharing versus ownership, status and reconnecting, transfer and offboarding, custom connectors |
 | [elaichi-toolboxes](./skills/elaichi-toolboxes/SKILL.md) | Curate what an agent can do — toolboxes versus templates, frozen parameters, what sharing at `use` delegates, and synthetic tools |
