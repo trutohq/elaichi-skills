@@ -14,6 +14,14 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- On the free Personal plan only the organization's creator can use it
+  (elaichi#986). Members added during the trial stay, but every other member
+  is refused `403 plan_single_user`, over the API and MCP alike, with a
+  message naming the creator, until the organization buys Gold or Black.
+  Covered in `elaichi` (Plans and its "three things" list), the `elaichi`
+  first-hour reference, the error tables in `elaichi-api`,
+  `elaichi-conventions` and the Cursor rule, and a troubleshooting row in
+  `elaichi-clients`.
 - Synthetic tools are on every plan (`elaichi`, `elaichi-toolboxes`, its
   `synthetic-tools` reference, the `elaichi` first-hour reference). The free
   Personal plan holds up to 10 in the organization and refuses the 11th with

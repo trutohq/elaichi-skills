@@ -18,7 +18,9 @@ the one your data should live in.
 A new organization starts on a **14-day Black trial**, no card needed. After it
 the organization moves to the free **Personal** plan (one person, 10
 connections across 3 connectors, 10 synthetic tools, 1,000 tool calls a month)
-unless someone buys Gold or Black. Nothing is deleted when that happens.
+unless someone buys Gold or Black. Nothing is deleted when that happens, but
+only the organization's creator can use it on Personal: members invited during
+the trial stay, and are refused with `plan_single_user` until it upgrades.
 Settings → Billing shows the countdown; the **elaichi** skill's Plans section has what each plan holds.
 
 ## 2. Connect one account and prove the loop
