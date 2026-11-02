@@ -155,6 +155,7 @@ row if the set changes between pages.
 | `forbidden` | 403 | Not allowed — including "needs an interactive browser session" |
 | `subscription_required` | 403 | The organization's plan is on hold. Contact support@elaichi.ai |
 | `feature_not_available` | 403 | The plan does not include this feature. `feature` and `plan` are in the error; the message names the plan that unlocks it |
+| `plan_single_user` | 403 | The organization is on Personal, which only its creator can use. The message names that person; an upgrade to Gold or Black restores access |
 | `not_found` | 404 | No such resource — **or one deliberately hidden from you** |
 | `conflict` | 409 | Clashes with current state. Many routes use a more specific 409 code |
 | `plan_limit_reached` | 409 | A Personal plan limit. `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan` |

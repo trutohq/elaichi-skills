@@ -146,7 +146,7 @@ current detail; prices below are US-dollar list prices, and visitors in some
 countries see a regional price.
 
 **Personal** is free and for one person: toolboxes and synthetic tools over
-MCP. It allows 1 member, 10 connections across at most 3 connectors, 10
+MCP. Only the organization's creator can use it (see below). It allows 1 member, 10 connections across at most 3 connectors, 10
 synthetic tools, and 1,000 connected-tool calls a calendar month (UTC; the
 count resets on the 1st). Nothing is shared and there is no governance, and no
 custom connectors, automations, collections, dashboards, knowledge bases or
@@ -184,9 +184,17 @@ Three things to get right when somebody asks:
 - **Moving to Personal deletes nothing.** Connections, members, roles and the
   audit log stay where they were. The organization just cannot add past a
   Personal limit or make new shares, and buying Gold or Black lifts that.
+- **On Personal only the creator gets in.** Members added during the trial
+  stay, but only the member who created the organization can use it (if they
+  are gone, the Org Owner who joined first). Everyone else gets
+  `403 plan_single_user`, over the API and MCP alike, with a message naming
+  that person. Settings → Billing stays open to them (with `billing:view`), so
+  a member with `billing:manage` can buy Gold, and access comes back on the
+  next request.
 - **A refusal names the plan.** `feature_not_available` says which plan unlocks
   the feature, and `plan_limit_reached` names the Personal limit (`members`,
-  `connections`, `connectors`, `synthetic_tools` or `tool_calls`). Relay it, point to
+  `connections`, `connectors`, `synthetic_tools` or `tool_calls`), and
+  `plan_single_user` names the one person Personal admits. Relay it, point to
   **Settings → Billing**, and do not work around it. Only an organization
   *on hold* answers `subscription_required`; send that to
   support@elaichi.ai.

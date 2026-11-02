@@ -108,7 +108,7 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 | `validation_error`, `bad_request`, `missing_organization_header` | 400 |
 | `unauthorized` | 401 |
 | `permission_required`, `forbidden` | 403 |
-| `subscription_required` (the plan is on hold; contact support@elaichi.ai), `feature_not_available` (not on this plan; the message names the plan that unlocks it), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
+| `subscription_required` (the plan is on hold; contact support@elaichi.ai), `feature_not_available` (not on this plan; the message names the plan that unlocks it), `plan_single_user` (Personal is for its creator only; the message names them), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
 | `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the plan has no automation platform (Black has it), it is switched off, or it is paused) | 403 |
 | `not_found` | 404 |
 | `conflict`, `plan_limit_reached` (a Personal plan limit: `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan`) | 409 |
