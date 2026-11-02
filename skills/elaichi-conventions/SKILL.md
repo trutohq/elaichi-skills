@@ -111,7 +111,7 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 | `subscription_required` (the plan is on hold; contact support@elaichi.ai), `feature_not_available` (not on this plan; the message names the plan that unlocks it), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
 | `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the plan has no automation platform (Black has it), it is switched off, or it is paused) | 403 |
 | `not_found` | 404 |
-| `conflict`, `plan_limit_reached` (a Personal plan limit: `details.limit` is `members`, `connections`, `connectors` or `tool_calls`, with `max` and `plan`) | 409 |
+| `conflict`, `plan_limit_reached` (a Personal plan limit: `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan`) | 409 |
 | `payload_too_large` | 413 |
 | `step_up_required` | 428 |
 | `rate_limited` | 429 |

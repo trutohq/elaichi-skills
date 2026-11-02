@@ -12,6 +12,17 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+### Changed
+
+- Synthetic tools are on every plan (`elaichi`, `elaichi-toolboxes`, its
+  `synthetic-tools` reference, the `elaichi` first-hour reference). The free
+  Personal plan holds up to 10 in the organization and refuses the 11th with
+  `409 plan_limit_reached`, `details.limit` `synthetic_tools`; Gold and Black
+  have no limit. Gold's list no longer names synthetic tools. A synthetic tool
+  still cannot be shared on its own, and sharing a toolbox that pins one still
+  needs Gold. `synthetic_tools` joins the `details.limit` values in
+  `elaichi-api`, `elaichi-conventions` and the Cursor rule.
+
 ### Added
 
 - `elaichi-clients`: Microsoft Copilot is a supported client, reached
