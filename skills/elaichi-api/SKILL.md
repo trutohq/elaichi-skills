@@ -157,7 +157,7 @@ row if the set changes between pages.
 | `feature_not_available` | 403 | The plan does not include this feature. `feature` and `plan` are in the error; the message names the plan that unlocks it |
 | `not_found` | 404 | No such resource — **or one deliberately hidden from you** |
 | `conflict` | 409 | Clashes with current state. Many routes use a more specific 409 code |
-| `plan_limit_reached` | 409 | A Personal plan limit. `details.limit` is `members`, `connections`, `connectors` or `tool_calls`, with `max` and `plan` |
+| `plan_limit_reached` | 409 | A Personal plan limit. `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan` |
 | `payload_too_large` | 413 | Body too big |
 | `step_up_required` | 428 | Browser sessions only: re-verify first |
 | `rate_limited` | 429 | Over the limit. See `Retry-After` |

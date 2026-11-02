@@ -145,17 +145,17 @@ and **Black**. Link [elaichi.ai/pricing](https://elaichi.ai/pricing/) for the
 current detail; prices below are US-dollar list prices, and visitors in some
 countries see a regional price.
 
-**Personal** is free and for one person: toolboxes over MCP. It allows 1
-member, 10 connections across at most 3 connectors, and 1,000 connected-tool
-calls a calendar month (UTC; the count resets on the 1st). Nothing is shared
-and there is no governance, and no synthetic tools, custom connectors,
-automations, collections, dashboards, knowledge bases or Elaichi Agent. Removing
-an old share or restriction always works.
+**Personal** is free and for one person: toolboxes and synthetic tools over
+MCP. It allows 1 member, 10 connections across at most 3 connectors, 10
+synthetic tools, and 1,000 connected-tool calls a calendar month (UTC; the
+count resets on the 1st). Nothing is shared and there is no governance, and no
+custom connectors, automations, collections, dashboards, knowledge bases or
+Elaichi Agent. Removing an old share or restriction always works.
 
 **Gold** is $15 per user per month, or $10 per user per month billed annually.
 It adds sharing, governance (custom roles, restrictions, SAML and OIDC single
-sign-on, SCIM provisioning, group-to-role mapping), synthetic tools and custom
-connectors.
+sign-on, SCIM provisioning, group-to-role mapping) and custom connectors, and
+removes Personal's limits.
 
 **Black** is on sale and self-serve: $24 per seat per month, or $18 per seat
 per month billed annually, in US dollars with regional discounts. It adds:
@@ -186,7 +186,7 @@ Three things to get right when somebody asks:
   Personal limit or make new shares, and buying Gold or Black lifts that.
 - **A refusal names the plan.** `feature_not_available` says which plan unlocks
   the feature, and `plan_limit_reached` names the Personal limit (`members`,
-  `connections`, `connectors` or `tool_calls`). Relay it, point to
+  `connections`, `connectors`, `synthetic_tools` or `tool_calls`). Relay it, point to
   **Settings → Billing**, and do not work around it. Only an organization
   *on hold* answers `subscription_required`; send that to
   support@elaichi.ai.
