@@ -7,8 +7,12 @@ support ticket for them.*
 Where: **Toolboxes → Synthetic tools → New synthetic tool**. Over MCP:
 `elaichi__synthetic_tool__create`, `__validate`, `__update`, `__execute`.
 
-Creating one needs `toolbox:create`, and running one needs `tool:execute`. Both
-Gold and Black include synthetic tools; the free Personal plan does not.
+Creating one needs `toolbox:create`, and running one needs `tool:execute`.
+Every plan includes synthetic tools. The free Personal plan holds up to 10 in
+the organization: the 11th is refused with `409 plan_limit_reached`
+(`details.limit` `synthetic_tools`) until one is deleted or the organization
+buys Gold or Black. Each step a run makes counts toward Personal's 1,000 tool
+calls a month.
 
 ## Who can do what
 

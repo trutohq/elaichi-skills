@@ -415,7 +415,6 @@ are the steadier way in.
 | Dashboards | `/dashboard` | CRUD, `validate`, `preview-widget`, a draft with `publish` / `discard`, widget and page data, filter and form options, form `submit`, row edits, action `invoke`, `export`, `transfer`, `share` |
 | Public dashboard links | `/dashboard/:id/public-link` | create, `preview`, `refresh`, `extend`, `pause`, `resume`, reveal `url`, revoke. Visitors read `/public/dashboard/:token` |
 | Knowledge | `/knowledge` | CRUD, documents, `trust` and `trust-batch`, `search` (one base or all), recent queries, references, `transfer`, `share` |
-| Web access | `/web-access-policy` | the org policy, allowed and blocked domains, `check` a URL |
 | Apps | `/bundle`, `/bundle-install` | package versions, export, install links, `transfer`, `share`; preview, install, `resume`, `rollback` |
 | Spend | `/spend` | usage, usage limits, payment policy, payment tools, payment caps |
 

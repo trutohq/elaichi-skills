@@ -82,7 +82,7 @@ not "how many are restricted" and must never be reported as one. Use
 ## 4. Is it a scope gap?
 
 - **No `mcp:tools` on the grant:** no connected tool is offered at all, and
-  `search_tools` and `execute_tool` are not even in `tools/list`.
+  `search_tools`, `read_tool` and `execute_tool` are not even in `tools/list`.
 - **An `elaichi__*` operation the role allows but the scope does not:** it is
   not listed, and the server `instructions` name it under "Permitted by your
   role, withheld by this connection's scope".

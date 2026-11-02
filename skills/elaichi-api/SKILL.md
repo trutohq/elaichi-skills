@@ -24,7 +24,7 @@ one of three groups:
 |---|---|---|
 | **Published** | Yes | Yes. This is the API. |
 | **Internal** — the console's own screens, browser redirects, inbound webhooks, staff tools | No | No. Its URLs can change without notice. |
-| **Black-plan** — automations, approvals, collections, dashboards and public links, knowledge, web access, apps, spend | No, not yet | Only if the organization is on Black (trial included), and expect changes. See [Endpoints](./references/endpoints.md#black-plan-families-not-in-the-schema). |
+| **Black-plan** — automations, approvals, collections, dashboards and public links, knowledge, apps, spend | No, not yet | Only if the organization is on Black (trial included), and expect changes. See [Endpoints](./references/endpoints.md#black-plan-families-not-in-the-schema). |
 
 Paths are unversioned — `/connection`, not `/v1/connection`. An unknown path
 asked for with `Accept: text/markdown` answers a short Markdown page that
@@ -155,9 +155,10 @@ row if the set changes between pages.
 | `forbidden` | 403 | Not allowed — including "needs an interactive browser session" |
 | `subscription_required` | 403 | The organization's plan is on hold. Contact support@elaichi.ai |
 | `feature_not_available` | 403 | The plan does not include this feature. `feature` and `plan` are in the error; the message names the plan that unlocks it |
+| `plan_single_user` | 403 | The organization is on Personal, which only its creator can use. The message names that person; an upgrade to Gold or Black restores access |
 | `not_found` | 404 | No such resource — **or one deliberately hidden from you** |
 | `conflict` | 409 | Clashes with current state. Many routes use a more specific 409 code |
-| `plan_limit_reached` | 409 | A Personal plan limit. `details.limit` is `members`, `connections`, `connectors` or `tool_calls`, with `max` and `plan` |
+| `plan_limit_reached` | 409 | A Personal plan limit. `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan` |
 | `payload_too_large` | 413 | Body too big |
 | `step_up_required` | 428 | Browser sessions only: re-verify first |
 | `rate_limited` | 429 | Over the limit. See `Retry-After` |

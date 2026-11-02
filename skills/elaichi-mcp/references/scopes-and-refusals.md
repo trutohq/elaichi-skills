@@ -202,6 +202,8 @@ silence would mark every plain write as destructive.
 So a plain write is `readOnlyHint: false` **and** `destructiveHint: false`,
 stated rather than implied. `execute_tool` and `run_code` are marked
 destructive and open-world, because their real tier depends on what they run.
+`read_tool` is marked read-only and open-world, because it reaches a third-party
+app. The server enforces that: it runs only a tool whose tier is `read`.
 
 Annotations are hints a client may ignore. The scope check on the server is
 the enforcement.

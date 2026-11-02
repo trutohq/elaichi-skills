@@ -159,7 +159,6 @@ Load the [elaichi-automations](../../elaichi-automations/SKILL.md) skill before 
 - Approvals: `automation.approval.list`, `automation.approval.get`.
 - Webhooks: `automation.webhook.list`, `automation.webhook.samples`.
 - Sessions: `automation.session.list`, `automation.session.get`, `automation.session.list_messages`, `automation.session.runs`, `automation.session.continue`, `automation.session.close`.
-- Web access: `web_access_policy.get`, `web_access_policy.check`.
 
 `automation.run`, `automation.enable`, `automation.dry_run`,
 `automation.publish` and `automation.session.continue` reach connected tools,

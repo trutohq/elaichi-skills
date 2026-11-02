@@ -166,7 +166,8 @@ not whoever shared the toolbox:
 
 ## Synthetic tools
 
-Gold and Black include synthetic tools; Personal does not.
+Every plan includes synthetic tools. The free Personal plan holds up to 10 in
+the organization; Gold and Black have no limit.
 
 Several calls chained into one, so the agent sees one decisive tool instead of
 orchestrating three. *Look the customer up in the CRM, then open a ticket for

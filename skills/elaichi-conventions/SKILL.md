@@ -108,10 +108,10 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 | `validation_error`, `bad_request`, `missing_organization_header` | 400 |
 | `unauthorized` | 401 |
 | `permission_required`, `forbidden` | 403 |
-| `subscription_required` (the plan is on hold; contact support@elaichi.ai), `feature_not_available` (not on this plan; the message names the plan that unlocks it), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
+| `subscription_required` (the plan is on hold; contact support@elaichi.ai), `feature_not_available` (not on this plan; the message names the plan that unlocks it), `plan_single_user` (Personal is for its creator only; the message names them), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
 | `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the plan has no automation platform (Black has it), it is switched off, or it is paused) | 403 |
 | `not_found` | 404 |
-| `conflict`, `plan_limit_reached` (a Personal plan limit: `details.limit` is `members`, `connections`, `connectors` or `tool_calls`, with `max` and `plan`) | 409 |
+| `conflict`, `plan_limit_reached` (a Personal plan limit: `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan`) | 409 |
 | `payload_too_large` | 413 |
 | `step_up_required` | 428 |
 | `rate_limited` | 429 |
@@ -229,22 +229,23 @@ Dynamic toolbox ids are computed and read-only: `global:{userId}` (named
 | Namespace | Cost |
 |---|---|
 | `elaichi__*` — administers Elaichi itself | One internal call. Cheap. |
-| Connected tools, reached via `execute_tool` or `run_code` | Restriction check + credential fetch + live third-party call. Seconds, and the vendor's rate limit. |
+| Connected tools, reached via `read_tool`, `execute_tool` or `run_code` | Restriction check + credential fetch + live third-party call. Seconds, and the vendor's rate limit. |
 
 `elaichi__toolbox__execute` and `elaichi__synthetic_tool__execute` cost the
 second kind, because they run a connected tool. Operation `a.b` in Elaichi's
 catalog is MCP tool `elaichi__a__b`.
 
 **Connected tools are never listed in `tools/list`, however few there are.**
-`search_tools` finds one; `execute_tool` runs it; `run_code` runs a small
+`search_tools` finds one; `read_tool` runs it if it only reads (a row's
+`runner` says which); `execute_tool` runs any; `run_code` runs a small
 JavaScript program that calls several. `search_tools` indexes connected tools
 only — never an `elaichi__` operation. A synthetic tool appears in it only as
 an entry of a toolbox you can reach; a standalone one is listed by
 `elaichi__synthetic_tool__list` and run by `elaichi__synthetic_tool__execute`.
 Ranking is **lexical**: query with concrete tool-ish words, not a sentence.
 
-When the person reaches no connected tool at all, `search_tools` and
-`execute_tool` are not listed. Clients that support MCP Apps also get
+When the person reaches no connected tool at all, `search_tools`,
+`read_tool` and `execute_tool` are not listed. Clients that support MCP Apps also get
 `show_card` and `show_object`, which only draw cards.
 
 A tool reaching several accounts of one app takes a required `connection`

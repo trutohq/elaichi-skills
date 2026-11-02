@@ -119,8 +119,8 @@ connection stays private from every permission holder, Org Owner included.
 
 | Permission | Meaning |
 |---|---|
-| `restriction:view` (View restrictions) | See restriction rules and the web access policy. |
-| `restriction:manage` (Manage restrictions) | Create, edit and delete restriction rules, and change the web access policy. |
+| `restriction:view` (View restrictions) | See restriction rules. |
+| `restriction:manage` (Manage restrictions) | Create, edit and delete restriction rules. |
 | `restriction:override` (Override restrictions) | Also needed for a rule aimed at one member. |
 | `audit:view` (View audit log) | See every event in the organization. Without it, everyone still sees their own activity. |
 | `spend:view` (View spend and usage) | See usage meters, limits and payment caps. |

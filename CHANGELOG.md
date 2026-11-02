@@ -12,6 +12,25 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+### Changed
+
+- On the free Personal plan only the organization's creator can use it
+  (elaichi#986). Members added during the trial stay, but every other member
+  is refused `403 plan_single_user`, over the API and MCP alike, with a
+  message naming the creator, until the organization buys Gold or Black.
+  Covered in `elaichi` (Plans and its "three things" list), the `elaichi`
+  first-hour reference, the error tables in `elaichi-api`,
+  `elaichi-conventions` and the Cursor rule, and a troubleshooting row in
+  `elaichi-clients`.
+- Synthetic tools are on every plan (`elaichi`, `elaichi-toolboxes`, its
+  `synthetic-tools` reference, the `elaichi` first-hour reference). The free
+  Personal plan holds up to 10 in the organization and refuses the 11th with
+  `409 plan_limit_reached`, `details.limit` `synthetic_tools`; Gold and Black
+  have no limit. Gold's list no longer names synthetic tools. A synthetic tool
+  still cannot be shared on its own, and sharing a toolbox that pins one still
+  needs Gold. `synthetic_tools` joins the `details.limit` values in
+  `elaichi-api`, `elaichi-conventions` and the Cursor rule.
+
 ### Added
 
 - `elaichi-clients`: Microsoft Copilot is a supported client, reached
@@ -25,6 +44,27 @@ Dates are `YYYY-MM-DD`.
   now name Microsoft Copilot.
 
 ### Changed
+
+- `read_tool` (`elaichi-mcp`, `elaichi-clients`, `elaichi-conventions`,
+  `elaichi`, `elaichi-automations`, `llms-install.md`, the Cursor rule): a new
+  MCP meta-tool, `read_tool { name, arguments }`, runs a connected tool that only
+  reads. It is marked read-only, so Claude, ChatGPT and other clients usually
+  run it without an approval prompt. The server refuses any `elaichi__*` name, a
+  tool whose tier is not `read` (synthetic tools always), and a read whose
+  arguments could send the connection's credentials to another address; each
+  refusal says to call `execute_tool`. Each `search_tools` row now carries
+  `runner`, `"read_tool"` or `"execute_tool"`. `execute_tool` is unchanged. A
+  client's per-tool permission now sees `read_tool` and `execute_tool` apart, and
+  a "read actions only" setting allows `read_tool` and blocks `execute_tool` and
+  `run_code`, so the ChatGPT note that said it did not make connected apps
+  read-only is gone. Over MCP only: the in-app Elaichi Agent has no `read_tool`
+  (elaichi#972).
+- `elaichi-clients` (consent screen table): the three scope rows now quote
+  Elaichi's corrected consent copy. An AI client cannot invite anyone, change
+  a member's roles, remove someone from the organization, delete a team or
+  role, or revoke an invitation or API token, and cannot read the API token
+  list: those are step-up gated or app only on MCP, so the screen no longer
+  promises them and the table says they stay in the Elaichi web app.
 
 - `elaichi` (app map): the screen "Settings → Assistant" is now **Settings →
   AI models** (still `/settings?tab=assistant`). An organization adds keys for
@@ -84,6 +124,15 @@ Dates are `YYYY-MM-DD`.
 - `elaichi-clients` and `elaichi-mcp` (scopes and refusals): a two-factor
   refusal is fixed by setting up two-factor and trying again. The client no
   longer needs to be connected again (elaichi#808).
+
+### Removed
+
+- Web access (elaichi#976). `elaichi-automations`: the `fetch` step, an agent
+  step's `web_fetch` and the `web` block are gone; a stored one fails with
+  `web_access_removed`. `elaichi-governance`, `elaichi`, `elaichi-api`,
+  `elaichi-mcp`: the Governance → Web access tab, `/web-access-policy` and the
+  `web_access_policy.get` / `.check` operations are gone. An older `elaichi.web`
+  restriction rule lists as "Web access (removed)" and can be deleted.
 
 ## [0.2.0] — 2026-10-10
 
