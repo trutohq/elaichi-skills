@@ -31,7 +31,7 @@ Guest ⊂ Member ⊂ Team Admin ⊂ People Admin ⊂ Org Admin ⊂ Org Owner
 | Role | Adds |
 |---|---|
 | **Guest** | Browse the connector catalog. Nothing else. A free seat. |
-| **Member** | The default. Connect accounts, build and share toolboxes and templates, run tools, create teams, make API tokens, and build automations, collections, dashboards and knowledge where the org has them. |
+| **Member** | The default. Connect accounts, build and share toolboxes and templates, run tools, create teams, make API tokens, and build workflows, collections, dashboards and knowledge where the org has them. |
 | **Team Admin** | Manage every team, including ones they do not run. |
 | **People Admin** | Invite, change roles, remove members, decide access requests. |
 | **Org Admin** | Everything else: restrictions, SSO, custom roles, logging, the whole audit log. |
@@ -115,7 +115,7 @@ When asked to do one, say what needs doing and point to the screen (most are in
   approval. Elaichi adds no per-call prompt over MCP.
 - **The Elaichi agent**: writes stop at an approval card, and deletes ask every
   time.
-- **Automations**: every destructive step needs an `approve` step before it.
+- **Workflows**: every destructive step needs an `approve` step before it.
 
 There is no admin-written rule today that pauses a whole class of AI client
 writes for an approver. To hold clients back, use restrictions and consent
@@ -130,7 +130,7 @@ scopes. Details: [Oversight](./references/oversight.md#approvals).
   plus events on connections they own or can edit.
 - **Every row carries `actor_kind`.** A call from an MCP client is recorded as
   the **person** (`user`) with surface `mcp` and the client named. The Elaichi
-  agent is `ai_assistant`, an automation is `automation`, Elaichi support is
+  agent is `ai_assistant`, a workflow is `automation`, Elaichi support is
   `staff`.
 - Tool call rows record what was called, on which account, how it was approved
   and what it touched, but not argument values.

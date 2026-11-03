@@ -9,9 +9,9 @@ guide for that screen yet.
 
 **An area you lack permission for is hidden, not disabled.** If a screen is
 missing for one person and present for another, that is roles — check
-Settings → People. Rows marked *automation platform* appear only on a Black
+Settings → People. Rows marked *workflow platform* appear only on a Black
 organization (the 14-day trial counts) whose Settings → Organization →
-Automations switch is on. New organizations start with it on.
+Workflows switch is on. New organizations start with it on.
 
 ## Getting around
 
@@ -19,7 +19,7 @@ Automations switch is on. New organizations start with it on.
 |---|---|
 | Organization switcher | Top of the sidebar |
 | Profile menu, sign out | Bottom of the sidebar |
-| Connect an AI client | The **Connect** row under the sidebar's list (**Connect an AI client** when the automation platform is on) |
+| Connect an AI client | The **Connect** row under the sidebar's list (**Connect an AI client** when the workflow platform is on) |
 | Command palette — navigate *and* create | **⌘K** / **Ctrl+K** |
 | Show/hide sidebar | **⌘B** |
 | Guide for the page you are on | **Help** in the header |
@@ -27,9 +27,9 @@ Automations switch is on. New organizations start with it on.
 
 Guide: [Getting around](/guides/basics/getting-around)
 
-The sidebar is grouped when the automation platform is on: **Agent** and
+The sidebar is grouped when the workflow platform is on: **Agent** and
 **Approvals** at the top, then **Connect** (Connections, Connectors,
-Toolboxes, Knowledge), then **Automate** (Automations, Dashboards,
+Toolboxes, Knowledge), then **Automate** (Workflows, Dashboards,
 Collections), then Governance and Settings. Without it, the sidebar is one flat
 list: Connections, Connectors, Toolboxes, Governance, Settings.
 
@@ -80,16 +80,16 @@ the **elaichi-clients** skill.
 | Chain several calls into one tool | Toolboxes → Synthetic tools (`/toolboxes/synthetic`) | [Synthetic tools](/guides/toolboxes/synthetic-tools) |
 | Share, and understand what that delegates | The toolbox → **Manage access** | [How toolboxes work](/guides/toolboxes/overview) |
 
-## Automation platform
+## Workflow platform
 
-All of these are *automation platform* screens. There are no docs guides for
+All of these are *workflow platform* screens. There are no docs guides for
 them yet; the **elaichi-automations** and **elaichi-data** skills carry the
 detail.
 
 | Task | Where |
 |---|---|
-| See and build automations | **Automations** (`/automations`) → **New automation**, which starts from a sentence |
-| Open one automation, its runs and settings | `/automations/<id>` |
+| See and build workflows | **Workflows** (`/automations`) → **New workflow**, which starts from a sentence |
+| Open one workflow, its runs and settings | `/automations/<id>` |
 | Review and publish a version | `/automations/<id>/publish` |
 | Read one run, step by step | `/automations/<id>/runs/<runId>` |
 | Follow a session across runs | `/automations/<id>/sessions/<sessionId>` |
@@ -97,7 +97,7 @@ detail.
 | Store and edit records | **Collections** (`/collections`, one at `/collections/<id>`, a table at `/collections/<id>/tables/<tableKey>`) |
 | Build and view dashboards | **Dashboards** (`/dashboards` → **New dashboard**, one at `/dashboards/<id>`) |
 | Edit a dashboard by hand | `/dashboards/<id>/edit` |
-| Turn public dashboard links on or off | Settings → Organization → Automations → **Public links** |
+| Turn public dashboard links on or off | Settings → Organization → Workflows → **Public links** |
 | Keep documents agents search | **Knowledge** (`/knowledge` → **New knowledge base**, one at `/knowledge/<id>`) |
 | See usage, set limits and payment controls | Governance → **Spend controls** (Usage, Limits, Payments) |
 
@@ -105,7 +105,7 @@ A public dashboard link opens at `https://app.elaichi.ai/p/<token>` with no
 sign-in.
 
 Some organizations also see **Apps** (`/apps`): packages of
-automations, toolboxes, collections and dashboards that others install as their
+workflows, toolboxes, collections and dashboards that others install as their
 own copies. It sits behind a switch of its own.
 
 ## Governance
@@ -140,7 +140,7 @@ sections are `/settings?tab=<value>`.
 
 | Section | `tab` | For | Guide |
 |---|---|---|---|
-| Organization | `organization` | Name, logo, slug, data region, organization id; the org's two-factor requirement and Elaichi support access; the Automations switch where offered; deleting the organization | [Organization profile](/guides/settings/organization-profile) |
+| Organization | `organization` | Name, logo, slug, data region, organization id; the org's two-factor requirement and Elaichi support access; the Workflows switch where offered; deleting the organization | [Organization profile](/guides/settings/organization-profile) |
 | People | — | Its own pages, above | [Invite and manage people](/guides/members/invite-and-manage-people) |
 | Billing | `plan` | The three plans, the trial countdown, Personal's limits as they fill, subscription and payment, upgrade from Gold to Black | [Manage billing](/guides/settings/billing) |
 | SSO and SCIM | `sso` | SAML or OIDC, enforcing it, SCIM users and groups, group-to-role mapping | [Set up single sign-on](/guides/settings/single-sign-on), [SCIM provisioning](/guides/sso/scim-provisioning) |

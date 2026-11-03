@@ -1,7 +1,7 @@
 # Collections
 
 A collection is a shared data table with a typed schema, like an Airtable
-base. Automations fill most of them. People read them in the console, and
+base. Workflows fill most of them. People read them in the console, and
 dashboards chart them.
 
 ## Tables
@@ -18,7 +18,7 @@ own fields and rows. There are no joins between tables.
 - A table key is permanent: lowercase letters, digits and underscores,
   starting with a letter.
 
-**Raw and derived tables.** When an automation pulls data from another
+**Raw and derived tables.** When a workflow pulls data from another
 system, keep it as fetched in a table named `raw_<source>`: the source's
 stable id as the unique key, the original fields, and `fetched_at`. Build the
 tables people read (rollups, computed costs) from it in later steps. A fix to
@@ -44,7 +44,7 @@ Get these right when you create a collection:
 - **`key`** is the machine name every operation uses. It is never renamed for
   you, so pick a readable one.
 - **`description`**: give every field one line on what it holds and where the
-  value comes from. The console flags fields without one, and automations and
+  value comes from. The console flags fields without one, and workflows and
   dashboards are written from it.
 - **`primary_field`** is the row's display title. Allowed types: text, number,
   date, datetime, email, url, select. Omit it to use the first field.
@@ -53,7 +53,7 @@ Get these right when you create a collection:
 - **`row_scope`** names a `user` field. `view` and `use` grantees then see and
   write only rows where that field is their own id. Rows with it empty are
   visible only to the owner and `edit` grantees.
-- **`indexed`**: index the fields people, automations and dashboards filter,
+- **`indexed`**: index the fields people, workflows and dashboards filter,
   sort or group by (dates of a time series, status selects, owner fields,
   lookup keys). The primary field, unique key fields and row scope field are
   indexed for you. Do not index long text, JSON or multi-select fields.
@@ -138,7 +138,7 @@ table) applies a batch of up to 20 ops atomically: `add_field`,
   console. No argument forces it through.
 - A field in the unique key or the row scope cannot change type or be
   dropped. Change the key or scope first.
-- A field key cannot be renamed while an automation or dashboard uses the
+- A field key cannot be renamed while a workflow or dashboard uses the
   collection. Check `collection.references` before you change or drop a
   field. It needs `edit` access.
 - `update_field` with `rename_choices` renames a select choice and rewrites
@@ -174,9 +174,9 @@ fields changed. It is **off by default**.
 - The restore lists `dropped_fields` (fields the collection no longer has)
   and `cleared_fields`. Tell the person about both.
 
-## How automations use collections
+## How workflows use collections
 
-An automation runs as its **owner**, so the owner needs `use` on any
+A workflow runs as its **owner**, so the owner needs `use` on any
 collection it writes and `view` on any it reads.
 
 - Steps: `collection.upsert` (at most 500 rows per step; wrap bigger sets in
@@ -185,11 +185,11 @@ collection it writes and `view` on any it reads.
   system).
 - Trigger: `collection_row`, on `inserted`, `updated` or `deleted` rows.
 - Every collection a definition reads or writes must be listed in its
-  `collections: []`. A table an automation names cannot be deleted.
-- Automation steps always read protected fields as hidden, whatever the
+  `collections: []`. A table a workflow names cannot be deleted.
+- Workflow steps always read protected fields as hidden, whatever the
   owner's access.
 
-Authoring automations is its own subject; `automation.schema` returns the
+Authoring workflows is its own subject; `automation.schema` returns the
 exact step shapes.
 
 ## Deleting
@@ -198,6 +198,6 @@ exact step shapes.
   history. Only the owner can. Anything that reads or writes it breaks at
   once: read `collection.references` first and tell the person.
 - `collection.table.delete` removes one table. It is refused while an
-  automation uses that table.
+  workflow uses that table.
 - Both return only `{ deleted: true }`, so name what was deleted from what
   you read before the call.
