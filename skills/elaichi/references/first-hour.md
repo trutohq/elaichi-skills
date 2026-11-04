@@ -126,14 +126,14 @@ Then choose how to hand it out:
 
 ## 8. If your organization is on Black
 
-The automation platform comes with Black, trial included, and a new
+The workflow platform comes with Black, trial included, and a new
 organization has it switched on. If it was switched off, someone who can manage
-the organization turns it on in **Settings → Organization → Automations**.
-Automations, Approvals, Dashboards, Collections and Knowledge then appear in
+the organization turns it on in **Settings → Organization → Workflows**.
+Workflows, Approvals, Dashboards, Collections and Knowledge then appear in
 the sidebar. On Personal or Gold they do not, and the way in is Settings →
 Billing.
 
-Start small: one automation that reads, on a schedule, writing to one
+Start small: one workflow that reads, on a schedule, writing to one
 collection. Add writes, and the approval in front of anything that deletes,
 once the reads look right. The **elaichi-automations** and **elaichi-data**
 skills carry the detail.

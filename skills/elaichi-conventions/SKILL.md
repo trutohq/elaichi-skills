@@ -21,7 +21,7 @@ authorized with OAuth, serves Claude, ChatGPT, Cursor, Microsoft Copilot and any
 | Setting up Claude, ChatGPT, Cursor, Microsoft Copilot or another MCP client | **elaichi-clients** |
 | Connecting accounts, connection health, transfer, offboarding, custom connectors | **elaichi-connections** |
 | Toolboxes, templates, frozen params, delegation, synthetic tools | **elaichi-toolboxes** |
-| Automations and workflows: triggers, steps, approvals, runs, sessions, webhooks | **elaichi-automations** |
+| Workflows: triggers, steps, approvals, runs, sessions, webhooks | **elaichi-automations** |
 | Collections, dashboards and public links, knowledge bases | **elaichi-data** |
 | Roles, permissions, restrictions, access requests, audit, SSO, SCIM | **elaichi-governance** |
 | Writing code against `api.elaichi.ai` | **elaichi-api** |
@@ -109,7 +109,7 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 | `unauthorized` | 401 |
 | `permission_required`, `forbidden` | 403 |
 | `subscription_required` (the plan is on hold; contact support@elaichi.ai), `feature_not_available` (not on this plan; the message names the plan that unlocks it), `plan_single_user` (Personal is for its creator only; the message names them), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
-| `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the plan has no automation platform (Black has it), it is switched off, or it is paused) | 403 |
+| `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the plan has no workflow platform (Black has it), it is switched off, or it is paused) | 403 |
 | `not_found` | 404 |
 | `conflict`, `plan_limit_reached` (a Personal plan limit: `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan`) | 409 |
 | `payload_too_large` | 413 |
@@ -199,12 +199,12 @@ Opaque, but chronologically sortable within a prefix.
 | `file` | stored tool file | `fupr` | file upload request |
 | `crun` | one `run_code` execution | `req` | request id (logs and audit) |
 
-The automation platform adds:
+The workflow platform adds:
 
 | Prefix | Entity | Prefix | Entity |
 |---|---|---|---|
-| `auto` | automation | `aver` | published automation version |
-| `arun` | automation run | `ases` | automation session |
+| `auto` | workflow | `aver` | published workflow version |
+| `arun` | workflow run | `ases` | workflow session |
 | `aapr` | approval | `awh` | webhook endpoint |
 | `coll` | collection | `crow` | collection row |
 | `cfld` | collection field | `dash` | dashboard |

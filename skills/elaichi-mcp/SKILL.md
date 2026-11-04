@@ -43,7 +43,7 @@ there is something to search. If they are missing, see
 
 | Namespace | What it is | What one call costs |
 |---|---|---|
-| `elaichi__*` | Runs Elaichi itself — members, teams, connections, toolboxes, automations, audit | One internal call. Fast and cheap. |
+| `elaichi__*` | Runs Elaichi itself — members, teams, connections, toolboxes, workflows, audit | One internal call. Fast and cheap. |
 | Connected tools (via `read_tool` or `execute_tool`) | The user's real Slack, Jira, HubSpot, Notion | A restriction check, a credential fetch, sometimes a token refresh, then a live third-party call. Seconds, and it spends the vendor's rate limit. |
 
 `elaichi__toolbox__execute`, `elaichi__synthetic_tool__execute` and
@@ -232,7 +232,7 @@ A client that supports MCP Apps gets two more tools:
   a refusal they can ask about, a stopped action, a saved file), call it with
   that `card_id` before you reply. It shows what Elaichi decided and runs
   nothing. Cards expire after 10 minutes.
-- **`show_object`** — when you finish building an automation, dashboard,
+- **`show_object`** — when you finish building a workflow, dashboard,
   collection or knowledge base, show it once. Do not call it after each edit.
 
 ## What the catalog will not do
@@ -256,9 +256,9 @@ synthetic tools, and reading and writing a toolbox's skill.
 
 The whole catalog by area: [Control-plane operations](./references/operations-catalog.md).
 
-## Automations, collections, dashboards, knowledge
+## Workflows, collections, dashboards, knowledge
 
-These appear only when the org has automations turned on. Load
+These appear only when the org has workflows turned on. Load
 **elaichi-automations** before touching `elaichi__automation__*`, and
 **elaichi-data** before `elaichi__collection__*`, `elaichi__dashboard__*` or
 `elaichi__knowledge__*`.

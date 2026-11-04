@@ -1,6 +1,6 @@
 ---
 name: elaichi
-description: Start here for any Elaichi question — what it is, what its words mean (connection, toolbox, automation, collection, dashboard, knowledge base), where a screen or setting lives in the app, what each plan includes, and which Elaichi skill to load next.
+description: Start here for any Elaichi question — what it is, what its words mean (connection, toolbox, workflow, collection, dashboard, knowledge base), where a screen or setting lives in the app, what each plan includes, and which Elaichi skill to load next.
 whenToUse: Someone asks what Elaichi is, how to do something in it, where a screen or setting lives, what one of its words means, or what their plan includes. Also the routing table when you are not sure which Elaichi skill covers a question.
 ---
 
@@ -62,24 +62,24 @@ Two of these are worth keeping apart, because it is the most common confusion:
 a **role** decides what you can do to Elaichi; a **restriction** decides what
 you can do *through* it.
 
-### The automation platform words
+### The workflow platform words
 
-Black organizations also have the automation platform (see [Plans](#plans)).
+Black organizations also have the workflow platform (see [Plans](#plans)).
 An organization on Personal or Gold does not, and its sidebar and MCP tool list
 show none of it.
 
 | Word | What it means |
 |---|---|
-| **Automation** | Also called a workflow. Steps that run on their own when a trigger fires: a schedule, a set time, a webhook, a Slack message, a collection row, another automation finishing, or a click. |
-| **Run** | One execution of an automation, with every step's result kept. |
-| **Session** | A thread that ties several runs of one automation together, so later runs can read what earlier ones did. |
+| **Workflow** | Steps that run on their own when a trigger fires: a schedule, a set time, a webhook, a Slack message, a collection row, another workflow finishing, or a click. |
+| **Run** | One execution of a workflow, with every step's result kept. |
+| **Session** | A thread that ties several runs of one workflow together, so later runs can read what earlier ones did. |
 | **Approval** | A step that pauses a run until an approver says yes. It waits in their **Approvals** inbox. |
-| **Collection** | Shared tables of records that automations write and people read. |
+| **Collection** | Shared tables of records that workflows write and people read. |
 | **Dashboard** | Charts and tables over collections and tools. If an admin allows it, a copy can be shared outside the company as a **public link**. |
-| **Knowledge base** | Short documents that agents and automations search in plain language. |
+| **Knowledge base** | Short documents that agents and workflows search in plain language. |
 | **Elaichi Agent** | The chat inside the app (**Agent** in the sidebar), and `@Elaichi` in Slack. A Black feature. |
 
-Automation versus synthetic tool: an automation runs **by itself** on a
+Workflow versus synthetic tool: a workflow runs **by itself** on a
 trigger; a synthetic tool runs **when an agent calls it**.
 
 ## Three steps to a working agent
@@ -92,7 +92,7 @@ trigger; a synthetic tool runs **when an agent calls it**.
    there is nothing to do to start. Build a deliberate toolbox when you want
    fewer, better-named tools with some inputs locked down.
 3. **Connect your AI client.** Click **Connect** (labeled **Connect an AI
-   client** when the automation platform is on) under the sidebar's list, copy
+   client** when the workflow platform is on) under the sidebar's list, copy
    the MCP endpoint, and add it to Claude, ChatGPT, Cursor, Microsoft Copilot or another MCP
    client.
 
@@ -103,13 +103,13 @@ Full walkthrough: [Getting started](https://elaichi.ai/docs/getting-started).
 | Sidebar area | What is there |
 |---|---|
 | **Agent** | The in-app chat. Black only. |
-| **Approvals** | Runs waiting on *you* to approve a step. Automation platform only. |
+| **Approvals** | Runs waiting on *you* to approve a step. Workflow platform only. |
 | **Connections** | The accounts you have authorized, their health, sharing, transfer |
 | **Connectors** | The product catalog, plus custom connectors you build, fork, or add from a remote MCP server |
 | **Toolboxes** | Your toolboxes, plus **Templates** and **Synthetic tools** |
-| **Knowledge** | Knowledge bases. Automation platform only. |
-| **Automations**, **Dashboards**, **Collections** | The automation platform, where it is on |
-| **Governance** | Restrictions, the audit log, access requests — and, with the automation platform, spend controls |
+| **Knowledge** | Knowledge bases. Workflow platform only. |
+| **Workflows**, **Dashboards**, **Collections** | The workflow platform, where it is on |
+| **Governance** | Restrictions, the audit log, access requests — and, with the workflow platform, spend controls |
 | **Settings** | Organization, People, Billing, SSO and SCIM, domains, API tokens, notifications, logging, and your own security, connected apps and files |
 
 Full screen-by-screen list, with paths and guides: [App map](./references/app-map.md).
@@ -119,7 +119,7 @@ row — one endpoint, not a list of servers to create.
 
 **An area you lack permission for is hidden, not greyed out.** So a sidebar
 shorter than a colleague's is a roles question (Settings → People) or the
-automation platform being off, not a bug.
+workflow platform being off, not a bug.
 
 Getting around fast: **⌘K** opens the command palette (navigate *and* create)
 and **⌘B** toggles the sidebar. Use **Ctrl** on Windows and Linux. Every page
@@ -149,7 +149,7 @@ countries see a regional price.
 MCP. Only the organization's creator can use it (see below). It allows 1 member, 10 connections across at most 3 connectors, 10
 synthetic tools, and 1,000 connected-tool calls a calendar month (UTC; the
 count resets on the 1st). Nothing is shared and there is no governance, and no
-custom connectors, automations, collections, dashboards, knowledge bases or
+custom connectors, workflows, collections, dashboards, knowledge bases or
 Elaichi Agent. Removing an old share or restriction always works.
 
 **Gold** is $15 per user per month, or $10 per user per month billed annually.
@@ -160,7 +160,7 @@ removes Personal's limits.
 **Black** is on sale and self-serve: $24 per seat per month, or $18 per seat
 per month billed annually, in US dollars with regional discounts. It adds:
 
-- the automation platform: automations (workflows), approvals, webhooks,
+- the workflow platform: workflows, approvals, webhooks,
   collections, dashboards, knowledge bases and spend controls
 - the Elaichi Agent, in the app and in Slack
 - customer-managed encryption keys (BYOK) in AWS KMS
@@ -211,7 +211,7 @@ The API host is the same either way.
 | Setting up Claude, ChatGPT, Cursor, Microsoft Copilot or another MCP client, and why a client shows no tools | [elaichi-clients](../elaichi-clients/SKILL.md) |
 | Connecting an account, connection health, transfer, offboarding, custom and remote MCP connectors | [elaichi-connections](../elaichi-connections/SKILL.md) |
 | Toolboxes, templates, stamping, frozen parameters, delegation, toolbox skills, synthetic tools | [elaichi-toolboxes](../elaichi-toolboxes/SKILL.md) |
-| Automations and workflows: triggers, steps, approvals, runs, sessions, webhooks, spend limits | [elaichi-automations](../elaichi-automations/SKILL.md) |
+| Workflows: triggers, steps, approvals, runs, sessions, webhooks, spend limits | [elaichi-automations](../elaichi-automations/SKILL.md) |
 | Collections, dashboards and public links, knowledge bases | [elaichi-data](../elaichi-data/SKILL.md) |
 | Roles, permissions, restrictions, access requests, the audit log, SSO and SCIM | [elaichi-governance](../elaichi-governance/SKILL.md) |
 | Writing code against `api.elaichi.ai` | [elaichi-api](../elaichi-api/SKILL.md) |
@@ -232,6 +232,6 @@ the real answer is a connect link the person opens themselves.
 
 | Document | Topics |
 |---|---|
-| [Concepts](./references/concepts.md) | The full model — organizations, connectors, connections, toolboxes, templates, synthetic tools, roles, restrictions, the audit log, and the automation platform |
+| [Concepts](./references/concepts.md) | The full model — organizations, connectors, connections, toolboxes, templates, synthetic tools, roles, restrictions, the audit log, and the workflow platform |
 | [App map](./references/app-map.md) | Every screen, its path, what it does, and the guide for it |
 | [First hour](./references/first-hour.md) | A new organization from sign-in to a working agent, including what to set up before inviting anyone |

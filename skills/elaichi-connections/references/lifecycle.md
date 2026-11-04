@@ -102,13 +102,13 @@ handled differently from everything else.
 | What they own | What happens | The admin decides |
 |---|---|---|
 | **Any connection**, private or shared | **Always deleted**, with its vault account | Optionally a **replacement** for each — another active connection to the same app that the admin can use. References move onto it first |
-| **Shared** toolbox, template, automation, collection, dashboard, knowledge base or app | **Blocks removal** until decided | Hand it to a person or a team, or delete it |
+| **Shared** toolbox, template, workflow, collection, dashboard, knowledge base or app | **Blocks removal** until decided | Hand it to a person or a team, or delete it |
 | Private toolbox, template or other private item | Deleted if nothing is said | Optionally hand it over |
 | Custom connector | **Blocks removal** until it has a new owner | Transfer only, to a person or a team |
 | Synthetic tool | Deleted — the only option | If another member's toolbox uses it, acknowledge the deletion |
 
 What a replacement rewrites, before the old connection is deleted: toolbox
-entries in **any** toolbox, automation steps, and steps in other members'
+entries in **any** toolbox, workflow steps, and steps in other members'
 synthetic tools. The rewritten toolbox entries are re-pinned under the admin
 who chose the replacement. A connection with no replacement is deleted all the
 same, and everything that used it goes unmet.

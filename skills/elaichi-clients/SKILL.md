@@ -42,7 +42,7 @@ address. So there is nothing to mint, nothing per toolbox, and nothing per app.
 ## Where the endpoint comes from
 
 In [app.elaichi.ai](https://app.elaichi.ai), click the **Connect** row under
-the sidebar's list (**Connect an AI client** when the automation platform is
+the sidebar's list (**Connect an AI client** when the workflow platform is
 on) and copy the endpoint. Paste it exactly as given.
 
 It is an OAuth endpoint. There is no API key, no bridge command, and no
@@ -165,8 +165,8 @@ same client at the same endpoint do not see the same tools.
 listed one by one, however few there are. The tool list holds:
 
 - Elaichi's own `elaichi__…` operations — only those the person's role and the
-  grant's scopes allow. Automation, collection, dashboard and knowledge
-  operations appear only where the automation platform is on.
+  grant's scopes allow. Workflow, collection, dashboard and knowledge
+  operations appear only where the workflow platform is on.
 - `search_tools` to find a connected tool, and `read_tool` and `execute_tool`
   to run one: `read_tool` for a tool that only reads, `execute_tool` for any
   tool. Each `search_tools` row names the one to use. They appear only while

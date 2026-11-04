@@ -14,6 +14,16 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- The console now calls automations **workflows**, and the skills follow. Prose
+  in every skill, the README and the plugin description says "workflow", and
+  the quoted console labels are now **Workflows** (sidebar, Settings →
+  Organization). Everything an agent types is unchanged: the
+  `elaichi-automations` skill slug (`elaichi:elaichi-automations`), the
+  `elaichi__automation__*` tool and `automation.*` operation names, the
+  `automation:*` permissions, `auto_` ids, `/automation` and `/automations`
+  routes, API paths and `automations_*` error codes. `elaichi-automations`
+  and `elaichi` (Concepts) say so once, so an agent that meets "automation" in
+  a tool name knows it is the same thing.
 - On the free Personal plan only the organization's creator can use it
   (elaichi#986). Members added during the trial stay, but every other member
   is refused `403 plan_single_user`, over the API and MCP alike, with a

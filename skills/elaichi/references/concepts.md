@@ -6,7 +6,7 @@ exposes **tools**. A **toolbox** curates tools across connections; a
 **template** is a toolbox design with no accounts attached. Everything a person
 can reach appears at their **MCP endpoint**. **Roles** decide what they may do
 in Elaichi; **restrictions** decide what they may reach through it. Where the
-automation platform is on, **automations** run tools on their own, write to
+workflow platform is on, **workflows** run tools on their own, write to
 **collections**, feed **dashboards**, and read **knowledge bases**.
 
 ## Organization
@@ -131,7 +131,7 @@ the original input and the outputs of earlier steps.
 Independent steps run in parallel. Cycles and unknown references are rejected
 when you save, not when you run. It advertises its own input schema and drops
 into any toolbox or template like an ordinary entry. It runs only when an agent
-calls it — for something that should run on its own, use an automation.
+calls it — for something that should run on its own, use a workflow.
 
 ## MCP endpoint
 
@@ -211,33 +211,34 @@ and SCIM changes, and sign-ins including failed ones.
 Every row carries `actor_kind` — `user`, `system`, `staff`, `scim`,
 `api_token`, `ai_assistant` or `automation` — and the surface it came from.
 A call from an MCP client is recorded with surface `mcp` and names the client;
-`ai_assistant` marks the in-app Elaichi Agent only. An automation's actions are
+`ai_assistant` marks the in-app Elaichi Agent only. A workflow's actions are
 recorded with the run and the person it acted for.
 
 People without audit permission see **Your activity** — their own rows —
 instead of the organization's log. Events are eventually consistent: a row may
 take a moment to appear.
 
-## The automation platform
+## The workflow platform
 
 Part of the Black plan (the 14-day trial included), behind one switch in
-Settings → Organization → Automations that new organizations start with on.
+Settings → Organization → Workflows that new organizations start with on.
 Everything below is absent from the app and from MCP on Personal and Gold, and
 while the switch is off.
 
-**Automation.** Also called a workflow. A published definition with a trigger
+**Workflow.** Formerly called an automation, so the tool names, routes,
+permissions and `auto_` ids still say `automation`. A published definition with a trigger
 and steps. Triggers: run by hand, a repeating schedule, once at a set time, a
-webhook, a Slack message, another automation finishing, or a collection row.
+webhook, a Slack message, another workflow finishing, or a collection row.
 Steps call tools and synthetic tools, transform data, branch and loop, write
 collections, search or write knowledge, ask an AI agent,
 notify people, and pause for **approval**. Each execution is a **run**. A
-**session** ties related runs of one automation together. Build and run them
+**session** ties related runs of one workflow together. Build and run them
 with **elaichi-automations**.
 
 **Approval.** An approve step pauses a run until a named approver decides. A
 step that deletes must have an approval in front of it.
 
-**Collection.** One or more tables of records with typed fields. Automations
+**Collection.** One or more tables of records with typed fields. Workflows
 write rows; people and dashboards read them. Rows keep their history.
 
 **Dashboard.** Pages of charts and tables over collections and tools. With the
@@ -245,7 +246,7 @@ org's **Public links** switch on (off by default), a member who can edit a
 dashboard can publish a read-only copy to a link anyone can open.
 
 **Knowledge base.** Short documents searched in plain language by people,
-agents and automation steps. Search is word-based, not semantic.
+agents and workflow steps. Search is word-based, not semantic.
 
 **Spend controls** live under Governance: they meter usage and set limits.
 

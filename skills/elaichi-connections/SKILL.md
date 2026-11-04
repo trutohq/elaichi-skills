@@ -148,7 +148,7 @@ leaves is the most expensive thing to untangle.
 
 What offboarding *can* do is keep tools working. For each connection being
 deleted, the admin may pick a **replacement**: another active connection to the
-same app that the admin can use. Toolbox entries, automation steps and other
+same app that the admin can use. Toolbox entries, workflow steps and other
 people's synthetic tools are moved onto it before the old one is deleted.
 Without a replacement, everything that used the connection stops.
 
