@@ -15,7 +15,7 @@
     {
       "id": "elaichi-automations",
       "title": "elaichi-automations",
-      "whenToUse": "Someone wants something to happen on its own — on a schedule, once at a set time, when a webhook, Slack message, collection row or another automation fires — or is building, debugging, running, sharing or turning off an Elaichi automation or workflow.",
+      "whenToUse": "Someone wants something to happen on its own — on a schedule, once at a set time, when a webhook, Slack message, collection row or another workflow fires — or is building, debugging, running, sharing or turning off an Elaichi workflow.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-automations/SKILL.md"
     },
     {

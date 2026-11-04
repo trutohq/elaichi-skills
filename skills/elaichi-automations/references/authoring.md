@@ -1,6 +1,6 @@
 # Writing a definition
 
-An automation's definition is one JSON document. YAML in the console is the
+A workflow's definition is one JSON document. YAML in the console is the
 same document in another view. This page lists what the document holds and the
 rules that are easy to miss.
 
@@ -26,7 +26,7 @@ you have not written before.
 | `output` | JSONata over the run that becomes the run's output |
 
 Why the automatic toolboxes are refused: `global:…` and `connection:…` mean
-something different after the automation changes owner. Build a real toolbox
+something different after the workflow changes owner. Build a real toolbox
 (see **elaichi-toolboxes**) and list its `tbx_…` id.
 
 ## Triggers
@@ -42,8 +42,8 @@ Every trigger has a `key` (unique in the definition) and a `type`. Most take
 | `schedule_once` | `at` (ISO time with `Z` or an offset), `missed` (`skip` or `run`) | `overlap: skip`. Must be at least 60 seconds in the future to publish. A late fire with `missed: run` still runs within 24 hours. |
 | `webhook` | `auth`, `methods` (`POST`, `PUT`), `dedupe_key` (JSONata over `{ headers, query, body }`) | Auth defaults to Standard Webhooks. Other schemes: `token`, or `hmac` with preset `github`, `stripe`, `slack`, `linear` or `custom`. At most 3. |
 | `collection_row` | `collection_id`, `table`, `on` (`inserted`, `updated`, `deleted`), `fields` | `fields` narrows `updated` only. The collection must be in `collections`. |
-| `automation_run` | `automation_id`, `on` (`succeeded`, `failed`) | Default `on: [succeeded]`. Never this automation. Chains stop at depth 3. |
-| `slack` | `slack_team_id`, `event` (`message` or `reaction_added`), `channel_ids`, plus `keywords`, `reactions`, `filter`, `threads` | Channel ids are written literally. Needs Manage on the automation. Outside guests are dropped unless `include_external_users` is true. |
+| `automation_run` | `automation_id`, `on` (`succeeded`, `failed`) | Default `on: [succeeded]`. Never this workflow. Chains stop at depth 3. |
+| `slack` | `slack_team_id`, `event` (`message` or `reaction_added`), `channel_ids`, plus `keywords`, `reactions`, `filter`, `threads` | Channel ids are written literally. Needs Manage on the workflow. Outside guests are dropped unless `include_external_users` is true. |
 
 `automation.run`'s `trigger_key` picks one manual trigger when there are
 several (for example one per button). Without a manual trigger there is
@@ -109,7 +109,7 @@ do not.
 | `wait` | `seconds` or `until` | At most an hour |
 | `state.get` | `keys` | Reads values kept across runs (a watermark, a "seen" map) |
 | `state.set` | `state_key`, `value` | Writes one. Put it after the step that must succeed first, so a failure retries next run. |
-| `runs.query` | `scope`, `status`, `limit` (≤ 20) | Reads earlier runs of this automation or session |
+| `runs.query` | `scope`, `status`, `limit` (≤ 20) | Reads earlier runs of this workflow or session |
 
 ### Collections
 
@@ -155,11 +155,11 @@ A step that leaves it out follows the organization default as it is when the
 step runs. If a pinned model is removed, the step runs on the default and the
 run records an `agent_model_fallback` warning.
 
-### Web and other automations
+### Web and other workflows
 
 | Type | Key fields | Notes |
 |---|---|---|
-| `automation.call` | `automation_id`, `input`, `wait_seconds` | Runs another published automation and waits for its output |
+| `automation.call` | `automation_id`, `input`, `wait_seconds` | Runs another published workflow and waits for its output |
 
 ## Expressions
 

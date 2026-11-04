@@ -24,7 +24,7 @@ one of three groups:
 |---|---|---|
 | **Published** | Yes | Yes. This is the API. |
 | **Internal** — the console's own screens, browser redirects, inbound webhooks, staff tools | No | No. Its URLs can change without notice. |
-| **Black-plan** — automations, approvals, collections, dashboards and public links, knowledge, apps, spend | No, not yet | Only if the organization is on Black (trial included), and expect changes. See [Endpoints](./references/endpoints.md#black-plan-families-not-in-the-schema). |
+| **Black-plan** — workflows, approvals, collections, dashboards and public links, knowledge, apps, spend | No, not yet | Only if the organization is on Black (trial included), and expect changes. See [Endpoints](./references/endpoints.md#black-plan-families-not-in-the-schema). |
 
 Paths are unversioned — `/connection`, not `/v1/connection`. An unknown path
 asked for with `Accept: text/markdown` answers a short Markdown page that
@@ -257,7 +257,7 @@ within a prefix, which is why cursors use them.
 Common prefixes: `org`, `usr`, `team`, `role`, `conn` (connection), `tbx`
 (toolbox), `tpl` (template), `syn` (synthetic tool), `acl` (a grant), `rstr`
 (restriction), `inv` (invite), `atok` (API token), `aud` (audit event), `areq`
-(access request), `file`. Black-plan resources add `auto` (automation),
+(access request), `file`. Black-plan resources add `auto` (workflow),
 `coll` (collection), `dash` (dashboard), `kbs` (knowledge base) and `bndl`
 (app). The full table is in [Conventions](../elaichi-conventions/SKILL.md).
 

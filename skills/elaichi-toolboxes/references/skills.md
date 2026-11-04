@@ -32,7 +32,7 @@ convention, what must never happen.
 | **Fields and values** | Exact property names, allowed status and label values, date and id formats |
 | **How to do the job** | The usual order of calls, which tool to use for what, what to check first |
 | **Rules** | What must always or never happen, and when to ask the person first |
-| **Automations** | Which automations use this toolbox, so nobody breaks them by renaming a field |
+| **Workflows** | Which workflows use this toolbox, so nobody breaks them by renaming a field |
 
 A starting point:
 
@@ -61,7 +61,7 @@ requests: those go to the Product board.
 - Ask the person before filing an `S1`.
 
 ## Used by
-- The "Daily bug digest" automation reads Status and Severity.
+- The "Daily bug digest" workflow reads Status and Severity.
 ```
 
 ## Naming tools in a skill

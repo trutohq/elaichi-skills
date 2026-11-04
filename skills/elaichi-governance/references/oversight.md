@@ -35,7 +35,7 @@ Every row carries `actor_kind`:
 |---|---|
 | `user` | A member, including calls their MCP client made on their behalf |
 | `ai_assistant` | The Elaichi agent, during a conversation |
-| `automation` | An automation run, acting for the person it runs as |
+| `automation` | A workflow run, acting for the person it runs as |
 | `staff` | Elaichi support, either acting directly or signed in as a member |
 | `system` | No acting person, for example SCIM provisioning |
 
@@ -100,12 +100,12 @@ approver.
 |---|---|
 | **An MCP client** (Claude, ChatGPT, Cursor, Microsoft Copilot and others) | The scopes the person granted on Elaichi's consent screen are the standing approval. Elaichi adds no per-call prompt over MCP. Any per-call confirmation is the client's own. |
 | **The Elaichi agent** | Writes stop at an approval card (Deny, Always allow, Allow once). Deletes ask every time. In Slack, the card goes to the requester's direct message with only Approve and Deny. |
-| **An automation** | A destructive step must have an `approve` step before it. Approvers decide in the **Approvals** inbox, by email, or in Slack; a gated destructive step is approved in the console only. See [elaichi-automations](../../elaichi-automations/SKILL.md). |
+| **A workflow** | A destructive step must have an `approve` step before it. Approvers decide in the **Approvals** inbox, by email, or in Slack; a gated destructive step is approved in the console only. See [elaichi-automations](../../elaichi-automations/SKILL.md). |
 
 What an admin can use today to hold AI clients back:
 
 - **Restrictions** block a connector or tool for a role or a person, for every
-  client and automation.
+  client and workflow.
 - **Consent scopes**: "Run your connected tools" runs every tool in the apps,
   reads, writes and deletes. "Delete data and remove access" covers Elaichi's
   own data only. To hold a client to reads, pick toolboxes of read tools at consent, or block the
@@ -117,14 +117,14 @@ approved.
 ## Spend
 
 Spend is a Governance tab that appears only where the organization has
-automations turned on.
+workflows turned on.
 
 Web access was removed: Elaichi no longer fetches websites, and its
 Governance tab and policy are gone. A restriction rule made earlier for web
 access lists as **Web access (removed)** and can still be deleted.
 
 **Spend** (**Governance → Spend**) has usage meters, usage limits (a hard limit
-plus alert percentages, organization-wide or per automation), and payment
+plus alert percentages, organization-wide or per workflow), and payment
 controls: a payment policy that sets when a payment needs one or two approvals,
 and payment caps per period and per transaction. Reading needs `spend:view`,
 changing needs `spend:manage`, and changing payment settings also asks the person

@@ -69,8 +69,8 @@ Put in it:
   options, label sets and formats the tools expect.
 - **Rules**: "always set Priority", "never close a ticket without a comment",
   "ask before writing to the live board".
-- **Which automations use it**, so nobody renames a field from under them.
-  An automation reaches tools only through stored toolboxes it names, never
+- **Which workflows use it**, so nobody renames a field from under them.
+  A workflow reaches tools only through stored toolboxes it names, never
   **All tools** (see [elaichi-automations](../elaichi-automations/SKILL.md)).
 
 How to write it so it works:
@@ -234,6 +234,6 @@ toolboxes is briefed on each one's skill and can read it as the resource
 - **elaichi-connections**: the accounts a toolbox binds to.
 - **elaichi-mcp**: how the tools you curate reach an agent.
 - **elaichi-governance**: why a tool you added is restricted or missing.
-- [elaichi-automations](../elaichi-automations/SKILL.md): automations run their
-  tools through stored toolboxes, so a toolbox an automation uses needs a skill
+- [elaichi-automations](../elaichi-automations/SKILL.md): workflows run their
+  tools through stored toolboxes, so a toolbox a workflow uses needs a skill
   that says so.
