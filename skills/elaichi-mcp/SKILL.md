@@ -221,7 +221,11 @@ large connector's whole schema set.
 
 A tool's file argument takes a `file_id`. Get one from
 `elaichi__file__upload_request` (the user uploads from their machine; you never
-see the bytes) or `elaichi__file__create` (text you wrote). See
+see the bytes) or `elaichi__file__create` (text you wrote).
+
+To see what is **in** a file (a screenshot a tool downloaded, a CSV export),
+call `elaichi__file__read` with its `file_id`. Do not open the file's `url`:
+that page needs a browser signed in to Elaichi. See
 [Tool discovery](./references/tool-discovery.md#files-in-and-out).
 
 ## Cards (MCP Apps clients)

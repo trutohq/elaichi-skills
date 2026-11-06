@@ -12,6 +12,14 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+### Added
+
+- `elaichi-mcp`: `elaichi__file__read` reads a file's content over MCP alone
+  (elaichi `file-read-mcp`). An image comes back as an image block, text
+  inline, anything else as a 10-minute download link that needs no sign-in.
+  The Files section, the operations catalog and Tool discovery say to use it
+  instead of opening a file's `url`, which needs a signed-in browser.
+
 ### Changed
 
 - The console now calls automations **workflows**, and the skills follow. Prose
