@@ -254,11 +254,11 @@ an exact account name or `conn_…` id beyond that. **Never guess it. Ask.**
 
 | Scope | Consent screen label | Covers |
 |---|---|---|
-| `mcp:read` | Read your organization's data | Reads, including sensitive ones like the audit log |
-| `mcp:write` | Create and change data | Creates and changes; implies read |
-| `mcp:destructive` | Delete data and remove access | Deletes, removals, revokes; implies read. Never pre-ticked |
-| `mcp:tools` | Run your connected tools | Connected tools, from all of them or chosen toolboxes. Includes tools that delete in those apps. `mcp:destructive` is for Elaichi's own data |
-| `openid`, `email` | Confirm who you are, See your email address | Identity only; reach nothing in the organization |
+| `mcp:read` | See your organization | Reads, including sensitive ones like the audit log |
+| `mcp:write` | Make changes | Creates and changes; implies read |
+| `mcp:destructive` | Delete things | Deletes, removals, revokes; implies read. Never pre-ticked |
+| `mcp:tools` | Use your connected apps | Connected tools, from Everything I can use or chosen toolboxes. Includes tools that delete in those apps. `mcp:destructive` is for Elaichi's own data |
+| `openid`, `email` | Not checkboxes; the email carries a "Shared with <app>" tag | Identity only; reach nothing in the organization |
 
 A client that asks for no scope gets `mcp:read` only. A grant's scopes never
 change after consent; adding one means connecting the client again.
