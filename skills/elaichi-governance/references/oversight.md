@@ -106,8 +106,8 @@ What an admin can use today to hold AI clients back:
 
 - **Restrictions** block a connector or tool for a role or a person, for every
   client and workflow.
-- **Consent scopes**: "Run your connected tools" runs every tool in the apps,
-  reads, writes and deletes. "Delete data and remove access" covers Elaichi's
+- **Consent scopes**: "Use your connected apps" runs every tool in the apps,
+  reads, writes and deletes. "Delete things" covers Elaichi's
   own data only. To hold a client to reads, pick toolboxes of read tools at consent, or block the
   write tools with a restriction. More in **elaichi-mcp**.
 

@@ -47,9 +47,8 @@ it to [Claude](https://elaichi.ai/docs/guides/mcp-servers/claude),
 client.
 
 On the consent screen, pick the organization, then look at the boxes. Every
-scope the client asked for starts ticked except **Delete data and remove
-access**. For most people **Read your organization's data** and **Run your
-connected tools** are enough; untick **Create and change data** unless you want
+scope the client asked for starts ticked except **Delete things**. For most people **See your organization** and **Use your
+connected apps** are enough; untick **Make changes** unless you want
 the client to reshape the organization. Leave Delete off until something
 genuinely needs it. Adding a scope later means connecting the client again.
 
@@ -143,8 +142,8 @@ skills carry the detail.
 | Symptom | First thing to check |
 |---|---|
 | The client shows no tools at all | The person's role may lack `tool:execute` (Guest, Billing Admin and Auditor do) |
-| The client shows Elaichi's own operations but nothing else | **Run your connected tools** was not granted, or nothing they can use is connected and active yet |
-| One expected tool is missing | Connection status first, restrictions second. Run your connected tools covers deletes in the apps too |
+| The client shows Elaichi's own operations but nothing else | **Use your connected apps** was not granted, or nothing they can use is connected and active yet |
+| One expected tool is missing | Connection status first, restrictions second. Use your connected apps covers deletes in the apps too |
 | A newly connected app has not appeared | Most clients cache the tool list. Start a new conversation, or reconnect |
 | A tool call or an add is refused with `plan_limit_reached` | The Personal plan's member, connection, connector, synthetic tool or monthly tool-call limit. Settings → Billing shows how full each is, and buying Gold or Black lifts them |
 | A call is refused after consent | The scope it needed was not granted. Connect the client again and tick it — Settings → Connected apps cannot add a scope |
