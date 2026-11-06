@@ -143,7 +143,7 @@ Approving or denying an access request is not on MCP at all
 - `file.upload_request_get` — poll until `status` is `confirmed`; it lists each `file_id`.
 - `file.create` — save text or base64 you wrote as a file (up to 1 MiB, kept 7 days).
 - `file.get` — is this file id usable now?
-- `file.read` — read what is in a file: an image comes back as an image you can see, text inline, anything else as a short-lived download link. Needs `mcp:read` and `mcp:tools`.
+- `file.read` — read what is in a file: an image comes back as an image you can see, text inline, anything else as a short-lived download link. `link_only: true` returns only the link, for a shell agent saving the file to disk. Needs `mcp:read` and `mcp:tools`.
 
 Pass a `file_id` to a connected tool's file argument. See
 [Tool discovery](./tool-discovery.md#files-in-and-out).

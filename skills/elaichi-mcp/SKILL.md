@@ -224,8 +224,12 @@ A tool's file argument takes a `file_id`. Get one from
 see the bytes) or `elaichi__file__create` (text you wrote).
 
 To see what is **in** a file (a screenshot a tool downloaded, a CSV export),
-call `elaichi__file__read` with its `file_id`. Do not open the file's `url`:
-that page needs a browser signed in to Elaichi. See
+call `elaichi__file__read` with its `file_id`: a chat client reads the image or
+text there. An agent with a shell that only needs the file on disk should `curl`
+the `download_url` the saved-file result already carries, or call
+`elaichi__file__read` with `link_only: true`, so the content never fills your
+context. Do not open the file's `url`: that page needs a browser signed in to
+Elaichi. See
 [Tool discovery](./references/tool-discovery.md#files-in-and-out).
 
 ## Cards (MCP Apps clients)
