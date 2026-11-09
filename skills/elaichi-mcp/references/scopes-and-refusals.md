@@ -211,7 +211,9 @@ the enforcement.
 
 ## Rate limits
 
-`POST /mcp` allows **120 requests per 60 seconds** per OAuth access token.
+`POST /mcp` allows **120 requests per 60 seconds** per OAuth grant, so
+refreshing the token does not reset the count. A request without a valid
+token is counted per client IP.
 Each tool call inside a `run_code` program counts against the same budget.
 Over the limit you get `429` with code `rate_limited` and a `Retry-After`
 header in seconds. Honor it; do not retry tighter.
