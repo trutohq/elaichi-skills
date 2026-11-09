@@ -25,6 +25,15 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `elaichi-clients`, `elaichi-mcp`, `elaichi-conventions`, `elaichi-governance`,
+  `elaichi-toolboxes`, `elaichi` and the Cursor rule describe the redesigned MCP
+  consent screen (elaichi#1013). The scopes read **Use your connected apps**,
+  **See your organization**, **Make changes** and **Delete things**. It is one
+  page with no "Step 1 of 2" and no Continue; toolboxes are a row under Use your
+  connected apps. "All my tools" is now **Everything I can use**, because it
+  includes system toolboxes as well as the person's own (Edit toolboxes offers
+  **Everything I can use** or **Only these toolboxes**). The buttons are
+  **Don't allow** and **Allow**. Scope ids are unchanged.
 - The console now calls automations **workflows**, and the skills follow. Prose
   in every skill, the README and the plugin description says "workflow", and
   the quoted console labels are now **Workflows** (sidebar, Settings →

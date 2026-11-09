@@ -98,7 +98,7 @@ account-level to configure.
    Select **Authenticate**.
 5. Elaichi's sign-in and consent screen opens in the browser and names Cursor
    as the requesting app. Pick the organization, choose what Cursor may do and
-   which tools it may use, then select **Allow access**. The browser shows
+   which toolboxes it may use, then select **Allow**. The browser shows
    "Authorization complete" and may ask to open Cursor. Select **Open Cursor**.
 
 There is **no `type` field, no command to run, and no `auth` block.** Cursor
@@ -136,8 +136,8 @@ transport, which Elaichi uses. The setup is **per agent**, not per person.
    is no client ID, secret or URL to enter.
 5. Select **Next**. On **Add tool**, select **Create a new connection** and
    sign in. Elaichi's sign-in and consent screen opens. Pick the
-   organization, choose what the agent may do and which tools it may use,
-   then select **Allow access**.
+   organization, choose what the agent may do and which toolboxes it may use,
+   then select **Allow**.
 6. Select **Add to agent**.
 7. Publish the agent, then go to **Channels** and open **Teams and Microsoft
    Copilot**. Make sure **Make agent available in Microsoft Copilot** is
@@ -187,7 +187,7 @@ There is nothing account-level to configure.
    when `COPILOT_HOME` is not set.
 5. Sign in when VS Code prompts. Elaichi's sign-in and consent screen opens in
    the browser. Pick the organization, choose what GitHub Copilot may do and
-   which tools it may use, then select **Allow access**.
+   which toolboxes it may use, then select **Allow**.
 
 The entry that results looks like this (the portable format, which uses a
 top-level `mcpServers`):
