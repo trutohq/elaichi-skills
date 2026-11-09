@@ -21,7 +21,7 @@ elaichi__connection__list
 If the app is not there, first check `elaichi__toolbox__list` for a toolbox
 someone shared with the user that holds this app's tools. Its pinned
 connection never appears in the recipient's connection list, yet its tools are
-theirs to run — under **All my tools**, or when that toolbox was chosen on the
+theirs to run — under **Everything I can use**, or when that toolbox was chosen on the
 consent screen.
 
 Nothing there either? Then it is setup, not a missing tool. Run the

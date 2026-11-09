@@ -87,7 +87,7 @@ Three kinds exist:
 | Kind | Where it comes from |
 |---|---|
 | **Dynamic, per connection** | Created automatically the moment a connection goes active. Read-only. |
-| **Dynamic, global** | One per person (`global:{userId}`, named **All tools**) — every tool of every connection they own or that is shared with them at `use`. Read-only. An MCP client granted **All my tools** reaches this plus every toolbox shared with them. |
+| **Dynamic, global** | One per person (`global:{userId}`, named **All tools**) — every tool of every connection they own or that is shared with them at `use`. Read-only. An MCP client granted **Everything I can use** reaches this plus every toolbox shared with them. |
 | **Built** | Created by someone, entry by entry, or stamped from a template. |
 
 Per entry, a builder can rename and re-describe the tool (which is what the

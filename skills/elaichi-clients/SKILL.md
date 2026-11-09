@@ -72,41 +72,45 @@ the client's own prompt, not Elaichi's.
 several memberships, nothing is preselected. Reaching another organization
 takes a second connection.
 
-**2. Choose what the client can do.** One checkbox per scope the client asked
-for:
+**2. Choose what the client can do.** The same page lists one checkbox per scope
+the client asked for, **Use your connected apps** first:
 
 | On the consent screen | In an error | What it allows |
 |---|---|---|
-| **Read your organization's data** | `mcp:read` | Everything you can already see in Elaichi. Never secret values. Open its **Details** once: it also covers the audit log, pending invitations, SSO and SCIM settings, verified domains and log-forwarding destinations. |
-| **Create and change data** | `mcp:write` | Create and change teams, roles, toolboxes, templates and connections, and share access. Inviting people and changing a member's roles stay in the Elaichi web app |
-| **Delete data and remove access** | `mcp:destructive` | Permanently delete data and remove access in Elaichi. Cannot be undone. Removing someone from your organization, deleting a team or role, and revoking an invitation or API token stay in the Elaichi web app |
-| **Run your connected tools** | `mcp:tools` | Run tools from the toolboxes chosen in the next step, deleting in your connected apps included |
+| **Use your connected apps** | `mcp:tools` | Read, send and delete in your connected apps, like email and calendar, from the toolboxes chosen in its **Toolboxes** row. Deleting in those apps is included |
+| **See your organization** | `mcp:read` | Anything you can see in Elaichi. Never secret values like passwords and keys. Open **See exactly what each one includes** once: read also covers the audit log, pending invitations, SSO and SCIM settings, verified domains and log-forwarding destinations. |
+| **Make changes** | `mcp:write` | Add and edit teams, roles, toolboxes, templates and connections, and share access. Inviting people and changing a member's roles stay in the Elaichi web app |
+| **Delete things** | `mcp:destructive` | Permanently delete data and remove access in Elaichi. Cannot be undone. Removing someone from your organization, deleting a team or role, and revoking an invitation or API token stay in the Elaichi web app |
 
-Every requested scope **starts ticked except Delete**, which always takes a
-deliberate click. A client that asks for no scope at all gets Read only.
-Ticking Create and change, or Delete, locks Read on. For most people, **Read**
-and **Run your connected tools** are enough; untick Create and change unless
-the person wants the client to reshape the organization.
+Every requested scope **starts ticked except Delete things**, which always takes
+a deliberate click. A client that asks for no scope at all gets See your
+organization only. Ticking Make changes, or Delete things, locks See your
+organization on. For most people, **See your organization** and **Use your
+connected apps** are enough; untick Make changes unless the person wants the
+client to reshape the organization.
 
-The screen may also show **Confirm who you are** and **See your email
-address**. They are always on when asked for, and reach nothing in the
-organization.
+Sign-in scopes (`openid`, `email`) are not checkboxes. The screen shows who is
+signed in, and a **Shared with <app>** tag on the email address, and neither
+reaches anything in the organization.
 
-**3. Choose toolboxes** (only when Run your connected tools is ticked):
+**3. Choose toolboxes** (only while Use your connected apps is ticked): the
+**Toolboxes** row under it opens a sheet. There is no second step and no
+Continue; **Don't allow** and **Allow** sit at the bottom of the same page.
 
-- **All my tools** — the default. Everything the person can use today, and
-  accounts and toolboxes they get later.
+- **Everything I can use** — the default. Your toolboxes and system toolboxes
+  for every connected app, including ones added later. A **Select all** link in
+  the sheet switches back to it.
 - **Only the ones I pick** — one to 50 toolboxes they can use. The client
-  reaches nothing else, including accounts connected later. Automatic
-  per-connection toolboxes cannot be picked; build or stamp a toolbox first.
+  reaches nothing else, including accounts connected later. System toolboxes
+  (one per connection) cannot be picked; build or stamp a toolbox first.
 
 ### Changing it later
 
-- **Toolboxes:** Settings → **Connected apps** → the app → **Manage toolboxes**.
+- **Toolboxes:** Settings → **Connected apps** → the app → **Edit toolboxes** (**Everything I can use** or **Only these toolboxes**).
   Takes effect on the client's next call.
 - **Scopes:** cannot be changed. A grant's scopes are fixed at consent, and
-  Connected apps cannot add one. To add Create and change, Delete or Run your
-  connected tools, **connect the client again** and tick it. This works only
+  Connected apps cannot add one. To add Make changes, Delete things or Use your
+  connected apps, **connect the client again** and tick it. This works only
   if the client asks for that scope again — the screen never offers a scope the
   client did not request.
 - **Revoke:** Settings → Connected apps. The client's next call fails.
@@ -202,11 +206,11 @@ Work down this list. The first match is usually the answer.
 | Symptom | Cause and fix |
 |---|---|
 | **No tools at all** | The person's role lacks `tool:execute` — Guest, Billing Admin and Auditor do. An admin changes the role. |
-| **Only `elaichi__…` operations, no `search_tools`** | Either **Run your connected tools** was not granted — connect the client again and tick it — or the grant reaches no active connected tool yet: nothing connected, or every account `pending` or `needs_reauth`. (Restricted tools still bring `search_tools`, which names them.) Connect or reconnect an app in Elaichi. |
-| **Chose "Only the ones I pick" and tools vanished** | A picked toolbox was deleted or the person lost access to it. Settings → Connected apps → the app → **Manage toolboxes**. |
+| **Only `elaichi__…` operations, no `search_tools`** | Either **Use your connected apps** was not granted — connect the client again and tick it — or the grant reaches no active connected tool yet: nothing connected, or every account `pending` or `needs_reauth`. (Restricted tools still bring `search_tools`, which names them.) Connect or reconnect an app in Elaichi. |
+| **Chose "Only the ones I pick" and tools vanished** | A picked toolbox was deleted or the person lost access to it. Settings → Connected apps → the app → **Edit toolboxes**. |
 | **`search_tools`, `read_tool` and `execute_tool` show up** | Nothing is wrong. Ask the client to search for the tool by name. |
-| **One expected tool is missing** | Connection status first, restrictions second. A tool that deletes is not left out for a missing Delete scope: Run your connected tools covers it. Work the ladder in [Diagnosing a missing tool](../elaichi-mcp/references/missing-tools.md). |
-| **Expected Elaichi operations are missing** | The grant lacks the scope they need (Create and change, or Delete), or the person's role lacks the permission. Connect again for a scope; ask an admin for a permission. |
+| **One expected tool is missing** | Connection status first, restrictions second. A tool that deletes is not left out for a missing Delete things scope: Use your connected apps covers it. Work the ladder in [Diagnosing a missing tool](../elaichi-mcp/references/missing-tools.md). |
+| **Expected Elaichi operations are missing** | The grant lacks the scope they need (Make changes, or Delete things), or the person's role lacks the permission. Connect again for a scope; ask an admin for a permission. |
 | **A newly connected app has not appeared** | Most clients cache the tool list. Start a new conversation, reconnect the connector, or re-scan tools. In ChatGPT, select **Refresh tools**. |
 | **A call is refused, naming a scope** | The grant was never given it. Connect the client again and tick it — Settings → Connected apps cannot add a scope. |
 | **A call is refused, naming a permission or `tool:execute`** | Reconnecting will not help. An admin changes the role. |

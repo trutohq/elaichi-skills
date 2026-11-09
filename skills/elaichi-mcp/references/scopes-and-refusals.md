@@ -19,10 +19,10 @@ Elaichi's own consent screen. Only `mcp:read` is granted by default.
 
 | Scope | Consent screen says | What it allows |
 |---|---|---|
-| `mcp:read` | Read your organization's data | Everything the user can already see: people, teams, roles, connections, toolboxes, templates, restrictions, settings, and the audit log. **Never secret values.** Also files and withdraws the user's own access requests. |
-| `mcp:write` | Create and change data | Create and change teams, roles, toolboxes, templates, synthetic tools, connections and org settings, and share them. Implies `mcp:read`. |
-| `mcp:destructive` | Delete data and remove access | Delete toolboxes, templates, connections and the rest; take back shares; transfer a connection. Elaichi's own data only. Implies `mcp:read`. Never a default, never implied by anything. |
-| `mcp:tools` | Run your connected tools | Run the tools from the toolboxes chosen on that screen, **deletes in the connected apps included**. Also files and withdraws the user's own access requests. |
+| `mcp:read` | See your organization | Everything the user can already see: people, teams, roles, connections, toolboxes, templates, restrictions, settings, and the audit log. **Never secret values.** Also files and withdraws the user's own access requests. |
+| `mcp:write` | Make changes | Add and edit teams, roles, toolboxes, templates, synthetic tools, connections and org settings, and share them. Implies `mcp:read`. |
+| `mcp:destructive` | Delete things | Delete toolboxes, templates, connections and the rest; take back shares; transfer a connection. Elaichi's own data only. Implies `mcp:read`. Never a default, never implied by anything. |
+| `mcp:tools` | Use your connected apps | Run the tools from the toolboxes chosen on that screen (a Toolboxes row under Use your connected apps), **deletes in the connected apps included**. Also files and withdraws the user's own access requests. |
 
 Two rules people miss:
 
@@ -42,9 +42,10 @@ in [Control-plane operations](./operations-catalog.md#never-on-mcp-at-any-scope)
 ## Toolbox selection
 
 When `mcp:tools` is requested, the consent screen also asks **which
-toolboxes** this client may reach. The user picks either:
+toolboxes** this client may reach, in a Toolboxes row under Use your connected
+apps that opens a sheet. The user picks either:
 
-- **All my tools** — their `global:{userId}` toolbox (every connection they own
+- **Everything I can use** — their `global:{userId}` toolbox (every connection they own
   or that is shared with them at `use`) **plus** every toolbox shared with
   them — directly, through a team, or with the whole organization — at `use` or
   above, including ones they get later; or

@@ -164,7 +164,7 @@ recipient runs the tools; they never see the account, cannot reuse it
 anywhere else, and lose it the moment the share is revoked. See the
 **elaichi-toolboxes** skill.
 
-Those tools are part of **All my tools**, and `search_tools` finds them like
+Those tools are part of **Everything I can use**, and `search_tools` finds them like
 any other. The pinned connection, though, is **not** in
 `elaichi__connection__list` or `elaichi://connections` for the recipient — it
 was never shared with them. So "the connection is not in my list" does not
