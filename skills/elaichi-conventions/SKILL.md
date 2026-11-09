@@ -142,7 +142,7 @@ rather than refused.
 | Surface | Limit |
 |---|---|
 | REST API | 600 requests / 60s per API token |
-| MCP endpoint | 120 requests / 60s per OAuth access token |
+| MCP endpoint | 120 requests / 60s per OAuth grant (refreshed tokens share it) |
 
 `429` carries `Retry-After` in seconds. There is no public idempotency key.
 
