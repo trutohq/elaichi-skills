@@ -77,7 +77,7 @@ the client asked for, **Use your connected apps** first:
 
 | On the consent screen | In an error | What it allows |
 |---|---|---|
-| **Use your connected apps** | `mcp:tools` | Read, send and delete in your connected apps, like Slack and Gmail, from the toolboxes chosen in its **Toolboxes** row. Deleting in those apps is included |
+| **Use your connected apps** | `mcp:tools` | Read, send and delete in your connected apps, like email and calendar, from the toolboxes chosen in its **Toolboxes** row. Deleting in those apps is included |
 | **See your organization** | `mcp:read` | Anything you can see in Elaichi. Never secret values like passwords and keys. Open **See exactly what each one includes** once: read also covers the audit log, pending invitations, SSO and SCIM settings, verified domains and log-forwarding destinations. |
 | **Make changes** | `mcp:write` | Add and edit teams, roles, toolboxes, templates and connections, and share access. Inviting people and changing a member's roles stay in the Elaichi web app |
 | **Delete things** | `mcp:destructive` | Permanently delete data and remove access in Elaichi. Cannot be undone. Removing someone from your organization, deleting a team or role, and revoking an invitation or API token stay in the Elaichi web app |
