@@ -241,7 +241,7 @@ fields as list rows, so a freshly changed row keeps its actions.
 | Surface | Limit | Keyed on |
 |---|---|---|
 | REST API | **600 requests / 60s** | The API token |
-| MCP endpoint | **120 requests / 60s** | The OAuth access token |
+| MCP endpoint | **120 requests / 60s** | The OAuth grant (the connected app); its refreshed tokens share one budget |
 
 Over the limit: `429`, code `rate_limited`, and `Retry-After` in seconds.
 Honor it.

@@ -25,6 +25,10 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `elaichi-api`, `elaichi-conventions`, `elaichi-mcp` and the Cursor rule say
+  the MCP rate limit is counted per OAuth grant (elaichi#1026), so refreshing
+  the token does not reset it; a request without a valid token is counted per
+  client IP. They used to say "per OAuth access token".
 - `elaichi-clients`, `elaichi-mcp`, `elaichi-conventions`, `elaichi-governance`,
   `elaichi-toolboxes`, `elaichi` and the Cursor rule describe the redesigned MCP
   consent screen (elaichi#1013). The scopes read **Use your connected apps**,
