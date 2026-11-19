@@ -17,5 +17,11 @@
     "integrations",
     "toolbox"
   ],
-  "mcpServers": "./mcp.json"
+  "privacyPolicyUrl": "https://elaichi.ai/privacy",
+  "mcpServers": {
+    "elaichi": {
+      "type": "http",
+      "url": "https://api.elaichi.ai/mcp"
+    }
+  }
 }

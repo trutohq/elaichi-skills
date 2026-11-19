@@ -12,6 +12,23 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+### Changed
+
+- Every skill's "when to use it" text moved from the `whenToUse` frontmatter
+  key into `description`. The Claude plugin directory accepts only the keys
+  Claude Code reads, and Claude picks a skill by its description anyway.
+  `manifest/skills.json` keeps its `whenToUse` field, now taken from
+  `description`.
+- The Claude plugin declares its MCP server inline in `plugin.json`
+  (`type: "http"`), and links the privacy policy.
+
+### Removed
+
+- `rules/elaichi.mdc`, `scripts/generate-rule.mjs` and `mcp.json`. The
+  directory refuses file types and config fields it does not list. The Cursor
+  rule is generated in trutohq/elaichi-cursor-plugin now, which already owns
+  the Cursor install.
+
 ### Added
 
 - `elaichi-mcp`: `elaichi__file__read` reads a file's content over MCP alone

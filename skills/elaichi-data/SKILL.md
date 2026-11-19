@@ -1,7 +1,6 @@
 ---
 name: elaichi-data
-description: Collections, dashboards and knowledge bases in Elaichi. Use to track records in a shared table or spreadsheet, build a live dashboard, chart or report on it, or keep a knowledge base of docs or a wiki that agents search ("remember this"). Covers which one to pick, building them over MCP, drafts and publishing, public links, and who can see what.
-whenToUse: Someone wants to store or track data, see it as a chart or report, share numbers with their team or outside the company, save reference text for later, or asks why a widget shows no data or a search found nothing. Also read before calling any elaichi__collection__*, elaichi__dashboard__* or elaichi__knowledge__* tool.
+description: Collections, dashboards and knowledge bases in Elaichi. Use to track records in a shared table or spreadsheet, build a live dashboard, chart or report on it, or keep a knowledge base of docs or a wiki that agents search ("remember this"). Covers which one to pick, building them over MCP, drafts and publishing, public links, and who can see what. Use when someone wants to store or track data, share numbers inside or outside the company, or asks why a widget shows no data or a search found nothing. Also read it before calling any elaichi__collection__*, elaichi__dashboard__* or elaichi__knowledge__* tool.
 ---
 
 # Collections, dashboards and knowledge

@@ -2,8 +2,7 @@
 // their published manifest schemas.
 //
 // Nothing else in this repo's CI ever opens either file: validate-manifest.yml
-// regenerates manifest/skills.json and rules/elaichi.mdc from the skills
-// themselves and diffs them, but a manifest with invalid JSON, a malformed
+// regenerates manifest/skills.json from the skills themselves and diffs it, but a manifest with invalid JSON, a malformed
 // name, an undocumented author field, a version that is not semver, a
 // logo/skills/rules path that does not exist on disk, or a wrong MCP server
 // declaration would still merge clean. This is the check that would have
@@ -20,8 +19,7 @@
 //     marketplace, and that repo's manifest keeps the name "elaichi" because
 //     it is the one being listed.
 //   - THIS repo's `.cursor-plugin/plugin.json` exists only so `npx skills`
-//     and a Cursor "remote rule" install can pull in the skills and the
-//     always-applied rule — it is not submitted to Cursor and must not carry
+//     can pull in the skills — it is not submitted to Cursor and must not carry
 //     the name "elaichi" (that would collide with the dedicated plugin the
 //     moment both were ever visible to Cursor's namespace together) or an
 //     `mcpServers` declaration (a user who installs both would otherwise get

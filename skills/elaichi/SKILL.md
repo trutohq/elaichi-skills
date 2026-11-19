@@ -1,7 +1,6 @@
 ---
 name: elaichi
-description: Start here for any Elaichi question — what it is, what its words mean (connection, toolbox, workflow, collection, dashboard, knowledge base), where a screen or setting lives in the app, what each plan includes, and which Elaichi skill to load next.
-whenToUse: Someone asks what Elaichi is, how to do something in it, where a screen or setting lives, what one of its words means, or what their plan includes. Also the routing table when you are not sure which Elaichi skill covers a question.
+description: Start here for any Elaichi question — what it is, what its words mean (connection, toolbox, workflow, collection, dashboard, knowledge base), where a screen or setting lives in the app, what each plan includes, and which Elaichi skill to load next. Use when someone asks what Elaichi is, how to do something in it, or where a screen or setting lives, and as the routing table when you are not sure which Elaichi skill covers a question.
 ---
 
 # Elaichi

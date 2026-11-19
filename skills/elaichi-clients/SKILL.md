@@ -1,7 +1,6 @@
 ---
 name: elaichi-clients
-description: Connect Claude, ChatGPT, Cursor, Microsoft Copilot or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one.
-whenToUse: Someone is setting up an AI client against Elaichi, pasting the MCP endpoint, editing mcp.json, choosing scopes or toolboxes on the consent screen, or reporting that their client connected but shows no tools, is missing one, or was refused.
+description: Connect Claude, ChatGPT, Cursor, Microsoft Copilot or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one. Use when someone is setting up an AI client, pasting the MCP endpoint, editing mcp.json, or reports that their client connected but shows no tools, is missing one, or was refused.
 ---
 
 # Connecting an AI client to Elaichi

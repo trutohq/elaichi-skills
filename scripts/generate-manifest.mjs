@@ -28,10 +28,13 @@ for (const id of readdirSync(skillsDir)) {
   const skillMd = join(skillPath, 'SKILL.md')
   const content = readFileSync(skillMd, 'utf-8')
   const frontmatter = parseFrontmatter(content)
-  const whenToUse = frontmatter.whenToUse ?? frontmatter.description ?? ''
+  // The Claude plugin directory accepts only the frontmatter keys Claude Code
+  // reads, so "when to use it" lives in `description` rather than a key of
+  // its own. The manifest keeps the `whenToUse` field name for its readers.
+  const whenToUse = frontmatter.description ?? ''
   if (whenToUse.length < 80) {
     throw new Error(
-      `Skill ${id} whenToUse must be at least 80 characters (got ${whenToUse.length})`
+      `Skill ${id} description must be at least 80 characters (got ${whenToUse.length})`
     )
   }
   skills.push({
