@@ -1,7 +1,6 @@
 ---
 name: elaichi-api
-description: Write code against the Elaichi REST API at api.elaichi.ai — API tokens and what they cannot do, the organization header, the cursor list envelope and server-side search, error codes, can_* capability fields, URL conventions, rate limits, and the OpenAPI schema. Use for scripts, integrations, provisioning, or a UI over Elaichi.
-whenToUse: Writing or reviewing code that calls api.elaichi.ai — scripts, integrations, provisioning, or a UI over Elaichi. Read before constructing the first request.
+description: Write code against the Elaichi REST API at api.elaichi.ai — API tokens and what they cannot do, the organization header, the cursor list envelope and server-side search, error codes, can_* capability fields, URL conventions, rate limits, and the OpenAPI schema. Use when writing or reviewing code that calls api.elaichi.ai (scripts, integrations, provisioning, or a UI over Elaichi), and read it before constructing the first request.
 ---
 
 # The Elaichi API
