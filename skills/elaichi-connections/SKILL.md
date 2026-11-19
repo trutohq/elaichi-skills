@@ -1,7 +1,6 @@
 ---
 name: elaichi-connections
-description: Connect and look after the accounts Elaichi runs tools against — connect Salesforce, Slack or any app, share versus own, connection status and reconnecting, transferring before someone leaves, what offboarding does to connections, custom connectors, your own OAuth app, and bringing your own remote MCP server.
-whenToUse: Someone is connecting an app account, sharing one with a team, fixing a broken or blocked connection, transferring ownership, offboarding a member, setting up an OAuth app for a connector, adding a remote MCP server, or building a custom connector.
+description: Connect and look after the accounts Elaichi runs tools against — connect Salesforce, Slack or any app, share versus own, connection status and reconnecting, transferring before someone leaves, what offboarding does to connections, custom connectors, your own OAuth app, and bringing your own remote MCP server. Use when someone is connecting an app account, sharing one with a team, fixing a broken or blocked connection, transferring ownership, offboarding a member, setting up an OAuth app for a connector, adding a remote MCP server, or building a custom connector.
 ---
 
 # Connections and connectors

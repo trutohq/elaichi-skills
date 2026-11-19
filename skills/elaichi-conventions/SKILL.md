@@ -1,7 +1,6 @@
 ---
 name: elaichi-conventions
-description: Elaichi's base facts in one page — production URLs, API token format and the organization header, the cursor list envelope, error codes, id prefixes (conn_, tbx_, auto_, dash_…), MCP namespaces and scopes, and which Elaichi skill covers which question.
-whenToUse: Load whenever calling, configuring, or reasoning about anything at api.elaichi.ai or an Elaichi MCP endpoint. Read before constructing a URL, an id, or a paged request, or when an error code needs explaining.
+description: Elaichi's base facts in one page — production URLs, API token format and the organization header, the cursor list envelope, error codes, id prefixes (conn_, tbx_, auto_, dash_…), MCP namespaces and scopes, and which Elaichi skill covers which question. Load it whenever calling, configuring or reasoning about anything at api.elaichi.ai or an Elaichi MCP endpoint, before constructing a URL, an id or a paged request, or when an error code needs explaining.
 ---
 
 # Elaichi conventions

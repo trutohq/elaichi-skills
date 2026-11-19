@@ -1,7 +1,6 @@
 ---
 name: elaichi-governance
-description: Decide and explain who can reach what in Elaichi — the eight built-in roles and 58 permissions, custom roles, restrictions that allow or block connectors and tools, access requests, approvals, the audit log, SSO, SCIM, verified domains and offboarding, and explaining why an action was refused.
-whenToUse: Someone asks who can do what, why an action was refused, how to block or allow a connector or tool, what a role grants, how access requests or approvals work, how to read the audit log, how to set up SSO, SCIM or domains, or how to offboard someone.
+description: Decide and explain who can reach what in Elaichi — the eight built-in roles and 58 permissions, custom roles, restrictions that allow or block connectors and tools, access requests, approvals, the audit log, SSO, SCIM, verified domains and offboarding, and explaining why an action was refused. Use when someone asks who can do what, what a role grants, how access requests or approvals work, how to read the audit log, how to set up SSO, SCIM or domains, or how to offboard someone.
 ---
 
 # Governance

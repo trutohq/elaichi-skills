@@ -104,14 +104,10 @@ Add `-g` to install globally instead of into the current project.
 
 ## Rules (Cursor only)
 
-| Rule | Description |
-|------|-------------|
-| [elaichi](./rules/elaichi.mdc) | Always-applied rule with URLs, API auth, the list envelope, error codes, id prefixes and the MCP namespaces |
-
-Claude Code plugins have no "always-applied rule" primitive, so the same facts
-arrive there through the model-invoked `elaichi-conventions` skill. The rule is
-**generated** from that skill by `scripts/generate-rule.mjs`, and CI fails if
-the two drift — edit the skill, not the rule.
+Cursor also gets an always-applied rule with the same facts as the
+`elaichi-conventions` skill. It ships in the Cursor plugin,
+[trutohq/elaichi-cursor-plugin](https://github.com/trutohq/elaichi-cursor-plugin),
+which generates it from that skill. Edit the skill, not the rule.
 
 ## What is Elaichi?
 

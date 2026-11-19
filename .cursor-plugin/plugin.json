@@ -18,6 +18,5 @@
     "toolbox"
   ],
   "logo": "./assets/logo-square.png",
-  "skills": "./skills",
-  "rules": "./rules"
+  "skills": "./skills"
 }

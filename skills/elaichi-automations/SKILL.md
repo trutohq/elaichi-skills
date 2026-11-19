@@ -1,7 +1,6 @@
 ---
 name: elaichi-automations
-description: Build and run Elaichi workflows (formerly called automations) — "every day at 9", "when X happens, do Y", schedules, triggers, webhooks and approvals. Covers workflow versus synthetic tool, the draft → validate → dry run → publish → enable loop, trigger and step types, runs, sessions, settings, and who can run what.
-whenToUse: Someone wants something to happen on its own — on a schedule, once at a set time, when a webhook, Slack message, collection row or another workflow fires — or is building, debugging, running, sharing or turning off an Elaichi workflow.
+description: Build and run Elaichi workflows (formerly called automations) — "every day at 9", "when X happens, do Y", schedules, triggers, webhooks and approvals. Covers workflow versus synthetic tool, the draft → validate → dry run → publish → enable loop, trigger and step types, runs, sessions, settings, and who can run what. Use when someone wants something to happen on its own — on a schedule, once at a set time, when a webhook, Slack message, collection row or another workflow fires — or is building, debugging, running, sharing or turning off an Elaichi workflow.
 ---
 
 # Workflows

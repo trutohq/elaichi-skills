@@ -13,12 +13,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Regenerate the manifest and the Cursor rule
-        run: |
-          node scripts/generate-manifest.mjs
-          node scripts/generate-rule.mjs
-      - name: Fail if either generated file is stale
-        run: git diff --exit-code manifest/skills.json rules/elaichi.mdc
+      - name: Regenerate the manifest
+        run: node scripts/generate-manifest.mjs
+      - name: Fail if the generated manifest is stale
+        run: git diff --exit-code manifest/skills.json
       - name: Check relative links
         run: node scripts/check-links.mjs
       - name: Validate plugin manifests
