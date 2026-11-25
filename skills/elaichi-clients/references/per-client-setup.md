@@ -71,6 +71,82 @@ Connected apps.
 
 Guide: [elaichi.ai/docs/guides/mcp-servers/chatgpt](https://elaichi.ai/docs/guides/mcp-servers/chatgpt)
 
+## Perplexity
+
+Pro, Max or Enterprise. The Free plan cannot add a custom connector. In a
+Perplexity organization, members can add their own only after an admin turns on
+**Allow members to add custom connectors**, which is off by default.
+
+1. In Perplexity, open **Plugins** in the sidebar. Select **Add custom**, then
+   **Add MCP connector**, and choose **Remote**.
+2. Name it Elaichi and paste the endpoint as the **MCP server URL**.
+3. Under **Advanced**, set **Authentication** to OAuth and **Transport** to
+   Streamable HTTP. Leave the client ID and secret empty.
+4. Tick the box that says custom connectors can introduce risks, then select
+   **Add**.
+5. On the **Plugins** page, select the Elaichi card. Sign in to Elaichi, pick
+   the organization, and approve what Perplexity can do.
+
+No client ID or secret is needed — Elaichi registers Perplexity automatically
+on first contact.
+
+**Perplexity Enterprise, for everyone:** a Perplexity admin adds it from
+**Organization settings → Connectors → Custom connector**, with the same
+endpoint and OAuth settings. A new organization connector starts turned off.
+Set it so **each member signs in**: if an admin signs in once for the
+organization, every member's call runs as that admin.
+
+Perplexity asks the person to confirm before a write action. **Treat that as a
+convenience, not the security boundary** — the scopes granted on Elaichi's
+consent screen are the real one.
+
+To disconnect for certain, revoke the grant in Elaichi under Settings →
+Connected apps.
+
+Guide: [elaichi.ai/docs/guides/mcp-servers/perplexity](https://elaichi.ai/docs/guides/mcp-servers/perplexity)
+
+## Grok
+
+Elaichi works in two Grok apps from xAI: Grok on grok.com, and Grok Bot, xAI's
+desktop app that runs Bots on a cloud computer.
+
+**grok.com.** Custom connectors are available to all Grok users.
+
+1. Go to **grok.com/connectors** and select **New Connector**.
+2. Select **Custom**, and paste the endpoint as the MCP server URL.
+3. Sign in to Elaichi, pick the organization, and approve what Grok can do.
+
+On Grok Business and Enterprise, a team admin adds the connector first: in
+**console.x.ai**, select the team, open **Grok Business → Connectors**, select
+**+ Add Connector**, choose **Other** and paste the endpoint (needs the Team
+Read-Write permission). Members then connect their own accounts at
+grok.com/connectors.
+
+**Grok Bot.** Needs a paid plan: Premium, Super or Ultra on The X Subscription,
+a linked SuperGrok, SuperGrok Plus, SuperGrok Heavy or X Premium+
+subscription, or a seat on self-serve Grok Business.
+
+1. Open **Connect apps** from the sidebar, then **Add a custom connector** at
+   the bottom.
+2. Name it Elaichi, and choose **Remote HTTPS** as the type.
+3. Paste the endpoint as the **Server URL**. Leave the OAuth **Client ID**
+   empty.
+4. Select **Add plugin**, then **Authorize**, and sign in to Elaichi.
+5. Check Elaichi is under **Installed**. In chat, type **@** to attach it.
+
+A Grok Bot app is account-wide: every Bot the person runs can use it, as them.
+On a team, Grok Bot follows the team's MCP server policy; if that policy does
+not allow the endpoint, Grok Bot cannot save the connector.
+
+No client ID or secret is needed in either app — Elaichi registers Grok
+automatically on first contact. Grok needs a server it can reach over the
+internet, so use the hosted endpoint.
+
+To disconnect for certain, revoke the grant in Elaichi under Settings →
+Connected apps.
+
+Guide: [elaichi.ai/docs/guides/mcp-servers/grok](https://elaichi.ai/docs/guides/mcp-servers/grok)
+
 ## Cursor
 
 Any recent version with MCP support. Cursor reads a file on the machine, so

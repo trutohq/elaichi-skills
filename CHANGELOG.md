@@ -12,6 +12,12 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+### Added
+
+- Perplexity and Grok (grok.com and Grok Bot) as AI clients: setup steps in
+  `elaichi-clients` and its per-client reference, rows in the app map and the
+  first hour, and in every client list.
+
 ### Changed
 
 - Every skill's "when to use it" text moved from the `whenToUse` frontmatter

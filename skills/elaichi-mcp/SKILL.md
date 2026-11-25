@@ -1,6 +1,6 @@
 ---
 name: elaichi-mcp
-description: Use the Elaichi MCP server well — find a connected tool with search_tools, run it with read_tool, execute_tool or run_code, pick the right account, read a refusal or "restricted" result, ask an admin for access, and work out why a tool is missing. For any MCP client (Claude, ChatGPT, Cursor, Microsoft Copilot and others). Use when an Elaichi MCP server is attached and you need to act on the user's connected apps, or explain why a tool is missing, refused or restricted, or which account to use. Read it before the first search_tools call.
+description: Use the Elaichi MCP server well — find a connected tool with search_tools, run it with read_tool, execute_tool or run_code, pick the right account, read a refusal or "restricted" result, ask an admin for access, and work out why a tool is missing. For any MCP client (Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot and others). Use when an Elaichi MCP server is attached and you need to act on the user's connected apps, or explain why a tool is missing, refused or restricted, or which account to use. Read it before the first search_tools call.
 ---
 
 # Using the Elaichi MCP endpoint

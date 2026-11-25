@@ -8,7 +8,7 @@ description: Elaichi's base facts in one page — production URLs, API token for
 Elaichi is an agent platform for companies. It connects the software a company
 already runs on and lets agents work in those systems, inside the same
 permissions the company already grants its people. One org-wide MCP endpoint,
-authorized with OAuth, serves Claude, ChatGPT, Cursor, Microsoft Copilot and any other MCP client.
+authorized with OAuth, serves Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot and any other MCP client.
 **MCP is how the product is delivered, not what the product is.**
 
 ## Skill routing
@@ -17,7 +17,7 @@ authorized with OAuth, serves Claude, ChatGPT, Cursor, Microsoft Copilot and any
 |---|---|
 | What Elaichi is, where a screen lives, what a word means, what a plan includes | **elaichi** |
 | Acting through an attached Elaichi MCP server | **elaichi-mcp** |
-| Setting up Claude, ChatGPT, Cursor, Microsoft Copilot or another MCP client | **elaichi-clients** |
+| Setting up Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot or another MCP client | **elaichi-clients** |
 | Connecting accounts, connection health, transfer, offboarding, custom connectors | **elaichi-connections** |
 | Toolboxes, templates, frozen params, delegation, synthetic tools | **elaichi-toolboxes** |
 | Workflows: triggers, steps, approvals, runs, sessions, webhooks | **elaichi-automations** |

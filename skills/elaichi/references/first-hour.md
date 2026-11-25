@@ -43,6 +43,8 @@ A toolbox appears for that connection immediately. Nothing to publish.
 Click the **Connect** row under the sidebar's list and copy the endpoint. Add
 it to [Claude](https://elaichi.ai/docs/guides/mcp-servers/claude),
 [ChatGPT](https://elaichi.ai/docs/guides/mcp-servers/chatgpt),
+[Perplexity](https://elaichi.ai/docs/guides/mcp-servers/perplexity),
+[Grok](https://elaichi.ai/docs/guides/mcp-servers/grok),
 [Cursor](https://elaichi.ai/docs/guides/mcp-servers/cursor) or another MCP
 client.
 
