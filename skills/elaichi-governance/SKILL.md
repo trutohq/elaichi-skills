@@ -1,7 +1,6 @@
 ---
 name: elaichi-governance
-description: Decide and explain who can reach what in Elaichi — the eight built-in roles and 58 permissions, custom roles, restrictions that allow or block connectors and tools, access requests, approvals, the audit log, SSO, SCIM, verified domains and offboarding, and explaining why an action was refused.
-whenToUse: Someone asks who can do what, why an action was refused, how to block or allow a connector or tool, what a role grants, how access requests or approvals work, how to read the audit log, how to set up SSO, SCIM or domains, or how to offboard someone.
+description: Decide and explain who can reach what in Elaichi — the eight built-in roles and 58 permissions, custom roles, restrictions that allow or block connectors and tools, access requests, approvals, the audit log, SSO, SCIM, verified domains and offboarding, and explaining why an action was refused. Use when someone asks who can do what, what a role grants, how access requests or approvals work, how to read the audit log, how to set up SSO, SCIM or domains, or how to offboard someone.
 ---
 
 # Governance
@@ -31,7 +30,7 @@ Guest ⊂ Member ⊂ Team Admin ⊂ People Admin ⊂ Org Admin ⊂ Org Owner
 | Role | Adds |
 |---|---|
 | **Guest** | Browse the connector catalog. Nothing else. A free seat. |
-| **Member** | The default. Connect accounts, build and share toolboxes and templates, run tools, create teams, make API tokens, and build automations, collections, dashboards and knowledge where the org has them. |
+| **Member** | The default. Connect accounts, build and share toolboxes and templates, run tools, create teams, make API tokens, and build workflows, collections, dashboards and knowledge where the org has them. |
 | **Team Admin** | Manage every team, including ones they do not run. |
 | **People Admin** | Invite, change roles, remove members, decide access requests. |
 | **Org Admin** | Everything else: restrictions, SSO, custom roles, logging, the whole audit log. |
@@ -45,7 +44,7 @@ Two sit off the chain, both free seats:
 | **Auditor** | Read-only oversight: restrictions, SSO, logging, the whole audit log. |
 
 - **One role per person.** To combine two roles, build a custom role
-  (`role:manage`; Gold and Black both include custom roles).
+  (`role:manage`; custom roles need Gold or Black, not Personal).
 - **You cannot grant a role or permission you do not hold yourself.** The
   backend enforces it whatever the screen drew.
 - **Org Owner cannot be removed from its last holder.**
@@ -115,7 +114,7 @@ When asked to do one, say what needs doing and point to the screen (most are in
   approval. Elaichi adds no per-call prompt over MCP.
 - **The Elaichi agent**: writes stop at an approval card, and deletes ask every
   time.
-- **Automations**: every destructive step needs an `approve` step before it.
+- **Workflows**: every destructive step needs an `approve` step before it.
 
 There is no admin-written rule today that pauses a whole class of AI client
 writes for an approver. To hold clients back, use restrictions and consent
@@ -130,15 +129,14 @@ scopes. Details: [Oversight](./references/oversight.md#approvals).
   plus events on connections they own or can edit.
 - **Every row carries `actor_kind`.** A call from an MCP client is recorded as
   the **person** (`user`) with surface `mcp` and the client named. The Elaichi
-  agent is `ai_assistant`, an automation is `automation`, Elaichi support is
+  agent is `ai_assistant`, a workflow is `automation`, Elaichi support is
   `staff`.
 - Tool call rows record what was called, on which account, how it was approved
   and what it touched, but not argument values.
 - Over MCP, `elaichi__audit__list` has no actor, action or date filter. Page
   back from the newest, and say that is what you did.
 
-Forwarding to Datadog (**Settings → Logging**) needs the Black plan, which is
-not on sale. Slack and email notifications (**Settings → Notifications**)
+Forwarding to Datadog (**Settings → Logging**) needs the Black plan. Slack and email notifications (**Settings → Notifications**)
 work on every plan. Details: [Oversight](./references/oversight.md).
 
 ## SSO, SCIM, domains and offboarding
@@ -146,7 +144,7 @@ work on every plan. Details: [Oversight](./references/oversight.md).
 - **Verified domains** (**Settings → Domains**, `org:manage`): prove an email
   domain by DNS TXT record. New users on it can auto-join, and it can route to
   an SSO connection.
-- **SSO** (**Settings → SSO and SCIM**, `sso:manage`): SAML or OIDC. **Enforced**
+- **SSO** (**Settings → SSO and SCIM**, `sso:manage`; Gold or Black): SAML or OIDC. **Enforced**
   SSO refuses every other sign-in method for addresses on its verified domain.
   Removing the domain switches enforcement off.
 - **SCIM**: your directory creates and updates members. **Deactivating a user
@@ -175,6 +173,11 @@ When relaying one:
    this layer exists to prevent.
 4. **A "not found" may mean "not yours" rather than "gone".** Resources you have
    no grant on are hidden, not refused, on purpose.
+5. **A plan refusal is not a permission gap.** `feature_not_available` names
+   the plan that unlocks the feature (sharing, custom roles, restrictions, SSO
+   and SCIM need Gold or Black; logging needs Black), and `plan_limit_reached`
+   names a Personal limit. No role change fixes either. Say which plan, and
+   point to Settings → Billing.
 
 Expect this in the UI, because it looks inconsistent until you know the rule.
 An action you could **never** take on a resource is **absent**, not greyed: a
@@ -189,7 +192,7 @@ a reason**, because hiding it would make a real list look cut short.
 | [Roles and permissions](./references/permissions.md) | All 58 permissions with meanings, the eight roles and what each holds, custom roles, sharing levels, teams |
 | [Restrictions and access requests](./references/restrictions.md) | Layers, allow versus block, the empty-set truth table, enforcement points, what a restricted tool looks like, access grants |
 | [People and identity](./references/identity.md) | App-only actions, joining, verified domains, SSO, SCIM, group mappings, offboarding, support access |
-| [Oversight](./references/oversight.md) | The audit log and `actor_kind`, logging destinations, notifications, approvals, web access, spend |
+| [Oversight](./references/oversight.md) | The audit log and `actor_kind`, logging destinations, notifications, approvals, spend |
 
 ## Companion skills
 

@@ -1,7 +1,6 @@
 ---
 name: elaichi-clients
-description: Connect Claude, ChatGPT, Cursor or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one.
-whenToUse: Someone is setting up an AI client against Elaichi, pasting the MCP endpoint, editing mcp.json, choosing scopes or toolboxes on the consent screen, or reporting that their client connected but shows no tools, is missing one, or was refused.
+description: Connect Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one. Use when someone is setting up an AI client, pasting the MCP endpoint, editing mcp.json, or reports that their client connected but shows no tools, is missing one, or was refused.
 ---
 
 # Connecting an AI client to Elaichi
@@ -42,7 +41,7 @@ address. So there is nothing to mint, nothing per toolbox, and nothing per app.
 ## Where the endpoint comes from
 
 In [app.elaichi.ai](https://app.elaichi.ai), click the **Connect** row under
-the sidebar's list (**Connect an AI client** when the automation platform is
+the sidebar's list (**Connect an AI client** when the workflow platform is
 on) and copy the endpoint. Paste it exactly as given.
 
 It is an OAuth endpoint. There is no API key, no bridge command, and no
@@ -72,41 +71,45 @@ the client's own prompt, not Elaichi's.
 several memberships, nothing is preselected. Reaching another organization
 takes a second connection.
 
-**2. Choose what the client can do.** One checkbox per scope the client asked
-for:
+**2. Choose what the client can do.** The same page lists one checkbox per scope
+the client asked for, **Use your connected apps** first:
 
 | On the consent screen | In an error | What it allows |
 |---|---|---|
-| **Read your organization's data** | `mcp:read` | Everything you can already see in Elaichi. Never secret values. Open its **Details** once: it also covers the audit log, pending invitations, SSO and SCIM settings, verified domains and your API token list (never values). |
-| **Create and change data** | `mcp:write` | Create and change teams, roles, toolboxes, templates and connections, invite people, and share access |
-| **Delete data and remove access** | `mcp:destructive` | Permanently delete data and remove people in Elaichi. Cannot be undone |
-| **Run your connected tools** | `mcp:tools` | Run tools from the toolboxes chosen in the next step, deleting in your connected apps included |
+| **Use your connected apps** | `mcp:tools` | Read, send and delete in your connected apps, like email and calendar, from the toolboxes chosen in its **Toolboxes** row. Deleting in those apps is included |
+| **See your organization** | `mcp:read` | Anything you can see in Elaichi. Never secret values like passwords and keys. Open **See exactly what each one includes** once: read also covers the audit log, pending invitations, SSO and SCIM settings, verified domains and log-forwarding destinations. |
+| **Make changes** | `mcp:write` | Add and edit teams, roles, toolboxes, templates and connections, and share access. Inviting people and changing a member's roles stay in the Elaichi web app |
+| **Delete things** | `mcp:destructive` | Permanently delete data and remove access in Elaichi. Cannot be undone. Removing someone from your organization, deleting a team or role, and revoking an invitation or API token stay in the Elaichi web app |
 
-Every requested scope **starts ticked except Delete**, which always takes a
-deliberate click. A client that asks for no scope at all gets Read only.
-Ticking Create and change, or Delete, locks Read on. For most people, **Read**
-and **Run your connected tools** are enough; untick Create and change unless
-the person wants the client to reshape the organization.
+Every requested scope **starts ticked except Delete things**, which always takes
+a deliberate click. A client that asks for no scope at all gets See your
+organization only. Ticking Make changes, or Delete things, locks See your
+organization on. For most people, **See your organization** and **Use your
+connected apps** are enough; untick Make changes unless the person wants the
+client to reshape the organization.
 
-The screen may also show **Confirm who you are** and **See your email
-address**. They are always on when asked for, and reach nothing in the
-organization.
+Sign-in scopes (`openid`, `email`) are not checkboxes. The screen shows who is
+signed in, and a **Shared with <app>** tag on the email address, and neither
+reaches anything in the organization.
 
-**3. Choose toolboxes** (only when Run your connected tools is ticked):
+**3. Choose toolboxes** (only while Use your connected apps is ticked): the
+**Toolboxes** row under it opens a sheet. There is no second step and no
+Continue; **Don't allow** and **Allow** sit at the bottom of the same page.
 
-- **All my tools** — the default. Everything the person can use today, and
-  accounts and toolboxes they get later.
+- **Everything I can use** — the default. Your toolboxes and system toolboxes
+  for every connected app, including ones added later. A **Select all** link in
+  the sheet switches back to it.
 - **Only the ones I pick** — one to 50 toolboxes they can use. The client
-  reaches nothing else, including accounts connected later. Automatic
-  per-connection toolboxes cannot be picked; build or stamp a toolbox first.
+  reaches nothing else, including accounts connected later. System toolboxes
+  (one per connection) cannot be picked; build or stamp a toolbox first.
 
 ### Changing it later
 
-- **Toolboxes:** Settings → **Connected apps** → the app → **Manage toolboxes**.
+- **Toolboxes:** Settings → **Connected apps** → the app → **Edit toolboxes** (**Everything I can use** or **Only these toolboxes**).
   Takes effect on the client's next call.
 - **Scopes:** cannot be changed. A grant's scopes are fixed at consent, and
-  Connected apps cannot add one. To add Create and change, Delete or Run your
-  connected tools, **connect the client again** and tick it. This works only
+  Connected apps cannot add one. To add Make changes, Delete things or Use your
+  connected apps, **connect the client again** and tick it. This works only
   if the client asks for that scope again — the screen never offers a scope the
   client did not request.
 - **Revoke:** Settings → Connected apps. The client's next call fails.
@@ -120,7 +123,11 @@ Full steps and plan requirements in
 |---|---|---|
 | **Claude** | Customize → Connectors → **Add custom connector**, paste the endpoint | On Team and Enterprise, **only an Owner** can add it. Everyone else then connects to it as themselves. |
 | **ChatGPT** | Plugins → **Add** → **Add custom MCP server**, name it Elaichi, paste the endpoint, then **Create as a plugin** | On Pro you add it yourself. On Business an admin adds it for the workspace. |
+| **Perplexity** | Plugins → **Add custom** → **Add MCP connector** → **Remote**, name it Elaichi, paste the endpoint as the MCP server URL, under Advanced choose **OAuth** and **Streamable HTTP**, tick the risk box, **Add**, then select the Elaichi card to sign in | Pro, Max or Enterprise; Free cannot add a custom connector. In a Perplexity organization, an admin must first turn on **Allow members to add custom connectors**. Perplexity asks before write actions. |
+| **Grok** | grok.com/connectors → **New Connector** → **Custom**, paste the endpoint, sign in. In Grok Bot: **Connect apps** → **Add a custom connector**, type **Remote HTTPS**, Server URL the endpoint, leave Client ID empty → **Add plugin** → **Authorize** | On Grok Business and Enterprise, a team admin adds it in console.x.ai first. Grok Bot needs a paid plan. |
 | **Cursor** | Customize → MCPs → **New MCP Server**, add an `elaichi` entry with the endpoint as `url`, then **Authenticate** | Per machine. No `type`, no `auth` block, no command. [Video](https://youtu.be/EwleY4bw0HQ) |
+| **Microsoft Copilot** | Copilot Studio → your agent → **Tools** → **Add a tool** → **New tool** → **Model Context Protocol**, Server URL the endpoint, **OAuth 2.0** → **Dynamic discovery** → **Create**. Then **Create a new connection**, sign in, **Add to agent**. Publish the agent to Microsoft Copilot | Per agent, not per person. Keep end-user credentials so each person signs in as themselves. Shows as unverified: sign-in goes through Copilot Studio's shared host. |
+| **GitHub Copilot (VS Code)** | Command Palette → **MCP: Add Server** → **HTTP**, paste the endpoint, name it `elaichi`, choose **Global** → **Copilot Global**, then sign in when prompted | Per machine. Not a verified client: the consent screen shows the name it registered, marked self-reported. Not the same as Microsoft Copilot, which is the next row. |
 | **Any other MCP client** | Add a remote (HTTP) MCP server with the endpoint URL | Needs dynamic client registration, PKCE and a browser sign-in. Test it. |
 
 Cursor, in full:
@@ -163,11 +170,12 @@ same client at the same endpoint do not see the same tools.
 listed one by one, however few there are. The tool list holds:
 
 - Elaichi's own `elaichi__…` operations — only those the person's role and the
-  grant's scopes allow. Automation, collection, dashboard and knowledge
-  operations appear only where the automation platform is on.
-- `search_tools` to find a connected tool and `execute_tool` to run one —
-  only while the grant reaches at least one connected tool, restricted ones
-  included.
+  grant's scopes allow. Workflow, collection, dashboard and knowledge
+  operations appear only where the workflow platform is on.
+- `search_tools` to find a connected tool, and `read_tool` and `execute_tool`
+  to run one: `read_tool` for a tool that only reads, `execute_tool` for any
+  tool. Each `search_tools` row names the one to use. They appear only while
+  the grant reaches at least one connected tool, restricted ones included.
 - `run_code` — Code Mode, a small JavaScript program that calls several tools
   and returns only what it needs. It is on for every organization; there is no
   client setting for it. Every call inside it passes the same checks as
@@ -186,8 +194,10 @@ text, and nothing is lost that the person needs to act on.
 
 **Client settings are not Elaichi's controls.** No tool name in the list names
 a connected app, so a client's per-tool allow-list or approval can only gate
-`execute_tool`, `run_code` and the two `…__execute` operations as wholes. A
-client's "read actions only" setting does not make connected apps read-only.
+`read_tool`, `execute_tool`, `run_code` and the two `…__execute` operations as
+wholes. `read_tool` is marked read-only, so a client usually runs it without
+asking, while it asks about each `execute_tool` call. A client's "read actions
+only" setting allows `read_tool` and blocks `execute_tool` and `run_code`.
 Per-app and per-tool control lives in Elaichi, as restrictions.
 
 ## Troubleshooting
@@ -197,23 +207,30 @@ Work down this list. The first match is usually the answer.
 | Symptom | Cause and fix |
 |---|---|
 | **No tools at all** | The person's role lacks `tool:execute` — Guest, Billing Admin and Auditor do. An admin changes the role. |
-| **Only `elaichi__…` operations, no `search_tools`** | Either **Run your connected tools** was not granted — connect the client again and tick it — or the grant reaches no active connected tool yet: nothing connected, or every account `pending` or `needs_reauth`. (Restricted tools still bring `search_tools`, which names them.) Connect or reconnect an app in Elaichi. |
-| **Chose "Only the ones I pick" and tools vanished** | A picked toolbox was deleted or the person lost access to it. Settings → Connected apps → the app → **Manage toolboxes**. |
-| **`search_tools` and `execute_tool` show up** | Nothing is wrong. Ask the client to search for the tool by name. |
-| **One expected tool is missing** | Connection status first, restrictions second. A tool that deletes is not left out for a missing Delete scope: Run your connected tools covers it. Work the ladder in [Diagnosing a missing tool](../elaichi-mcp/references/missing-tools.md). |
-| **Expected Elaichi operations are missing** | The grant lacks the scope they need (Create and change, or Delete), or the person's role lacks the permission. Connect again for a scope; ask an admin for a permission. |
+| **Only `elaichi__…` operations, no `search_tools`** | Either **Use your connected apps** was not granted — connect the client again and tick it — or the grant reaches no active connected tool yet: nothing connected, or every account `pending` or `needs_reauth`. (Restricted tools still bring `search_tools`, which names them.) Connect or reconnect an app in Elaichi. |
+| **Chose "Only the ones I pick" and tools vanished** | A picked toolbox was deleted or the person lost access to it. Settings → Connected apps → the app → **Edit toolboxes**. |
+| **`search_tools`, `read_tool` and `execute_tool` show up** | Nothing is wrong. Ask the client to search for the tool by name. |
+| **One expected tool is missing** | Connection status first, restrictions second. A tool that deletes is not left out for a missing Delete things scope: Use your connected apps covers it. Work the ladder in [Diagnosing a missing tool](../elaichi-mcp/references/missing-tools.md). |
+| **Expected Elaichi operations are missing** | The grant lacks the scope they need (Make changes, or Delete things), or the person's role lacks the permission. Connect again for a scope; ask an admin for a permission. |
 | **A newly connected app has not appeared** | Most clients cache the tool list. Start a new conversation, reconnect the connector, or re-scan tools. In ChatGPT, select **Refresh tools**. |
 | **A call is refused, naming a scope** | The grant was never given it. Connect the client again and tick it — Settings → Connected apps cannot add a scope. |
 | **A call is refused, naming a permission or `tool:execute`** | Reconnecting will not help. An admin changes the role. |
-| **Every call fails with `subscription_required`** | The organization has no active plan; it is paused until someone subscribes. |
+| **Every call fails with `subscription_required`** | The organization's plan is on hold. Contact support@elaichi.ai. |
+| **Every call fails saying the workspace "is for one person"** | The organization is on the free Personal plan, which only its creator can use (`plan_single_user`). Reconnecting will not help. The person named in the message, or anyone with `billing:manage`, upgrades it to Gold in Settings → Billing. |
+| **Tool calls fail saying the monthly limit is used up** | The organization is on the free Personal plan, which allows 1,000 connected-tool calls a month (UTC; resets on the 1st). The refusal comes with a "See plans" card. Tell the person, link Settings → Billing at app.elaichi.ai, and do not retry. Gold and Black have no such limit. |
 | **Refused because the organization requires two-factor** | Set up two-factor in Elaichi (Settings → Security), then try again. No need to connect the client again. |
 | **Every call fails "no longer an active member"** | The person was removed or suspended. An admin restores them. |
 | **The client asks to sign in again** | The grant was revoked, or the client went 30 days without refreshing. Connect again. |
 | **Sign-in says the organization requires SSO** | Use the company's SSO sign-in, then approve. |
 | **"Add custom connector" is missing in Claude** | On Team or Enterprise only an Owner can add one. Ask an Owner to add it, then connect to it as yourself. |
 | **ChatGPT sign-in loops or never returns** | The plan may not include custom MCP servers. On Business, an admin adds it for the workspace. |
+| **Perplexity has no option to add a custom connector** | The Free plan cannot add one; Pro, Max or Enterprise can. In a Perplexity organization, an admin must turn on **Allow members to add custom connectors**. |
+| **Grok Business shows no Elaichi connector** | A team admin adds it first in console.x.ai: **Grok Business** → **Connectors** → **+ Add Connector** → **Other**. |
 | **Cursor never shows the server** | Invalid JSON, usually a trailing comma or a missing brace. Check the file is valid JSON. |
 | **Cursor shows no sign-in prompt** | Elaichi has not been authenticated yet. Open Customize → MCPs, find Elaichi under **Needs Attention**, and select **Authenticate** again. |
+| **Microsoft Copilot agent never calls Elaichi tools** | In Copilot Studio, check the agent's **Tools** page lists Elaichi and its connection is signed in, then publish again. Teams keeps a published agent cached: in Teams, sign out and back in or refresh the browser, and say **Start over** in an old chat. Also check the agent is published to Microsoft Copilot (**Channels** → **Teams and Microsoft Copilot**). |
+| **GitHub Copilot does not list the server, or it cannot start** | In VS Code, check the endpoint, then which configuration file holds the entry (the same server ID must not be used twice in one destination). Run **MCP: List Servers**, select Elaichi and choose **Show Output**. |
+| **GitHub Copilot connects but shows no Elaichi tools** | Confirm the server is enabled, then open **Chat: Open Customizations** → **Tools** and check Elaichi's tools are ticked. After a fix, run **Restart Server** and retry. |
 
 ## Disconnecting
 
@@ -226,7 +243,7 @@ depends on the client.
 
 | Document | Topics |
 |---|---|
-| [Setting up each client](./references/per-client-setup.md) | Claude, ChatGPT, Cursor and other MCP clients in full, with plan requirements and the exact configuration each needs |
+| [Setting up each client](./references/per-client-setup.md) | Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot and other MCP clients in full, with plan requirements and the exact configuration each needs |
 
 ## Companion skills
 

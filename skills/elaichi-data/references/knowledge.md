@@ -3,7 +3,7 @@
 A knowledge base is a set of short reference documents that people and agents
 search in plain words: policies, how-tos, product facts, the answers a team
 gives again and again. It is the "what we already know" half of an
-automation.
+workflow.
 
 ## Bases and documents
 
@@ -25,13 +25,13 @@ This is the rule that matters most.
 |---|---|
 | A person in the console | Reviewed (trusted) |
 | An AI client over MCP, or the Elaichi agent | **Unreviewed**, labeled as added through chat |
-| An automation's `knowledge.write` step | **Unreviewed** "learned" document, always, whoever owns or started the run |
+| A workflow's `knowledge.write` step | **Unreviewed** "learned" document, always, whoever owns or started the run |
 
 - **Editing a reviewed document from chat makes it unreviewed again.** The
   person who vouched for the old text never read the new one.
 - Only a person can mark a document reviewed: **Mark as reviewed** in the
   console, which needs Manage on the base. No MCP operation can.
-- The reason: an automation that reads a Slack thread or a webhook could
+- The reason: a workflow that reads a Slack thread or a webhook could
   otherwise save text anyone chose, and the next agent would read it as fact.
 
 Tell the person when you add or change a document that it is now waiting in
@@ -106,21 +106,21 @@ For someone who can manage a base:
   nothing. Each row has the searched words (lowercased, not the person's
   exact sentence), where the search came from, and when. **Group rows about
   the same thing and write one document per group**, not one per row.
-- `knowledge.references` lists the automations that read or write the base.
+- `knowledge.references` lists the workflows that read or write the base.
 
-## How agents and automations use it
+## How agents and workflows use it
 
 - **MCP clients** see `elaichi__knowledge__search` in `tools/list`. It is not
   found through `search_tools`, which only searches connected tools. Over MCP
   the search includes unreviewed documents and marks them `trusted: false`.
 - **The Elaichi agent** is told to answer from the organization's knowledge
   bases with the same search.
-- **Automations** declare the bases they use in `knowledge_bases`. A
+- **Workflows** declare the bases they use in `knowledge_bases`. A
   `knowledge.search` step leaves unreviewed documents out unless it asks for
   them. A `knowledge.write` step always writes an unreviewed learned document.
   An AI `agent` step can be given relevant documents up front, but only when
   the search passes and only from reviewed documents.
-- An automation acts as its owner: `view` on a base is enough to search it,
+- A workflow acts as its owner: `view` on a base is enough to search it,
   `use` is needed to write. Access is checked again on every run.
 
 ## Deleting
@@ -128,7 +128,7 @@ For someone who can manage a base:
 - `knowledge.doc.delete` removes one document. Permanent; confirm which one
   first. It needs `use` access or above.
 - `knowledge.delete` removes the whole base and every document. Only the owner
-  can. Automations that search it lose their source at once, so read
+  can. Workflows that search it lose their source at once, so read
   `knowledge.references` first and tell the person.
 - Both answer only `{ deleted: true }`, so name what was deleted from what you
   read before the call.

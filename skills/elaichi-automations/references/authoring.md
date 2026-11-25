@@ -1,6 +1,6 @@
 # Writing a definition
 
-An automation's definition is one JSON document. YAML in the console is the
+A workflow's definition is one JSON document. YAML in the console is the
 same document in another view. This page lists what the document holds and the
 rules that are easy to miss.
 
@@ -21,13 +21,12 @@ you have not written before.
 | `knowledge_bases` | Knowledge bases an `agent` or `knowledge.*` step uses. At most 5. |
 | `input_schema` | A JSON Schema object for manual-run input — a backfill, a button's form |
 | `config_schema` | Settings the owner may change after publishing, read as `config.<key>` |
-| `web` | `{ domains, methods? }` — the only hosts a `fetch` step or an agent's `web_fetch` may reach. Required for either. At most 20 domains. |
 | `session_key` | JSONata over `{ trigger }` that groups runs into one session (a ticket, a thread). Absent means each run stands alone. |
 | `session_title` | JSONata over `{ trigger }` that names a new session |
 | `output` | JSONata over the run that becomes the run's output |
 
 Why the automatic toolboxes are refused: `global:…` and `connection:…` mean
-something different after the automation changes owner. Build a real toolbox
+something different after the workflow changes owner. Build a real toolbox
 (see **elaichi-toolboxes**) and list its `tbx_…` id.
 
 ## Triggers
@@ -43,8 +42,8 @@ Every trigger has a `key` (unique in the definition) and a `type`. Most take
 | `schedule_once` | `at` (ISO time with `Z` or an offset), `missed` (`skip` or `run`) | `overlap: skip`. Must be at least 60 seconds in the future to publish. A late fire with `missed: run` still runs within 24 hours. |
 | `webhook` | `auth`, `methods` (`POST`, `PUT`), `dedupe_key` (JSONata over `{ headers, query, body }`) | Auth defaults to Standard Webhooks. Other schemes: `token`, or `hmac` with preset `github`, `stripe`, `slack`, `linear` or `custom`. At most 3. |
 | `collection_row` | `collection_id`, `table`, `on` (`inserted`, `updated`, `deleted`), `fields` | `fields` narrows `updated` only. The collection must be in `collections`. |
-| `automation_run` | `automation_id`, `on` (`succeeded`, `failed`) | Default `on: [succeeded]`. Never this automation. Chains stop at depth 3. |
-| `slack` | `slack_team_id`, `event` (`message` or `reaction_added`), `channel_ids`, plus `keywords`, `reactions`, `filter`, `threads` | Channel ids are written literally. Needs Manage on the automation. Outside guests are dropped unless `include_external_users` is true. |
+| `automation_run` | `automation_id`, `on` (`succeeded`, `failed`) | Default `on: [succeeded]`. Never this workflow. Chains stop at depth 3. |
+| `slack` | `slack_team_id`, `event` (`message` or `reaction_added`), `channel_ids`, plus `keywords`, `reactions`, `filter`, `threads` | Channel ids are written literally. Needs Manage on the workflow. Outside guests are dropped unless `include_external_users` is true. |
 
 `automation.run`'s `trigger_key` picks one manual trigger when there are
 several (for example one per button). Without a manual trigger there is
@@ -62,7 +61,7 @@ Every step takes these, beside its own fields:
 | `error_handling` | `fail` (default), `ignore`, or `ignore_rest` |
 | `retry` | `{ max_attempts (≤ 5), backoff (fixed or exponential), delay_seconds, on: [rate_limited, failed] }` |
 | `timeout_seconds` | At most 300 |
-| `repeat` | `{ until, interval_seconds, max_attempts, on_exhausted }` — polls a read-only `call_tool`, `call_synthetic_tool` or `fetch` until `until` is truthy over `{ output, attempt }`. A write is never repeated. |
+| `repeat` | `{ until, interval_seconds, max_attempts, on_exhausted }` — polls a read-only `call_tool` or `call_synthetic_tool` until `until` is truthy over `{ output, attempt }`. A write is never repeated. |
 
 A step after an `error_handling: ignore` step can test `errors.<key>` in its
 `run_if` to know whether the earlier one failed.
@@ -110,7 +109,7 @@ do not.
 | `wait` | `seconds` or `until` | At most an hour |
 | `state.get` | `keys` | Reads values kept across runs (a watermark, a "seen" map) |
 | `state.set` | `state_key`, `value` | Writes one. Put it after the step that must succeed first, so a failure retries next run. |
-| `runs.query` | `scope`, `status`, `limit` (≤ 20) | Reads earlier runs of this automation or session |
+| `runs.query` | `scope`, `status`, `limit` (≤ 20) | Reads earlier runs of this workflow or session |
 
 ### Collections
 
@@ -146,14 +145,21 @@ in total.
 
 An agent's budget defaults to 8 turns, 20 tool calls, 200,000 tokens and 300
 seconds. Publishing one needs the organization's Agent to be on, and its model
-must be one the organization has enabled.
+must be one the organization has added in Settings → **AI models** that can call
+tools.
 
-### Web and other automations
+`model` is a model ref, `<provider>:<model id>`. `automation.options` with
+`target: { "kind": "step_model" }` lists the refs a step can use. A step that
+sets `model` keeps that model, even if the organization default changes later.
+A step that leaves it out follows the organization default as it is when the
+step runs. If a pinned model is removed, the step runs on the default and the
+run records an `agent_model_fallback` warning.
+
+### Web and other workflows
 
 | Type | Key fields | Notes |
 |---|---|---|
-| `fetch` | `url`, `method`, `query`, `headers`, `body`, `response` | Only hosts in `web`. Carries no credentials: auth, cookie and API-key headers are refused — use a connection instead. GET is a read, POST/PUT/PATCH a write, DELETE destructive. Fetched content is untrusted. |
-| `automation.call` | `automation_id`, `input`, `wait_seconds` | Runs another published automation and waits for its output |
+| `automation.call` | `automation_id`, `input`, `wait_seconds` | Runs another published workflow and waits for its output |
 
 ## Expressions
 
@@ -174,8 +180,8 @@ Each save works out the draft's **tier** from its steps: the worst step wins.
 | Tier | Comes from | Publishing needs |
 |---|---|---|
 | `read` | Reads only | `automation:create` or `automation:manage`, with edit access |
-| `write` | Any write tool, `notify`, or a write `fetch` | Also `automation:publish` (every Member holds it) or `automation:manage` |
-| `destructive` | Any destructive tool or a DELETE `fetch` | The same, and an `approve` step gating each destructive step |
+| `write` | Any write tool or `notify` | Also `automation:publish` (every Member holds it) or `automation:manage` |
+| `destructive` | Any destructive tool | The same, and an `approve` step gating each destructive step |
 | `null` | Elaichi cannot tell yet | Cannot publish. Finish the steps. |
 
 A webhook or Slack trigger also needs `automation:publish` or

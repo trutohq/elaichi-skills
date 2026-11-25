@@ -19,10 +19,10 @@ Elaichi's own consent screen. Only `mcp:read` is granted by default.
 
 | Scope | Consent screen says | What it allows |
 |---|---|---|
-| `mcp:read` | Read your organization's data | Everything the user can already see: people, teams, roles, connections, toolboxes, templates, restrictions, settings, and the audit log. **Never secret values.** Also files and withdraws the user's own access requests. |
-| `mcp:write` | Create and change data | Create and change teams, roles, toolboxes, templates, synthetic tools, connections and org settings, and share them. Implies `mcp:read`. |
-| `mcp:destructive` | Delete data and remove access | Delete toolboxes, templates, connections and the rest; take back shares; transfer a connection. Elaichi's own data only. Implies `mcp:read`. Never a default, never implied by anything. |
-| `mcp:tools` | Run your connected tools | Run the tools from the toolboxes chosen on that screen, **deletes in the connected apps included**. Also files and withdraws the user's own access requests. |
+| `mcp:read` | See your organization | Everything the user can already see: people, teams, roles, connections, toolboxes, templates, restrictions, settings, and the audit log. **Never secret values.** Also files and withdraws the user's own access requests. |
+| `mcp:write` | Make changes | Add and edit teams, roles, toolboxes, templates, synthetic tools, connections and org settings, and share them. Implies `mcp:read`. |
+| `mcp:destructive` | Delete things | Delete toolboxes, templates, connections and the rest; take back shares; transfer a connection. Elaichi's own data only. Implies `mcp:read`. Never a default, never implied by anything. |
+| `mcp:tools` | Use your connected apps | Run the tools from the toolboxes chosen on that screen (a Toolboxes row under Use your connected apps), **deletes in the connected apps included**. Also files and withdraws the user's own access requests. |
 
 Two rules people miss:
 
@@ -42,9 +42,10 @@ in [Control-plane operations](./operations-catalog.md#never-on-mcp-at-any-scope)
 ## Toolbox selection
 
 When `mcp:tools` is requested, the consent screen also asks **which
-toolboxes** this client may reach. The user picks either:
+toolboxes** this client may reach, in a Toolboxes row under Use your connected
+apps that opens a sheet. The user picks either:
 
-- **All my tools** — their `global:{userId}` toolbox (every connection they own
+- **Everything I can use** — their `global:{userId}` toolbox (every connection they own
   or that is shared with them at `use`) **plus** every toolbox shared with
   them — directly, through a team, or with the whole organization — at `use` or
   above, including ones they get later; or
@@ -106,7 +107,7 @@ A refused call comes back as a tool result with `isError: true`. Its first
 text block is the whole answer, written for the person: **display the message
 unchanged.** It already names what was missing in their words.
 
-There are five kinds. Each has one right move.
+There are six kinds. Each has one right move.
 
 | Kind | How you know | The right move |
 |---|---|---|
@@ -115,8 +116,9 @@ There are five kinds. Each has one right move.
 | Restriction | `structuredContent.error` holds the restriction | Offer `elaichi__access_request__create` with its `request_access.arguments`. |
 | Step-up | Says the app must confirm it is them, and names a screen | Send them to that screen. More scope will not help. |
 | Two-factor | Says the org requires two-factor | They set up two-factor, then try again. No reconnect needed. |
+| Plan limit | Says the monthly tool-call limit is used up and when it resets; the result carries a "See plans" card | Tell the person and link the plan page. Never an access request, never a retry. |
 
-Two rules cover all five:
+Two rules cover all six:
 
 1. **You cannot grant any of them.** Relay the exact name and stop.
 2. **Do not look for another route to the same effect.** That is the failure
@@ -164,6 +166,20 @@ and the exact permission the refusal named — but only on a connection with
 `mcp:write`. A read-only or tools-only connection may file `"restriction"`
 requests alone. Never use `reason: "scope"`.
 
+### Plan limit: "See plans"
+
+The free Personal plan allows 1,000 connected-tool calls a calendar month
+(UTC). Past it, a call that would reach a connected app is an error result
+rather than an HTTP error. Its text says the allowance is used up and when it
+resets (the 1st), and its card links the plan page (Settings → Billing).
+Nobody can approve a used-up allowance, so the card has no "ask an admin"
+action. Say so plainly, link the plan page, and stop: the same call, a
+different tool or `run_code` all count against the same limit. Gold and Black
+have no tool-call limit, and a call Elaichi refuses before it runs (a
+restriction, a missing account) does not count. Elaichi's own administration
+operations are not counted; `elaichi__toolbox__execute` and each step of a
+synthetic tool are, because they run a connected tool.
+
 ### Step-up: "Only in the Elaichi app"
 
 Inviting or revoking an invitation, changing someone's role, removing a
@@ -187,13 +203,17 @@ silence would mark every plain write as destructive.
 So a plain write is `readOnlyHint: false` **and** `destructiveHint: false`,
 stated rather than implied. `execute_tool` and `run_code` are marked
 destructive and open-world, because their real tier depends on what they run.
+`read_tool` is marked read-only and open-world, because it reaches a third-party
+app. The server enforces that: it runs only a tool whose tier is `read`.
 
 Annotations are hints a client may ignore. The scope check on the server is
 the enforcement.
 
 ## Rate limits
 
-`POST /mcp` allows **120 requests per 60 seconds** per OAuth access token.
+`POST /mcp` allows **120 requests per 60 seconds** per OAuth grant, so
+refreshing the token does not reset the count. A request without a valid
+token is counted per client IP.
 Each tool call inside a `run_code` program counts against the same budget.
 Over the limit you get `429` with code `rate_limited` and a `Retry-After`
 header in seconds. Honor it; do not retry tighter.

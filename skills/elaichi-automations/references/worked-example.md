@@ -7,15 +7,15 @@ This is the order of calls a model makes, with arguments that match the real
 schema. Operation `a.b` is MCP tool `elaichi__a__b`. Ids like `tbx_…` and
 `auto_…` stand for real ones you read from earlier results.
 
-## 1. Check automations are on
+## 1. Check workflows are on
 
 Look for `elaichi__automation__draft__create` in your tool list. If no
-`elaichi__automation__*` tool is there, automations are off for this
+`elaichi__automation__*` tool is there, workflows are off for this
 organization. Say so, point to their admin or support@elaichi.ai, and stop.
 
 ## 2. Find the Jira tool, in a stored toolbox
 
-An automation's steps call tools through a **stored** toolbox (`tbx_…`), never
+A workflow's steps call tools through a **stored** toolbox (`tbx_…`), never
 through the automatic ones.
 
 1. `toolbox.list` — find a toolbox that holds a Jira search tool.
@@ -164,7 +164,7 @@ returned `run_id` if it was still going after 20 seconds.
 ## 10. Show it
 
 If your tool list has `show_object`, call it once with `{ "id": "auto_…" }`
-so the person sees the finished automation. Otherwise, give them the
+so the person sees the finished workflow. Otherwise, give them the
 `console_url`.
 
 ## Going further

@@ -12,6 +12,12 @@ Dates are `YYYY-MM-DD`.
 
 ## [Unreleased]
 
+### Added
+
+- Perplexity and Grok (grok.com and Grok Bot) as AI clients: setup steps in
+  `elaichi-clients` and its per-client reference, rows in the app map and the
+  first hour, and in every client list.
+
 ### Changed
 
 - `elaichi-mcp`: a tool's file argument now teaches one source order. A
@@ -21,6 +27,149 @@ Dates are `YYYY-MM-DD`.
   public address, and the manual `file.upload_request` page only as a last
   resort. The three newer tools are described as "use only if listed in
   `tools/list`, else fall through".
+- Every skill's "when to use it" text moved from the `whenToUse` frontmatter
+  key into `description`. The Claude plugin directory accepts only the keys
+  Claude Code reads, and Claude picks a skill by its description anyway.
+  `manifest/skills.json` keeps its `whenToUse` field, now taken from
+  `description`.
+- The Claude plugin declares its MCP server inline in `plugin.json`
+  (`type: "http"`), and links the privacy policy.
+
+### Removed
+
+- `rules/elaichi.mdc`, `scripts/generate-rule.mjs` and `mcp.json`. The
+  directory refuses file types and config fields it does not list. The Cursor
+  rule is generated in trutohq/elaichi-cursor-plugin now, which already owns
+  the Cursor install.
+
+### Added
+
+- `elaichi-mcp`: `elaichi__file__read` reads a file's content over MCP alone
+  (elaichi `file-read-mcp`). An image comes back as an image block, text
+  inline, anything else as a 10-minute download link that needs no sign-in.
+  `link_only: true` returns only the link. A saved-file tool result now
+  carries that `download_url` too, so a shell agent can `curl` it with no
+  second call. The Files section, the operations catalog and Tool discovery
+  say to use these instead of opening a file's `url`, which needs a
+  signed-in browser.
+
+### Changed
+
+- `elaichi-api`, `elaichi-conventions`, `elaichi-mcp` and the Cursor rule say
+  the MCP rate limit is counted per OAuth grant, so refreshing
+  the token does not reset it; a request without a valid token is counted per
+  client IP. They used to say "per OAuth access token".
+- `elaichi-clients`, `elaichi-mcp`, `elaichi-conventions`, `elaichi-governance`,
+  `elaichi-toolboxes`, `elaichi` and the Cursor rule describe the redesigned MCP
+  consent screen. The scopes read **Use your connected apps**,
+  **See your organization**, **Make changes** and **Delete things**. It is one
+  page with no "Step 1 of 2" and no Continue; toolboxes are a row under Use your
+  connected apps. "All my tools" is now **Everything I can use**, because it
+  includes system toolboxes as well as the person's own (Edit toolboxes offers
+  **Everything I can use** or **Only these toolboxes**). The buttons are
+  **Don't allow** and **Allow**. Scope ids are unchanged.
+- The console now calls automations **workflows**, and the skills follow. Prose
+  in every skill, the README and the plugin description says "workflow", and
+  the quoted console labels are now **Workflows** (sidebar, Settings →
+  Organization). Everything an agent types is unchanged: the
+  `elaichi-automations` skill slug (`elaichi:elaichi-automations`), the
+  `elaichi__automation__*` tool and `automation.*` operation names, the
+  `automation:*` permissions, `auto_` ids, `/automation` and `/automations`
+  routes, API paths and `automations_*` error codes. `elaichi-automations`
+  and `elaichi` (Concepts) say so once, so an agent that meets "automation" in
+  a tool name knows it is the same thing.
+- On the free Personal plan only the organization's creator can use it. Members added during the trial stay, but every other member
+  is refused `403 plan_single_user`, over the API and MCP alike, with a
+  message naming the creator, until the organization buys Gold or Black.
+  Covered in `elaichi` (Plans and its "three things" list), the `elaichi`
+  first-hour reference, the error tables in `elaichi-api`,
+  `elaichi-conventions` and the Cursor rule, and a troubleshooting row in
+  `elaichi-clients`.
+- Synthetic tools are on every plan (`elaichi`, `elaichi-toolboxes`, its
+  `synthetic-tools` reference, the `elaichi` first-hour reference). The free
+  Personal plan holds up to 10 in the organization and refuses the 11th with
+  `409 plan_limit_reached`, `details.limit` `synthetic_tools`; Gold and Black
+  have no limit. Gold's list no longer names synthetic tools. A synthetic tool
+  still cannot be shared on its own, and sharing a toolbox that pins one still
+  needs Gold. `synthetic_tools` joins the `details.limit` values in
+  `elaichi-api`, `elaichi-conventions` and the Cursor rule.
+
+### Added
+
+- `elaichi-clients`: Microsoft Copilot is a supported client, reached
+  through a Copilot Studio agent that has Elaichi's endpoint as an MCP tool
+  (OAuth, dynamic discovery) and is published to Microsoft Copilot. A row
+  in the per-client table, a full section in **Setting up each client**, and a
+  troubleshooting row. It shows as unverified. GitHub Copilot (VS Code) is
+  also documented there, with its own row, section and two troubleshooting
+  rows. The works-with lists in `elaichi`, `elaichi-conventions`,
+  `elaichi-mcp`, `elaichi-toolboxes`, `elaichi-governance` and the Cursor rule
+  now name Microsoft Copilot.
+
+### Changed
+
+- `read_tool` (`elaichi-mcp`, `elaichi-clients`, `elaichi-conventions`,
+  `elaichi`, `elaichi-automations`, `llms-install.md`, the Cursor rule): a new
+  MCP meta-tool, `read_tool { name, arguments }`, runs a connected tool that only
+  reads. It is marked read-only, so Claude, ChatGPT and other clients usually
+  run it without an approval prompt. The server refuses any `elaichi__*` name, a
+  tool whose tier is not `read` (synthetic tools always), and a read whose
+  arguments could send the connection's credentials to another address; each
+  refusal says to call `execute_tool`. Each `search_tools` row now carries
+  `runner`, `"read_tool"` or `"execute_tool"`. `execute_tool` is unchanged. A
+  client's per-tool permission now sees `read_tool` and `execute_tool` apart, and
+  a "read actions only" setting allows `read_tool` and blocks `execute_tool` and
+  `run_code`, so the ChatGPT note that said it did not make connected apps
+  read-only is gone. Over MCP only: the in-app Elaichi Agent has no `read_tool`.
+- `elaichi-clients` (consent screen table): the three scope rows now quote
+  Elaichi's corrected consent copy. An AI client cannot invite anyone, change
+  a member's roles, remove someone from the organization, delete a team or
+  role, or revoke an invitation or API token, and cannot read the API token
+  list: those are step-up gated or app only on MCP, so the screen no longer
+  promises them and the table says they stay in the Elaichi web app.
+
+- `elaichi` (app map): the screen "Settings → Assistant" is now **Settings →
+  AI models** (still `/settings?tab=assistant`). An organization adds keys for
+  several AI providers there, and every model it adds can be picked in the
+  Elaichi Agent and in each workflow agent step. Both rows now link to the new
+  guide, [Get an AI provider key](/guides/settings/ai-provider-keys), instead of
+  the draft `/guides/settings/assistant` page.
+- `elaichi-automations`: an `agent` step's `model` is a ref,
+  `<provider>:<model id>`, listed by `automation.options` with
+  `target: { kind: "step_model" }`. A step that leaves `model` out follows the
+  organization default as it is when the step runs. A pinned model that is
+  removed later runs on the default and records an `agent_model_fallback` run
+  warning.
+- `elaichi-mcp`: a trimmed `search_tools` schema now names what it left out.
+  Optional parameters lose their descriptions first, and any dropped are listed
+  by name in `x_truncated.omitted_properties`. Elaichi checks only required
+  arguments, so the old line saying a missing optional one gets a validation
+  error naming it was wrong, and is gone. A query that is a tool's exact name
+  returns its whole schema. A `detail: "summary"` row can be called with its
+  `required` keys.
+- `elaichi-mcp`: results are also kept under 30,000 characters by shortening
+  long prose. Rows, ids, links and cursors are never cut, `elaichi_note` says
+  what happened, and `run_code` still reads a connected app's result whole.
+- `elaichi-api`: the Automations row lists `GET /automation/models`, the AI
+  models an agent step can use (`automation:create` or `automation:manage`).
+  The `/assistant/models` and `/assistant/providers` routes are not listed:
+  that file calls the in-app agent's `/assistant/*` internal.
+- Plans (`elaichi`, `elaichi-conventions`, `elaichi-api`, `elaichi-clients`,
+  `elaichi-mcp`, `elaichi-connections`, `elaichi-toolboxes`,
+  `elaichi-governance`, `elaichi-automations`, `elaichi-data`,
+  `llms-install.md`): there are three cumulative plans, **Personal** (free, one
+  person: 1 member, 10 connections across 3 connectors, 1,000 connected-tool
+  calls a month), **Gold** and **Black**. Black is on sale and self-serve, and
+  the automation platform, approvals, collections, dashboards, knowledge bases,
+  the Elaichi Agent, BYOK and logging destinations are Black features, no
+  longer "early access, by invitation". Every new workspace starts on a 14-day
+  Black trial with Black's free usage as a hard stop, then moves to Personal.
+  `subscription_required` now means the plan is on hold; `plan_limit_reached`
+  (409) is added, and `feature_not_available` names the plan that unlocks the
+  feature. Over MCP a call past Personal's monthly limit is an error result
+  with a "See plans" card: tell the person, link the plan page, do not retry
+  (a sixth kind of refusal in `elaichi-mcp`).
+
 - `elaichi-mcp`, `elaichi-governance`, `elaichi-connections`: the six step-up
   operations (`invite.create`, `invite.delete`, `member.set_roles`,
   `member.delete`, `role.delete`, `team.delete`) are no longer on the MCP tool
@@ -36,6 +185,15 @@ Dates are `YYYY-MM-DD`.
 - `elaichi-clients` and `elaichi-mcp` (scopes and refusals): a two-factor
   refusal is fixed by setting up two-factor and trying again. The client no
   longer needs to be connected again.
+
+### Removed
+
+- Web access. `elaichi-automations`: the `fetch` step, an agent
+  step's `web_fetch` and the `web` block are gone; a stored one fails with
+  `web_access_removed`. `elaichi-governance`, `elaichi`, `elaichi-api`,
+  `elaichi-mcp`: the Governance → Web access tab, `/web-access-policy` and the
+  `web_access_policy.get` / `.check` operations are gone. An older `elaichi.web`
+  restriction rule lists as "Web access (removed)" and can be deleted.
 
 ## [0.2.0] — 2026-10-10
 

@@ -56,7 +56,7 @@ That is why removing one asks for the same confirmation as verifying one.
 ## Single sign-on
 
 **Settings → SSO and SCIM**. Reading needs `sso:view`, changing needs
-`sso:manage`. SAML and OIDC. Gold and Black both include SSO.
+`sso:manage`. SAML and OIDC. SSO needs Gold or Black; Personal does not include it.
 
 An SSO connection has three switches, all off by default:
 
@@ -103,7 +103,7 @@ will break, by name. It lists, without changing anything:
   that used the old one is switched to it first. With none picked, those things
   stop working.
 - **Synthetic tools they own.** Deleted with them.
-- **Toolboxes, templates, automations, collections, dashboards, knowledge bases,
+- **Toolboxes, templates, workflows, collections, dashboards, knowledge bases,
   apps and custom connectors they own.** A shared one needs a new owner or a
   deliberate deletion before removal; a private one is deleted unless handed
   over. A custom connector can only be transferred. Nothing else can ever move

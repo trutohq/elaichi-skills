@@ -7,7 +7,8 @@ that *kind of thing* at all.
 
 Where: **Governance → Restrictions**. Reading needs `restriction:view`. Writing
 needs `restriction:manage`, and a rule aimed at one member also needs
-`restriction:override`. Restrictions are on Gold and Black.
+`restriction:override`. Writing them needs Gold or Black. On Personal a
+restriction written earlier keeps applying, and removing it always works.
 
 **No AI surface can change a restriction.** MCP clients and the Elaichi agent
 can read them (`elaichi__restriction__list`, `__get`) with `restriction:view`,
@@ -90,7 +91,7 @@ Everywhere a member can reach a connector or tool, through the same check:
 | **Connect** | Connecting or reconnecting a blocked connector is refused |
 | **Save** | A toolbox entry or synthetic tool step naming a tool restricted for the person saving it is refused. An entry saved before the rule existed stays saved, but does not resolve or run. |
 | **Advertise** | A restricted tool is never in an MCP client's `tools/list` or in a toolbox's runnable `tools` |
-| **Execute** | Every call (MCP, `execute_tool`, `toolbox.execute`, the Elaichi agent, each synthetic tool step, automations) is checked for the person it acts as. The final outbound URL, and every redirect, is checked against tool-level blocks too. |
+| **Execute** | Every call (MCP, `read_tool`, `execute_tool`, `toolbox.execute`, the Elaichi agent, each synthetic tool step, workflows) is checked for the person it acts as. The final outbound URL, and every redirect, is checked against tool-level blocks too. |
 
 Restrictions are checked for **the person calling**, not for a toolbox's
 delegator. A blocked tool stays blocked inside every toolbox entry, frozen or

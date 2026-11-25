@@ -55,8 +55,8 @@ Two stand outside the chain, both free seats:
 58 permissions. The console's label is in brackets.
 
 Some families appear in the role editor only when the organization has the
-feature: the automation family (`automation:*`, `collection:*`, `dashboard:*`,
-`knowledge:*`, `spend:*`) only where automations are turned on, and `bundle:*`
+feature: the workflow family (`automation:*`, `collection:*`, `dashboard:*`,
+`knowledge:*`, `spend:*`) only where workflows are turned on, and `bundle:*`
 (apps) only when apps are available. A role can still store them.
 
 ### Organization
@@ -119,8 +119,8 @@ connection stays private from every permission holder, Org Owner included.
 
 | Permission | Meaning |
 |---|---|
-| `restriction:view` (View restrictions) | See restriction rules and the web access policy. |
-| `restriction:manage` (Manage restrictions) | Create, edit and delete restriction rules, and change the web access policy. |
+| `restriction:view` (View restrictions) | See restriction rules. |
+| `restriction:manage` (Manage restrictions) | Create, edit and delete restriction rules. |
 | `restriction:override` (Override restrictions) | Also needed for a rule aimed at one member. |
 | `audit:view` (View audit log) | See every event in the organization. Without it, everyone still sees their own activity. |
 | `spend:view` (View spend and usage) | See usage meters, limits and payment caps. |
@@ -152,14 +152,14 @@ connection stays private from every permission holder, Org Owner included.
 | `notification:view` (View notification destinations) | See notification destinations. |
 | `notification:manage` (Manage notification destinations) | Send organization events to Slack or email. |
 
-### Automations, collections, dashboards and knowledge
+### Workflows, collections, dashboards and knowledge
 
 | Permission | Meaning |
 |---|---|
-| `automation:create` | Create automations, and edit, run, publish a read-only version of, or delete the ones you own or can edit. |
-| `automation:publish` | Publish any version of automations you own or can edit, including ones that write, delete, or start from a webhook or Slack message. Destructive steps still need an `approve` step before them. |
-| `automation:share` | Share automations. |
-| `automation:manage` | Everything above, plus reach automations beyond the ones you own or can edit. |
+| `automation:create` | Create workflows, and edit, run, publish a read-only version of, or delete the ones you own or can edit. |
+| `automation:publish` | Publish any version of workflows you own or can edit, including ones that write, delete, or start from a webhook or Slack message. Destructive steps still need an `approve` step before them. |
+| `automation:share` | Share workflows. |
+| `automation:manage` | Everything above, plus reach workflows beyond the ones you own or can edit. |
 | `collection:create` / `collection:share` / `collection:manage` | Create collections; share them; change the schema or settings of ones you can edit. |
 | `dashboard:create` / `dashboard:share` / `dashboard:manage` | Create dashboards; share them; change ones you can edit. |
 | `dashboard:publish` | Publish a dashboard you can edit to a public link. **High trust.** Works only after an admin turns public links on for the organization (off by default, needs `org:manage`). |
@@ -180,8 +180,8 @@ hold no grant on. More in
 
 ## Custom roles
 
-`role:manage`, plus a plan with custom roles (Gold and Black both include
-them). Build from the catalog above. Edits reach everyone holding the role within
+`role:manage`, plus a plan with custom roles (Gold or Black; Personal has
+only the predefined roles). Build from the catalog above. Edits reach everyone holding the role within
 about two minutes.
 
 - **You cannot grant a role or a permission you do not hold yourself.** The
@@ -202,7 +202,7 @@ about two minutes.
 
 Separate from roles. Connections, toolboxes, templates, custom connectors and
 files are shared through one kind of grant, to a **user**, a **team**, or the
-whole **organization**. Automations, collections, dashboards, knowledge bases
+whole **organization**. Workflows, collections, dashboards, knowledge bases
 and apps are shared the same way where the organization has them.
 
 | Level | Allows |

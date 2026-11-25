@@ -1,7 +1,7 @@
 # Dashboards
 
 A dashboard is one to ten pages of live widgets. Each widget reads a
-collection, a read-only tool, or an automation's runs, and draws a metric,
+collection, a read-only tool, or a workflow's runs, and draws a metric,
 chart, table or other view. Limits: 24 widgets a page, 100 in all, a
 12-column grid.
 
@@ -72,10 +72,10 @@ required but may be null. A live widget sends `snapshot: null`.
 | `table` | Rows, with optional column `format`, viewer controls and row buttons |
 | `markdown` | Static text; `variant: "callout"` with a `tone` makes a note |
 | `heading` | A full-width section label. Viewers can fold it to hide the widgets under it. |
-| `progress` | A bar from a value and a total, or the live progress of automation runs |
+| `progress` | A bar from a value and a total, or the live progress of workflow runs |
 | `stepper` | Which stage one row is at, from a select field |
 | `form` | Adds a collection row, as each viewer |
-| `action` | A button that runs a published automation's manual trigger, as the automation's owner |
+| `action` | A button that runs a published workflow's manual trigger, as the workflow's owner |
 
 Source types:
 
@@ -84,7 +84,7 @@ Source types:
 | `collection.aggregate` | `{ collection_id, spec: { group_by?, metrics, filter?, sort? } }`: the same spec `collection.aggregate` takes |
 | `collection.query` | Flat: `{ collection_id, filter?, q?, sort?, fields?, limit? }` |
 | `tool` | `{ toolbox_id, tool, args, transform }`: a read-tier tool, with a JSONata transform that returns the view's spec. Its `view` is null. |
-| `automation.runs` | `{ automation_id, status?, limit? }`: the newest runs (at most 5). Viewers need `use` on the automation. |
+| `automation.runs` | `{ automation_id, status?, limit? }`: the newest runs (at most 5). Viewers need `use` on the workflow. |
 | `shared` | `{ key }`: one of the dashboard's `shared_sources`, declared once and read by several widgets |
 
 Collection sources and forms take an optional `table`. Markdown, heading,
@@ -148,7 +148,7 @@ This is the rule to explain when someone says "my colleague sees no data".
   advance which widgets a person will not be able to read.
 
 **Sharing a dashboard never widens anyone's data access.** To show people data
-from a connection they do not hold, let an automation (which runs as its
+from a connection they do not hold, let a workflow (which runs as its
 owner) write it into a collection, share that collection at `view`, and point
 the widgets at the collection. Prefer collection sources over tool sources for
 anything meant for a wide audience.
@@ -183,8 +183,8 @@ can never fill or press one. A person does that in Elaichi. In
 
 - A form writes a row **as the viewer**, through the collection's row scope
   and protected fields.
-- A button or row action runs a published automation's manual trigger **as
-  the automation's owner**, and is shown only to people who may run it.
+- A button or row action runs a published workflow's manual trigger **as
+  the workflow's owner**, and is shown only to people who may run it.
 - Export (CSV or NDJSON) of a table is for a signed-in person only, and only
   when the table's `viewer_controls.export` is on.
 
@@ -207,7 +207,7 @@ address, with no sign-in.
 **Who can make one.** All of these must hold:
 
 - An admin with `org:manage` has turned on **Public links** (Settings →
-  Organization → Automations). It is **off by default**, and while it is off
+  Organization → Workflows). It is **off by default**, and while it is off
   nobody can create, refresh or resume a link.
 - The person has `dashboard:publish` (the Member role holds it) and can edit
   the dashboard.
@@ -231,7 +231,7 @@ At most 5 active links per dashboard. A link expires after 1 to 365 days
   the person to agree. If the dashboard later changes, a scheduled refresh
   publishes nothing and the link is suspended until someone reviews it again.
 
-**How it updates.** Manually, after an automation that writes one of the
+**How it updates.** Manually, after a workflow that writes one of the
 dashboard's collections finishes a run (at most once every 15 minutes), or
 every 1, 6, 12 or 24 hours. Optional per-link switches let visitors fill in
 forms, edit rows, or filter and sort tables live; each runs as the publisher
@@ -245,9 +245,9 @@ and is off by default.
 | `dashboard.public_link.refresh` | Takes a fresh copy now. Only the link's current publisher (`snapshot_by`) can, only on an active link, and only when the dashboard still matches what was agreed. Check `can_refresh_now` and `refresh_now_blocked_reason` first. Confirm with the person: it changes what strangers see. |
 | `dashboard.public_link.revoke` | The address stops working at once. It cannot be undone; a new link must be made in the console. Confirm which link first. |
 
-A link is a copy, so editing rows directly (not through the automation that
+A link is a copy, so editing rows directly (not through the workflow that
 feeds it) leaves it stale. Compare `snapshot_at` with when the data changed,
-and refresh if it is older. On an automation-refreshed link, `snapshot_at`
+and refresh if it is older. On a workflow-refreshed link, `snapshot_at`
 can trail the data by up to 15 minutes without anything being wrong.
 
 ## Deleting

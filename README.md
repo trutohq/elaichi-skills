@@ -92,8 +92,8 @@ Add `-g` to install globally instead of into the current project.
 | Skill | Description |
 |-------|-------------|
 | [elaichi](./skills/elaichi/SKILL.md) | What Elaichi is, the words it uses, where everything lives in the app, and which skill to load next |
-| [elaichi-mcp](./skills/elaichi-mcp/SKILL.md) | Drive the MCP endpoint — `search_tools`, `execute_tool` and `run_code`, the `connection` argument, scopes and refusals, and the missing-tool ladder |
-| [elaichi-clients](./skills/elaichi-clients/SKILL.md) | Connect Claude, ChatGPT, Cursor or any other MCP client, what to grant on the consent screen, and why a client shows no tools |
+| [elaichi-mcp](./skills/elaichi-mcp/SKILL.md) | Drive the MCP endpoint — `search_tools`, `read_tool`, `execute_tool` and `run_code`, the `connection` argument, scopes and refusals, and the missing-tool ladder |
+| [elaichi-clients](./skills/elaichi-clients/SKILL.md) | Connect Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot or any other MCP client, what to grant on the consent screen, and why a client shows no tools |
 | [elaichi-connections](./skills/elaichi-connections/SKILL.md) | Connect and look after accounts — sharing versus ownership, status and reconnecting, transfer and offboarding, custom connectors |
 | [elaichi-toolboxes](./skills/elaichi-toolboxes/SKILL.md) | Curate what an agent can do — toolboxes versus templates, frozen parameters, what sharing at `use` delegates, and synthetic tools |
 | [elaichi-governance](./skills/elaichi-governance/SKILL.md) | Roles and the full permission catalog, restrictions, access requests, approvals, the audit log, offboarding, SSO and SCIM |
@@ -104,14 +104,10 @@ Add `-g` to install globally instead of into the current project.
 
 ## Rules (Cursor only)
 
-| Rule | Description |
-|------|-------------|
-| [elaichi](./rules/elaichi.mdc) | Always-applied rule with URLs, API auth, the list envelope, error codes, id prefixes and the MCP namespaces |
-
-Claude Code plugins have no "always-applied rule" primitive, so the same facts
-arrive there through the model-invoked `elaichi-conventions` skill. The rule is
-**generated** from that skill by `scripts/generate-rule.mjs`, and CI fails if
-the two drift — edit the skill, not the rule.
+Cursor also gets an always-applied rule with the same facts as the
+`elaichi-conventions` skill. It ships in the Cursor plugin,
+[trutohq/elaichi-cursor-plugin](https://github.com/trutohq/elaichi-cursor-plugin),
+which generates it from that skill. Edit the skill, not the rule.
 
 ## What is Elaichi?
 
@@ -156,6 +152,9 @@ Because every call travels through Elaichi:
 - **58 permissions, 8 predefined roles** plus unlimited custom roles, per-tool
   restrictions, and an append-only audit log — all of it applying over MCP too
 - **SSO, SCIM and directory group mapping**
+- **Three plans** — Personal (free, for one person), Gold and Black, each
+  including the one before; every new workspace starts on a 14-day Black trial.
+  See [elaichi.ai/pricing](https://elaichi.ai/pricing/)
 
 ## Resources
 

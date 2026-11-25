@@ -1,7 +1,6 @@
 ---
 name: elaichi-api
-description: Write code against the Elaichi REST API at api.elaichi.ai — API tokens and what they cannot do, the organization header, the cursor list envelope and server-side search, error codes, can_* capability fields, URL conventions, rate limits, and the OpenAPI schema. Use for scripts, integrations, provisioning, or a UI over Elaichi.
-whenToUse: Writing or reviewing code that calls api.elaichi.ai — scripts, integrations, provisioning, or a UI over Elaichi. Read before constructing the first request.
+description: Write code against the Elaichi REST API at api.elaichi.ai — API tokens and what they cannot do, the organization header, the cursor list envelope and server-side search, error codes, can_* capability fields, URL conventions, rate limits, and the OpenAPI schema. Use when writing or reviewing code that calls api.elaichi.ai (scripts, integrations, provisioning, or a UI over Elaichi), and read it before constructing the first request.
 ---
 
 # The Elaichi API
@@ -24,7 +23,7 @@ one of three groups:
 |---|---|---|
 | **Published** | Yes | Yes. This is the API. |
 | **Internal** — the console's own screens, browser redirects, inbound webhooks, staff tools | No | No. Its URLs can change without notice. |
-| **Invite-only** — automations, approvals, collections, dashboards and public links, knowledge, web access, apps, spend | No, not yet | Only if the organization has the feature, and expect changes. See [Endpoints](./references/endpoints.md#invite-only-families-not-in-the-schema). |
+| **Black-plan** — workflows, approvals, collections, dashboards and public links, knowledge, apps, spend | No, not yet | Only if the organization is on Black (trial included), and expect changes. See [Endpoints](./references/endpoints.md#black-plan-families-not-in-the-schema). |
 
 Paths are unversioned — `/connection`, not `/v1/connection`. An unknown path
 asked for with `Accept: text/markdown` answers a short Markdown page that
@@ -61,7 +60,7 @@ in the app. Do not look for a way around it.
 - Scheduling the organization's deletion (`DELETE /organization/:id`), and
   changing whether the organization requires two-factor sign-in.
 - Approving an AI client on the consent screen.
-- Changing payment settings (invite-only spend controls).
+- Changing payment settings (Black-plan spend controls).
 
 A token never gets `428 step_up_required`. That code goes to a browser session
 that must re-verify first. Some routes ask the browser to re-verify but let a
@@ -82,9 +81,13 @@ With an API token the header is **optional** — the token already names the
 organization. If you send it, it must match, or you get `403`.
 `/organization/:id/*` routes take the org from the path instead.
 
-An organization without an active plan answers `403 subscription_required` on
-its product routes. A feature the plan does not include answers
-`403 feature_not_available`, with `feature` and `plan` in the error.
+Plans are cumulative: Personal (free, limited), Gold, Black. A feature the
+plan does not include answers `403 feature_not_available`, with `feature` and
+`plan` in the error, and a message naming the plan that unlocks it. A Personal
+organization that would cross a limit answers `409 plan_limit_reached`, with
+`details.limit` (`members`, `connections`, `connectors` or `tool_calls`),
+`max` and `plan`. Only an organization whose plan is on hold answers
+`403 subscription_required` on its product routes.
 
 ## The list envelope
 
@@ -149,10 +152,12 @@ row if the set changes between pages.
 | `unauthorized` | 401 | Missing or invalid credential |
 | `permission_required` | 403 | Role denial. `details.required_permissions` lists every permission that would do — **any one** is enough |
 | `forbidden` | 403 | Not allowed — including "needs an interactive browser session" |
-| `subscription_required` | 403 | The organization has no active plan |
-| `feature_not_available` | 403 | The plan does not include this feature |
+| `subscription_required` | 403 | The organization's plan is on hold. Contact support@elaichi.ai |
+| `feature_not_available` | 403 | The plan does not include this feature. `feature` and `plan` are in the error; the message names the plan that unlocks it |
+| `plan_single_user` | 403 | The organization is on Personal, which only its creator can use. The message names that person; an upgrade to Gold or Black restores access |
 | `not_found` | 404 | No such resource — **or one deliberately hidden from you** |
 | `conflict` | 409 | Clashes with current state. Many routes use a more specific 409 code |
+| `plan_limit_reached` | 409 | A Personal plan limit. `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan` |
 | `payload_too_large` | 413 | Body too big |
 | `step_up_required` | 428 | Browser sessions only: re-verify first |
 | `rate_limited` | 429 | Over the limit. See `Retry-After` |
@@ -235,7 +240,7 @@ fields as list rows, so a freshly changed row keeps its actions.
 | Surface | Limit | Keyed on |
 |---|---|---|
 | REST API | **600 requests / 60s** | The API token |
-| MCP endpoint | **120 requests / 60s** | The OAuth access token |
+| MCP endpoint | **120 requests / 60s** | The OAuth grant (the connected app); its refreshed tokens share one budget |
 
 Over the limit: `429`, code `rate_limited`, and `Retry-After` in seconds.
 Honor it.
@@ -251,7 +256,7 @@ within a prefix, which is why cursors use them.
 Common prefixes: `org`, `usr`, `team`, `role`, `conn` (connection), `tbx`
 (toolbox), `tpl` (template), `syn` (synthetic tool), `acl` (a grant), `rstr`
 (restriction), `inv` (invite), `atok` (API token), `aud` (audit event), `areq`
-(access request), `file`. Invite-only resources add `auto` (automation),
+(access request), `file`. Black-plan resources add `auto` (workflow),
 `coll` (collection), `dash` (dashboard), `kbs` (knowledge base) and `bndl`
 (app). The full table is in [Conventions](../elaichi-conventions/SKILL.md).
 
@@ -269,7 +274,7 @@ read-only, and every change, share or transfer call refuses them.
 
 | Document | Topics |
 |---|---|
-| [Endpoints](./references/endpoints.md) | Every published route by area, with the permission each needs, plus the invite-only families |
+| [Endpoints](./references/endpoints.md) | Every published route by area, with the permission each needs, plus the Black-plan families |
 | [Patterns](./references/patterns.md) | Paging, server-side search, capability fields, error handling, retries, and tokens in code |
 
 ## Companion skills

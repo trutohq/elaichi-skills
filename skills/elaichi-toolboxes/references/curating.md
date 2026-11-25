@@ -136,7 +136,7 @@ Two rules follow:
 ## Write the skill
 
 Before you hand the toolbox over, write its skill: purpose, the ids it works on,
-field names and allowed values, rules, and any automation that uses it. Name
+field names and allowed values, rules, and any workflow that uses it. Name
 each tool by its catalog `tool_name` in backticks, and check
 `skill_tool_issues` in the response. See [Toolbox skills](./skills.md).
 

@@ -57,18 +57,95 @@ ChatGPT cannot reach a local MCP server; use the hosted endpoint.
 ChatGPT may ask for confirmation before an action, depending on its own app
 permission settings. **Treat that as a convenience, not the security
 boundary** — the scopes granted on Elaichi's consent screen are the real one.
-Every connected-app call goes through `execute_tool` or `run_code`, which are
-marked as able to change things, so a "read actions only" setting in ChatGPT
-does not make connected apps read-only.
+A connected-app read goes through `read_tool`, which is marked read-only, so
+ChatGPT usually runs it without asking. A write goes through `execute_tool` or
+`run_code`, which are marked as able to change things. A "read actions only"
+setting in ChatGPT allows `read_tool` and blocks `execute_tool` and `run_code`.
 
-Because connected tools are reached through `search_tools` and `execute_tool`
-rather than listed one by one, apps connected in Elaichi later are reachable
+Because connected tools are reached through `search_tools`, `read_tool` and
+`execute_tool` rather than listed one by one, apps connected in Elaichi later are reachable
 without selecting Refresh tools in ChatGPT.
 
 To disconnect for certain, revoke the grant in Elaichi under Settings →
 Connected apps.
 
 Guide: [elaichi.ai/docs/guides/mcp-servers/chatgpt](https://elaichi.ai/docs/guides/mcp-servers/chatgpt)
+
+## Perplexity
+
+Pro, Max or Enterprise. The Free plan cannot add a custom connector. In a
+Perplexity organization, members can add their own only after an admin turns on
+**Allow members to add custom connectors**, which is off by default.
+
+1. In Perplexity, open **Plugins** in the sidebar. Select **Add custom**, then
+   **Add MCP connector**, and choose **Remote**.
+2. Name it Elaichi and paste the endpoint as the **MCP server URL**.
+3. Under **Advanced**, set **Authentication** to OAuth and **Transport** to
+   Streamable HTTP. Leave the client ID and secret empty.
+4. Tick the box that says custom connectors can introduce risks, then select
+   **Add**.
+5. On the **Plugins** page, select the Elaichi card. Sign in to Elaichi, pick
+   the organization, and approve what Perplexity can do.
+
+No client ID or secret is needed — Elaichi registers Perplexity automatically
+on first contact.
+
+**Perplexity Enterprise, for everyone:** a Perplexity admin adds it from
+**Organization settings → Connectors → Custom connector**, with the same
+endpoint and OAuth settings. A new organization connector starts turned off.
+Set it so **each member signs in**: if an admin signs in once for the
+organization, every member's call runs as that admin.
+
+Perplexity asks the person to confirm before a write action. **Treat that as a
+convenience, not the security boundary** — the scopes granted on Elaichi's
+consent screen are the real one.
+
+To disconnect for certain, revoke the grant in Elaichi under Settings →
+Connected apps.
+
+Guide: [elaichi.ai/docs/guides/mcp-servers/perplexity](https://elaichi.ai/docs/guides/mcp-servers/perplexity)
+
+## Grok
+
+Elaichi works in two Grok apps from xAI: Grok on grok.com, and Grok Bot, xAI's
+desktop app that runs Bots on a cloud computer.
+
+**grok.com.** Custom connectors are available to all Grok users.
+
+1. Go to **grok.com/connectors** and select **New Connector**.
+2. Select **Custom**, and paste the endpoint as the MCP server URL.
+3. Sign in to Elaichi, pick the organization, and approve what Grok can do.
+
+On Grok Business and Enterprise, a team admin adds the connector first: in
+**console.x.ai**, select the team, open **Grok Business → Connectors**, select
+**+ Add Connector**, choose **Other** and paste the endpoint (needs the Team
+Read-Write permission). Members then connect their own accounts at
+grok.com/connectors.
+
+**Grok Bot.** Needs a paid plan: Premium, Super or Ultra on The X Subscription,
+a linked SuperGrok, SuperGrok Plus, SuperGrok Heavy or X Premium+
+subscription, or a seat on self-serve Grok Business.
+
+1. Open **Connect apps** from the sidebar, then **Add a custom connector** at
+   the bottom.
+2. Name it Elaichi, and choose **Remote HTTPS** as the type.
+3. Paste the endpoint as the **Server URL**. Leave the OAuth **Client ID**
+   empty.
+4. Select **Add plugin**, then **Authorize**, and sign in to Elaichi.
+5. Check Elaichi is under **Installed**. In chat, type **@** to attach it.
+
+A Grok Bot app is account-wide: every Bot the person runs can use it, as them.
+On a team, Grok Bot follows the team's MCP server policy; if that policy does
+not allow the endpoint, Grok Bot cannot save the connector.
+
+No client ID or secret is needed in either app — Elaichi registers Grok
+automatically on first contact. Grok needs a server it can reach over the
+internet, so use the hosted endpoint.
+
+To disconnect for certain, revoke the grant in Elaichi under Settings →
+Connected apps.
+
+Guide: [elaichi.ai/docs/guides/mcp-servers/grok](https://elaichi.ai/docs/guides/mcp-servers/grok)
 
 ## Cursor
 
@@ -97,7 +174,7 @@ account-level to configure.
    Select **Authenticate**.
 5. Elaichi's sign-in and consent screen opens in the browser and names Cursor
    as the requesting app. Pick the organization, choose what Cursor may do and
-   which tools it may use, then select **Allow access**. The browser shows
+   which toolboxes it may use, then select **Allow**. The browser shows
    "Authorization complete" and may ask to open Cursor. Select **Open Cursor**.
 
 There is **no `type` field, no command to run, and no `auth` block.** Cursor
@@ -114,6 +191,123 @@ under Settings → Connected apps.
 Guide: [elaichi.ai/docs/guides/mcp-servers/cursor](https://elaichi.ai/docs/guides/mcp-servers/cursor)
 
 Video walkthrough: https://youtu.be/EwleY4bw0HQ
+
+## Microsoft Copilot
+
+Microsoft Copilot (formerly Microsoft 365 Copilot) reaches Elaichi through an
+agent built in **Copilot Studio**. You add Elaichi's endpoint to the agent as an MCP tool, then publish
+the agent to Microsoft Copilot. Copilot Studio supports the Streamable HTTP
+transport, which Elaichi uses. The setup is **per agent**, not per person.
+
+1. In Copilot Studio, open the agent and go to its **Tools** page.
+2. Select **Add a tool**, then **New tool**, then **Model Context Protocol**.
+   The MCP onboarding wizard opens.
+3. Fill in **Server name** (`Elaichi`), **Server description** and **Server
+   URL**. The server URL is the Elaichi endpoint. Write the description so the
+   agent can tell when to call Elaichi: it is where the person's connected
+   apps and Elaichi's own operations live.
+4. Set the authentication type to **OAuth 2.0**, then the type to **Dynamic
+   discovery**, then select **Create**. Dynamic discovery is for servers that
+   support OAuth 2.0 dynamic client registration, which Elaichi does. There
+   is no client ID, secret or URL to enter.
+5. Select **Next**. On **Add tool**, select **Create a new connection** and
+   sign in. Elaichi's sign-in and consent screen opens. Pick the
+   organization, choose what the agent may do and which toolboxes it may use,
+   then select **Allow**.
+6. Select **Add to agent**.
+7. Publish the agent, then go to **Channels** and open **Teams and Microsoft
+   Copilot**. Make sure **Make agent available in Microsoft Copilot** is
+   selected and select **Add channel**.
+8. In Microsoft Copilot, type **@**, pick the agent and ask a question.
+
+**Keep each person signing in as themselves.** Leave the connection on
+end-user credentials, so every person who uses the agent signs in to Elaichi
+with their own account and gets their own access. A connection set to the
+maker's credentials would run every person's calls as the maker. Microsoft's
+setup pages above do not cover that setting, so check it when you add the
+tool.
+
+**It shows as unverified.** Sign-in goes through Copilot Studio's shared sign-in
+host, so the consent screen cannot tell one agent from another. Check it is
+the sign-in you started before you approve.
+
+Before others can use the agent, Microsoft requires that it be published at
+least once and shared with them. Showing it in the Microsoft 365 Agent Store or the
+Teams app store for the whole organization goes through admin approval.
+Power Platform data policies that restrict connectors also restrict the MCP
+server.
+
+To disconnect: remove the Elaichi tool from the agent or delete its
+connection in Copilot Studio, and revoke the grant in Elaichi under Settings
+→ Connected apps.
+
+Source: Microsoft Learn,
+[Connect your agent to an existing MCP server](https://learn.microsoft.com/microsoft-copilot-studio/mcp-add-existing-server-to-agent)
+and
+[Connect and configure an agent for Teams and Microsoft Copilot](https://learn.microsoft.com/microsoft-copilot-studio/publication-add-bot-to-microsoft-teams).
+
+## GitHub Copilot (VS Code)
+
+GitHub Copilot in VS Code, with a version that has MCP server support. This is
+GitHub Copilot in the editor. For Microsoft Copilot, see the section above.
+Like Cursor, it reads a file on the machine, so this is **per machine**.
+There is nothing account-level to configure.
+
+1. Open the Command Palette and run **MCP: Add Server**.
+2. Choose **HTTP (HTTP or Server-Sent Events)** and paste the Elaichi
+   endpoint.
+3. Enter `elaichi` as the server ID. It must not already be used in the
+   destination you pick.
+4. For a personal setup, choose **Global**, then **Copilot Global**. That
+   writes to `$COPILOT_HOME/mcp-config.json`, or `~/.copilot/mcp-config.json`
+   when `COPILOT_HOME` is not set.
+5. Sign in when VS Code prompts. Elaichi's sign-in and consent screen opens in
+   the browser. Pick the organization, choose what GitHub Copilot may do and
+   which toolboxes it may use, then select **Allow**.
+
+The entry that results looks like this (the portable format, which uses a
+top-level `mcpServers`):
+
+```json
+{
+  "mcpServers": {
+    "elaichi": {
+      "type": "http",
+      "url": "https://api.elaichi.ai/mcp"
+    }
+  }
+}
+```
+
+There is **no `oauth` block and no client ID or secret.** Dynamic client
+registration handles the credentials. Do not paste a token into the file.
+
+Other places the entry can live:
+
+| File | Top-level key | Use |
+|---|---|---|
+| `$COPILOT_HOME/mcp-config.json` (else `~/.copilot/mcp-config.json`) | `mcpServers` | Personal, all workspaces. The preferred destination. |
+| `.mcp.json` at the workspace root | `mcpServers` | Shared with a team. Needs the experimental setting `chat.mcp.workspaceRootConfig.enabled`. |
+| `.vscode/mcp.json`, or the user profile's `mcp.json` | `servers` | **Deprecated** in VS Code's own flow, kept for compatibility. Same entry, with `servers` in place of `mcpServers`. |
+
+Do not commit a shared file that holds anything but the endpoint. A person
+who opens the repository signs in as themselves.
+
+**GitHub Copilot is not a verified client.** The consent screen shows the name
+GitHub Copilot registered with, and marks it as self-reported. Check it is the
+sign-in you started before you approve.
+
+To see the tools, open **Chat: Open Customizations** → **Tools**. To read the
+server's log, run **MCP: List Servers**, select Elaichi and choose **Show
+Output**. After changing the file, use **Restart Server**.
+
+To disconnect: remove only the `elaichi` entry from its file (or **Uninstall**
+from the server's menu if offered), and revoke the grant in Elaichi under
+Settings → Connected apps. VS Code's docs do not describe revoking a remote
+server's sign-in from the editor.
+
+Source: [VS Code, MCP servers in VS Code](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
+and the [MCP configuration reference](https://code.visualstudio.com/docs/agents/reference/mcp-configuration).
 
 ## Other MCP clients
 

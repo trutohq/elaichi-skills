@@ -19,7 +19,7 @@ is `elaichi__connection__list_tools`, and `automation.run.get` is
 | Role has no `tool:execute` | **Nothing** is listed — no operation and no connected tool. Guest, Auditor and Billing Admin lack it. |
 | Role lacks the operation's permission | Not listed. |
 | Scope | `read` and `sensitive_read` need `mcp:read`. `write` needs `mcp:write`. `destructive` needs `mcp:destructive`. An operation that runs a connected tool also needs `mcp:tools`, and a delete in the connected app needs nothing more. |
-| Automations off for the org | Every operation marked **(A)** below is hidden. They come back when the plan includes automations **and** an admin turns on "Automations and everything they use" in Settings → Organization. |
+| Workflows off for the org | Every operation marked **(A)** below is hidden. They come back when the plan includes workflows (Black, trial included) **and** an admin turns on "Workflows and everything they use" in Settings → Organization. Personal and Gold never list them. |
 | Apps feature dormant | `bundle.*` is hidden unless Apps is switched on, on top of **(A)**. |
 | MCP Apps not negotiated | `canvas.upsert_widget` is hidden. |
 | Step-up | Marked **(S)**. **Not listed at any scope**; a call by name is refused with the steps to do it in the app. See below. |
@@ -146,6 +146,7 @@ Approving or denying an access request is not on MCP at all
 - `file.upload_request` — last resort: the user signs in, picks files and confirms on a page. Returns an `upload_page_url`.
 - `file.upload_request_get` — poll until `status` is `confirmed`; it lists each `file_id`.
 - `file.get` — is this file id usable now?
+- `file.read` — read what is in a file: an image comes back as an image you can see, text inline, anything else as a short-lived download link. `link_only: true` returns only the link, for a shell agent saving the file to disk. Needs `mcp:read` and `mcp:tools`.
 
 Pass a `file_id` to a connected tool's file argument. The order to try these in
 is in [Tool discovery](./tool-discovery.md#files-in-and-out): automatic upload
@@ -153,7 +154,7 @@ first, the manual page last. `file.upload_link`, `file.import_attachment` and
 `file.import_url` may not be on every server yet; use one only if it is in
 `tools/list`.
 
-## Automations (A)
+## Workflows (A)
 
 Load the [elaichi-automations](../../elaichi-automations/SKILL.md) skill before building one.
 
@@ -165,7 +166,6 @@ Load the [elaichi-automations](../../elaichi-automations/SKILL.md) skill before 
 - Approvals: `automation.approval.list`, `automation.approval.get`.
 - Webhooks: `automation.webhook.list`, `automation.webhook.samples`.
 - Sessions: `automation.session.list`, `automation.session.get`, `automation.session.list_messages`, `automation.session.runs`, `automation.session.continue`, `automation.session.close`.
-- Web access: `web_access_policy.get`, `web_access_policy.check`.
 
 `automation.run`, `automation.enable`, `automation.dry_run`,
 `automation.publish` and `automation.session.continue` reach connected tools,
@@ -228,7 +228,7 @@ payload:
 
 When any cap fired, the result carries `elaichi_truncated: true` as its first
 key. A vendor's own `truncated` field is separate and untouched. Elaichi's own
-automation and dashboard definitions (schema, get, drafts) keep deep nesting
+workflow and dashboard definitions (schema, get, drafts) keep deep nesting
 and their key names, so they round-trip into an update.
 
 Most list operations here answer `{ result, nextCursor, prevCursor }` —

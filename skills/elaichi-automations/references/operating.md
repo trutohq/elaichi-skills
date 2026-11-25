@@ -1,9 +1,9 @@
-# Operating automations
+# Operating workflows
 
 What happens after publishing: runs, approvals, sessions, settings, webhooks,
 limits, and who may do what. Operation `a.b` is MCP tool `elaichi__a__b`.
 
-## The automation's own state
+## The workflow's own state
 
 `automation.list` and `automation.get` carry these. Read them; do not work
 them out from other fields.
@@ -24,20 +24,20 @@ them out from other fields.
 
 | Operation | Use it for |
 |---|---|
-| `automation.run` | Start a run by hand. `input` must fit the automation's `input_schema`. Waits up to 20 seconds. |
+| `automation.run` | Start a run by hand. `input` must fit the workflow's `input_schema`. Waits up to 20 seconds. |
 | `automation.run.progress` | A run still going: each step's state, loop items settled, which branch arm ran, what a waiting step waits for |
 | `automation.run.get` | How a run ended: status, outcome, the failing step and its error, an output preview. `counts` appear only once it finishes. |
 | `automation.run.list` | Runs, newest first. Filter by `status`, `session_id` or `q`. |
-| `automation.run_warnings` | Warnings one run recorded: a `check` set to warn, a `repeat` that ran out of tries, a settings change mid-run |
+| `automation.run_warnings` | Warnings one run recorded: a `check` set to warn, a `repeat` that ran out of tries, a settings change mid-run, an `agent` step that ran on the default model because its pinned model was removed |
 | `automation.run.transcript` | What one `agent` step said and did. Needs `step_seq`, the step's position in the run (0 is first). |
 
 Run `status`: `queued`, `starting`, `running`, `waiting` (on an approval, a
-wait or a called automation), `succeeded`, `failed`, `cancelled`, `skipped`.
+wait or a called workflow), `succeeded`, `failed`, `cancelled`, `skipped`.
 
 Run `outcome` says more about a finished run: `completed`, `nothing_to_do`,
 `completed_with_failures`, `completed_with_warnings`.
 
-`automation.run` is refused, with a plain reason, when the automation was
+`automation.run` is refused, with a plain reason, when the workflow was
 never published, is disabled or paused, or already has too many runs queued
 (20). Check `can_run` first.
 
@@ -52,7 +52,7 @@ those off.
 
 - `automation.approval.list` lists them. `scope: assigned` (the default) is
   what the caller may answer; `scope: visible` adds every approval on an
-  automation they can see. `status` is `pending` (default), `resolved` or
+  workflow they can see. `status` is `pending` (default), `resolved` or
   `all`.
 - `automation.approval.get` reads one, including `delivery_line`: who was told
   on Slack and email, or why someone was not. Relay it when someone asks why an
@@ -101,12 +101,14 @@ A session with no activity for 30 days closes itself.
 - A setting never holds a secret or an Elaichi id. Credentials belong on a
   connection; a reference to a person or team uses a `member` or `team`
   setting.
-- Changing settings on an automation with a write or destructive tier, or a
+- Changing settings on a workflow with a write or destructive tier, or a
   webhook or Slack trigger, needs `automation:publish` or `automation:manage`
   as well as edit access, because settings can steer what it does.
-- `automation.options` lists the choices a picker offers for a setting or a
-  run input, as the caller sees them. `target` is `{ kind: "input", property }`
-  or `{ kind: "config", key }`. Search with `q`.
+- `automation.options` lists the choices a picker offers for a setting, a run
+  input or an agent step's model, as the caller sees them. `target` is
+  `{ kind: "input", property }`, `{ kind: "config", key }` or
+  `{ kind: "step_model" }`. Search with `q`. `step_model` and `config` need
+  Manage.
 
 ## Webhooks
 
@@ -119,7 +121,7 @@ can be given to the sender before the first publish.
   of running. `automation.webhook.samples` lists the last few (5 per trigger,
   kept a week). Pass a sample's id to `automation.dry_run` as `sample_id` to
   test against a real delivery.
-- Revealing, rotating or setting a secret is done on the automation's Triggers
+- Revealing, rotating or setting a secret is done on the workflow's Triggers
   panel in the console.
 
 ## Usage limits
@@ -128,30 +130,35 @@ Admins can cap runs, steps, tool calls, agent tokens, fetches and
 notifications. A run that meets a limit waits until the limit resets or is
 raised, or fails with `usage_limit_reached`.
 
-- `automation.usage.get` (`period`: `day` or `month`) shows one automation's
+- `automation.usage.get` (`period`: `day` or `month`) shows one workflow's
   use against its limits, with `hit` when a limit is holding runs. Say in plain
   words what is held and until when.
 - Limits are changed in **Governance → Spend** in the console. No operation
   changes them.
 
+The plan sets a floor under these. Black includes 1,000 run minutes and 1
+GB-month of storage a month; beyond that a paid Black organization is billed
+$0.02 per run minute and $5 per GB-month. A trial has no billing, so it stops at
+the allowance instead until Black is bought.
+
 ## Who may do what
 
-Sharing levels on an automation are `view`, `use` and `edit`. The owner holds
+Sharing levels on a workflow are `view`, `use` and `edit`. The owner holds
 everything, plus delete and transfer.
 
 | Action | Needs |
 |---|---|
 | See it in `automation.list` | Owner, or shared with you, a team of yours, or the whole organization |
 | Read its runs, sessions, warnings, transcripts, usage | `use` |
-| Run it, continue a session | `use` and `tool:execute`, on a published, enabled, unpaused automation (`can_run`) |
+| Run it, continue a session | `use` and `tool:execute`, on a published, enabled, unpaused workflow (`can_run`) |
 | Edit the draft, rename, enable, disable, discard | `edit` and `automation:create` or `automation:manage` (`can_manage`) |
 | Publish | The same, plus `automation:publish` or `automation:manage` past a read tier or with a webhook or Slack trigger (`can_publish`) |
-| Read webhook endpoints and samples, close a session, add a Slack trigger, let an agent step write | Manage on the automation |
+| Read webhook endpoints and samples, close a session, add a Slack trigger, let an agent step write | Manage on the workflow |
 | Delete, transfer | The owner only |
 | Share | Done in the console with **Manage access** |
 
 Every Member holds `automation:create`, `automation:share` and
-`automation:publish`. `automation:manage` reaches automations other people own.
+`automation:publish`. `automation:manage` reaches workflows other people own.
 
 ## Scopes over MCP
 
@@ -163,7 +170,7 @@ The person's consent decides which operations your connection may call:
   `automation.enable` and `automation.session.continue` reach connected tools,
   so they also need connected-tool access.
 - A connection limited to chosen toolboxes can run or publish only an
-  automation whose steps stay inside those toolboxes. A `call_synthetic_tool`
+  workflow whose steps stay inside those toolboxes. A `call_synthetic_tool`
   step is refused on such a connection.
 
 See **elaichi-mcp** for reading a scope refusal.

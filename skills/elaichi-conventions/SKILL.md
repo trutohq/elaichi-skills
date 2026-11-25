@@ -1,7 +1,6 @@
 ---
 name: elaichi-conventions
-description: Elaichi's base facts in one page — production URLs, API token format and the organization header, the cursor list envelope, error codes, id prefixes (conn_, tbx_, auto_, dash_…), MCP namespaces and scopes, and which Elaichi skill covers which question.
-whenToUse: Load whenever calling, configuring, or reasoning about anything at api.elaichi.ai or an Elaichi MCP endpoint. Read before constructing a URL, an id, or a paged request, or when an error code needs explaining.
+description: Elaichi's base facts in one page — production URLs, API token format and the organization header, the cursor list envelope, error codes, id prefixes (conn_, tbx_, auto_, dash_…), MCP namespaces and scopes, and which Elaichi skill covers which question. Load it whenever calling, configuring or reasoning about anything at api.elaichi.ai or an Elaichi MCP endpoint, before constructing a URL, an id or a paged request, or when an error code needs explaining.
 ---
 
 # Elaichi conventions
@@ -9,7 +8,7 @@ whenToUse: Load whenever calling, configuring, or reasoning about anything at ap
 Elaichi is an agent platform for companies. It connects the software a company
 already runs on and lets agents work in those systems, inside the same
 permissions the company already grants its people. One org-wide MCP endpoint,
-authorized with OAuth, serves Claude, ChatGPT, Cursor and any other MCP client.
+authorized with OAuth, serves Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot and any other MCP client.
 **MCP is how the product is delivered, not what the product is.**
 
 ## Skill routing
@@ -18,10 +17,10 @@ authorized with OAuth, serves Claude, ChatGPT, Cursor and any other MCP client.
 |---|---|
 | What Elaichi is, where a screen lives, what a word means, what a plan includes | **elaichi** |
 | Acting through an attached Elaichi MCP server | **elaichi-mcp** |
-| Setting up Claude, ChatGPT, Cursor or another MCP client | **elaichi-clients** |
+| Setting up Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot or another MCP client | **elaichi-clients** |
 | Connecting accounts, connection health, transfer, offboarding, custom connectors | **elaichi-connections** |
 | Toolboxes, templates, frozen params, delegation, synthetic tools | **elaichi-toolboxes** |
-| Automations and workflows: triggers, steps, approvals, runs, sessions, webhooks | **elaichi-automations** |
+| Workflows: triggers, steps, approvals, runs, sessions, webhooks | **elaichi-automations** |
 | Collections, dashboards and public links, knowledge bases | **elaichi-data** |
 | Roles, permissions, restrictions, access requests, audit, SSO, SCIM | **elaichi-governance** |
 | Writing code against `api.elaichi.ai` | **elaichi-api** |
@@ -108,10 +107,10 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 | `validation_error`, `bad_request`, `missing_organization_header` | 400 |
 | `unauthorized` | 401 |
 | `permission_required`, `forbidden` | 403 |
-| `subscription_required` (no active Gold or Black plan), `feature_not_available` (not on this plan), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
-| `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the automation platform is not offered, turned off, or paused) | 403 |
+| `subscription_required` (the plan is on hold; contact support@elaichi.ai), `feature_not_available` (not on this plan; the message names the plan that unlocks it), `plan_single_user` (Personal is for its creator only; the message names them), `organization_blocked` (suspended by Elaichi support), `mfa_setup_required` (the org requires two-factor) | 403 |
+| `automations_not_available`, `automations_disabled`, `automations_kill_switch` (the plan has no workflow platform (Black has it), it is switched off, or it is paused) | 403 |
 | `not_found` | 404 |
-| `conflict` | 409 |
+| `conflict`, `plan_limit_reached` (a Personal plan limit: `details.limit` is `members`, `connections`, `connectors`, `synthetic_tools` or `tool_calls`, with `max` and `plan`) | 409 |
 | `payload_too_large` | 413 |
 | `step_up_required` | 428 |
 | `rate_limited` | 429 |
@@ -121,6 +120,12 @@ The one exception is `/scim/v2/*`, which speaks RFC 7644's
 
 Many routes use a more specific code than these; branch on the ones you know
 and show the message for the rest.
+
+Plan refusals are about the organization, not the person: relay the message,
+link **Settings → Billing**, do not retry. Over MCP, a connected-tool call past
+Personal's monthly limit (1,000, resetting on the 1st, UTC) is an error result
+with a "See plans" card, not an HTTP error; tell the person and link the plan
+page.
 
 `permission_required` carries `details.required_permissions` — **any one** of
 them suffices. Show `error.message` unchanged; it is written for a person and
@@ -136,7 +141,7 @@ rather than refused.
 | Surface | Limit |
 |---|---|
 | REST API | 600 requests / 60s per API token |
-| MCP endpoint | 120 requests / 60s per OAuth access token |
+| MCP endpoint | 120 requests / 60s per OAuth grant (refreshed tokens share it) |
 
 `429` carries `Retry-After` in seconds. There is no public idempotency key.
 
@@ -193,12 +198,12 @@ Opaque, but chronologically sortable within a prefix.
 | `file` | stored tool file | `fupr` | file upload request |
 | `crun` | one `run_code` execution | `req` | request id (logs and audit) |
 
-The automation platform adds:
+The workflow platform adds:
 
 | Prefix | Entity | Prefix | Entity |
 |---|---|---|---|
-| `auto` | automation | `aver` | published automation version |
-| `arun` | automation run | `ases` | automation session |
+| `auto` | workflow | `aver` | published workflow version |
+| `arun` | workflow run | `ases` | workflow session |
 | `aapr` | approval | `awh` | webhook endpoint |
 | `coll` | collection | `crow` | collection row |
 | `cfld` | collection field | `dash` | dashboard |
@@ -223,22 +228,23 @@ Dynamic toolbox ids are computed and read-only: `global:{userId}` (named
 | Namespace | Cost |
 |---|---|
 | `elaichi__*` — administers Elaichi itself | One internal call. Cheap. |
-| Connected tools, reached via `execute_tool` or `run_code` | Restriction check + credential fetch + live third-party call. Seconds, and the vendor's rate limit. |
+| Connected tools, reached via `read_tool`, `execute_tool` or `run_code` | Restriction check + credential fetch + live third-party call. Seconds, and the vendor's rate limit. |
 
 `elaichi__toolbox__execute` and `elaichi__synthetic_tool__execute` cost the
 second kind, because they run a connected tool. Operation `a.b` in Elaichi's
 catalog is MCP tool `elaichi__a__b`.
 
 **Connected tools are never listed in `tools/list`, however few there are.**
-`search_tools` finds one; `execute_tool` runs it; `run_code` runs a small
+`search_tools` finds one; `read_tool` runs it if it only reads (a row's
+`runner` says which); `execute_tool` runs any; `run_code` runs a small
 JavaScript program that calls several. `search_tools` indexes connected tools
 only — never an `elaichi__` operation. A synthetic tool appears in it only as
 an entry of a toolbox you can reach; a standalone one is listed by
 `elaichi__synthetic_tool__list` and run by `elaichi__synthetic_tool__execute`.
 Ranking is **lexical**: query with concrete tool-ish words, not a sentence.
 
-When the person reaches no connected tool at all, `search_tools` and
-`execute_tool` are not listed. Clients that support MCP Apps also get
+When the person reaches no connected tool at all, `search_tools`,
+`read_tool` and `execute_tool` are not listed. Clients that support MCP Apps also get
 `show_card` and `show_object`, which only draw cards.
 
 A tool reaching several accounts of one app takes a required `connection`
@@ -247,11 +253,11 @@ an exact account name or `conn_…` id beyond that. **Never guess it. Ask.**
 
 | Scope | Consent screen label | Covers |
 |---|---|---|
-| `mcp:read` | Read your organization's data | Reads, including sensitive ones like the audit log |
-| `mcp:write` | Create and change data | Creates and changes; implies read |
-| `mcp:destructive` | Delete data and remove access | Deletes, removals, revokes; implies read. Never pre-ticked |
-| `mcp:tools` | Run your connected tools | Connected tools, from all of them or chosen toolboxes. Includes tools that delete in those apps. `mcp:destructive` is for Elaichi's own data |
-| `openid`, `email` | Confirm who you are, See your email address | Identity only; reach nothing in the organization |
+| `mcp:read` | See your organization | Reads, including sensitive ones like the audit log |
+| `mcp:write` | Make changes | Creates and changes; implies read |
+| `mcp:destructive` | Delete things | Deletes, removals, revokes; implies read. Never pre-ticked |
+| `mcp:tools` | Use your connected apps | Connected tools, from Everything I can use or chosen toolboxes. Includes tools that delete in those apps. `mcp:destructive` is for Elaichi's own data |
+| `openid`, `email` | Not checkboxes; the email carries a "Shared with <app>" tag | Identity only; reach nothing in the organization |
 
 A client that asks for no scope gets `mcp:read` only. A grant's scopes never
 change after consent; adding one means connecting the client again.

@@ -9,7 +9,7 @@
     {
       "name": "elaichi",
       "source": "./",
-      "description": "Official Elaichi plugin: skills for the MCP endpoint, toolboxes, connections, governance, automations, data, and the control-plane API."
+      "description": "Official Elaichi plugin: skills for the MCP endpoint, toolboxes, connections, governance, workflows, data, and the control-plane API."
     }
   ]
 }

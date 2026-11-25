@@ -1,7 +1,6 @@
 ---
 name: elaichi-toolboxes
-description: Build and share toolboxes in Elaichi — pick tools for a job, rename them, lock parameters, stamp from a template, share at "use" (delegation), write the toolbox skill that tells agents how to use it, and build multi-step synthetic tools.
-whenToUse: Someone is building, sharing or debugging a toolbox, template or synthetic tool, writing or reading a toolbox skill, deciding between a toolbox and a template, or asking what happens when they share one with a colleague.
+description: Build and share toolboxes in Elaichi — pick tools for a job, rename them, lock parameters, stamp from a template, share at "use" (delegation), write the toolbox skill that tells agents how to use it, and build multi-step synthetic tools. Use when someone is building, sharing or debugging a toolbox, template or synthetic tool, deciding between a toolbox and a template, or asks what happens when they share one with a colleague.
 ---
 
 # Toolboxes, templates, skills and synthetic tools
@@ -69,8 +68,8 @@ Put in it:
   options, label sets and formats the tools expect.
 - **Rules**: "always set Priority", "never close a ticket without a comment",
   "ask before writing to the live board".
-- **Which automations use it**, so nobody renames a field from under them.
-  An automation reaches tools only through stored toolboxes it names, never
+- **Which workflows use it**, so nobody renames a field from under them.
+  A workflow reaches tools only through stored toolboxes it names, never
   **All tools** (see [elaichi-automations](../elaichi-automations/SKILL.md)).
 
 How to write it so it works:
@@ -133,6 +132,10 @@ Writing good names and descriptions: [Curating a toolbox](./references/curating.
 
 ## What sharing at `use` actually does
 
+Sharing needs Gold or Black. On the free Personal plan a toolbox serves only
+its owner over MCP, and a share is refused with `feature_not_available`
+naming Gold; removing an old share always works.
+
 **Sharing a toolbox at `use` delegates execution.** The recipient runs its
 tools over the connections its entries pin, **without any grant on those
 connections**. They never see a credential, cannot reach the account anywhere
@@ -161,6 +164,9 @@ not whoever shared the toolbox:
 | owner | Also delete and transfer |
 
 ## Synthetic tools
+
+Every plan includes synthetic tools. The free Personal plan holds up to 10 in
+the organization; Gold and Black have no limit.
 
 Several calls chained into one, so the agent sees one decisive tool instead of
 orchestrating three. *Look the customer up in the CRM, then open a ticket for
@@ -196,8 +202,10 @@ There is no publishing step. Any `use` grantee reaches a toolbox through the
 MCP endpoint, and it always runs **as them**.
 
 When a person connects an MCP client, the consent screen asks which toolboxes it
-may reach: **All my tools**, or **Only the ones I pick**. They change it later in
-**Settings → Connected apps → Manage toolboxes**. A client limited to picked
+may reach, in a Toolboxes row under Use your connected apps: **Everything I can use**
+(including system toolboxes), or **Only the ones I pick**. They change it later in
+**Settings → Connected apps → Edit toolboxes** (**Everything I can use** or
+**Only these toolboxes**). A client limited to picked
 toolboxes is briefed on each one's skill and can read it as the resource
 `elaichi://toolbox/{id}/skill`.
 
@@ -227,6 +235,6 @@ toolboxes is briefed on each one's skill and can read it as the resource
 - **elaichi-connections**: the accounts a toolbox binds to.
 - **elaichi-mcp**: how the tools you curate reach an agent.
 - **elaichi-governance**: why a tool you added is restricted or missing.
-- [elaichi-automations](../elaichi-automations/SKILL.md): automations run their
-  tools through stored toolboxes, so a toolbox an automation uses needs a skill
+- [elaichi-automations](../elaichi-automations/SKILL.md): workflows run their
+  tools through stored toolboxes, so a toolbox a workflow uses needs a skill
   that says so.

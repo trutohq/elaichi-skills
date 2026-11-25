@@ -121,7 +121,7 @@ async function elaichiError(res: Response) {
 |---|---|
 | `permission_required` | Show `message` **unchanged**. `details.required_permissions` lists choices — any one is enough. Do not retry. |
 | `forbidden` | Often "needs an interactive browser session". Tell the person to do it in the app. Do not retry. |
-| `subscription_required`, `feature_not_available` | The plan, not the person. Say so; do not retry. |
+| `subscription_required`, `feature_not_available`, `plan_limit_reached` | The plan, not the person. Say so, name the plan or limit the message names, and link Settings → Billing; do not retry. |
 | `not_found` | May mean "not yours". Do not treat it as proof the resource is gone. |
 | `validation_error` | Fix the request. Never retry unchanged. |
 | `conflict` and other 409 codes | Re-read the resource and decide; do not blind-retry. |
