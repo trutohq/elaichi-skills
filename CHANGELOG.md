@@ -20,6 +20,13 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `elaichi-mcp`: a tool's file argument now teaches one source order. A
+  `file_…` already in hand or downloaded from the app, then `file.create` for
+  text you wrote, then the client's automatic upload (`file.upload_link` with a
+  shell, `file.import_attachment` in ChatGPT), then `file.import_url` for a
+  public address, and the manual `file.upload_request` page only as a last
+  resort. The three newer tools are described as "use only if listed in
+  `tools/list`, else fall through".
 - Every skill's "when to use it" text moved from the `whenToUse` frontmatter
   key into `description`. The Claude plugin directory accepts only the keys
   Claude Code reads, and Claude picks a skill by its description anyway.
