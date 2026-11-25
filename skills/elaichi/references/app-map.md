@@ -174,6 +174,8 @@ sections are `/settings?tab=<value>`.
 | Copy your endpoint | The **Connect** row in the sidebar | [How it works](/guides/mcp-servers/how-it-works) |
 | Add it to Claude | Claude → Customize → Connectors → **Add custom connector** | [Claude](/guides/mcp-servers/claude) |
 | Add it to ChatGPT | ChatGPT → Plugins → **Add** → **Add custom MCP server** | [ChatGPT](/guides/mcp-servers/chatgpt) |
+| Add it to Perplexity | Perplexity → Plugins → **Add custom** → **Add MCP connector** → **Remote** | [Perplexity](/guides/mcp-servers/perplexity) |
+| Add it to Grok | grok.com/connectors → **New Connector** → **Custom**, or Grok Bot → **Connect apps** → **Add a custom connector** | [Grok](/guides/mcp-servers/grok) |
 | Add it to Cursor | Cursor → Customize → MCPs → **New MCP Server** | [Cursor](/guides/mcp-servers/cursor) |
 | Review, narrow or revoke an authorized client | Settings → Connected apps | [Connected apps](/guides/settings/connected-apps) |
 

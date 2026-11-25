@@ -1,6 +1,6 @@
 ---
 name: elaichi-clients
-description: Connect Claude, ChatGPT, Cursor, Microsoft Copilot or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one. Use when someone is setting up an AI client, pasting the MCP endpoint, editing mcp.json, or reports that their client connected but shows no tools, is missing one, or was refused.
+description: Connect Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one. Use when someone is setting up an AI client, pasting the MCP endpoint, editing mcp.json, or reports that their client connected but shows no tools, is missing one, or was refused.
 ---
 
 # Connecting an AI client to Elaichi
@@ -123,6 +123,8 @@ Full steps and plan requirements in
 |---|---|---|
 | **Claude** | Customize → Connectors → **Add custom connector**, paste the endpoint | On Team and Enterprise, **only an Owner** can add it. Everyone else then connects to it as themselves. |
 | **ChatGPT** | Plugins → **Add** → **Add custom MCP server**, name it Elaichi, paste the endpoint, then **Create as a plugin** | On Pro you add it yourself. On Business an admin adds it for the workspace. |
+| **Perplexity** | Plugins → **Add custom** → **Add MCP connector** → **Remote**, name it Elaichi, paste the endpoint as the MCP server URL, under Advanced choose **OAuth** and **Streamable HTTP**, tick the risk box, **Add**, then select the Elaichi card to sign in | Pro, Max or Enterprise; Free cannot add a custom connector. In a Perplexity organization, an admin must first turn on **Allow members to add custom connectors**. Perplexity asks before write actions. |
+| **Grok** | grok.com/connectors → **New Connector** → **Custom**, paste the endpoint, sign in. In Grok Bot: **Connect apps** → **Add a custom connector**, type **Remote HTTPS**, Server URL the endpoint, leave Client ID empty → **Add plugin** → **Authorize** | On Grok Business and Enterprise, a team admin adds it in console.x.ai first. Grok Bot needs a paid plan. |
 | **Cursor** | Customize → MCPs → **New MCP Server**, add an `elaichi` entry with the endpoint as `url`, then **Authenticate** | Per machine. No `type`, no `auth` block, no command. [Video](https://youtu.be/EwleY4bw0HQ) |
 | **Microsoft Copilot** | Copilot Studio → your agent → **Tools** → **Add a tool** → **New tool** → **Model Context Protocol**, Server URL the endpoint, **OAuth 2.0** → **Dynamic discovery** → **Create**. Then **Create a new connection**, sign in, **Add to agent**. Publish the agent to Microsoft Copilot | Per agent, not per person. Keep end-user credentials so each person signs in as themselves. Shows as unverified: sign-in goes through Copilot Studio's shared host. |
 | **GitHub Copilot (VS Code)** | Command Palette → **MCP: Add Server** → **HTTP**, paste the endpoint, name it `elaichi`, choose **Global** → **Copilot Global**, then sign in when prompted | Per machine. Not a verified client: the consent screen shows the name it registered, marked self-reported. Not the same as Microsoft Copilot, which is the next row. |
@@ -222,6 +224,8 @@ Work down this list. The first match is usually the answer.
 | **Sign-in says the organization requires SSO** | Use the company's SSO sign-in, then approve. |
 | **"Add custom connector" is missing in Claude** | On Team or Enterprise only an Owner can add one. Ask an Owner to add it, then connect to it as yourself. |
 | **ChatGPT sign-in loops or never returns** | The plan may not include custom MCP servers. On Business, an admin adds it for the workspace. |
+| **Perplexity has no option to add a custom connector** | The Free plan cannot add one; Pro, Max or Enterprise can. In a Perplexity organization, an admin must turn on **Allow members to add custom connectors**. |
+| **Grok Business shows no Elaichi connector** | A team admin adds it first in console.x.ai: **Grok Business** → **Connectors** → **+ Add Connector** → **Other**. |
 | **Cursor never shows the server** | Invalid JSON, usually a trailing comma or a missing brace. Check the file is valid JSON. |
 | **Cursor shows no sign-in prompt** | Elaichi has not been authenticated yet. Open Customize → MCPs, find Elaichi under **Needs Attention**, and select **Authenticate** again. |
 | **Microsoft Copilot agent never calls Elaichi tools** | In Copilot Studio, check the agent's **Tools** page lists Elaichi and its connection is signed in, then publish again. Teams keeps a published agent cached: in Teams, sign out and back in or refresh the browser, and say **Start over** in an old chat. Also check the agent is published to Microsoft Copilot (**Channels** → **Teams and Microsoft Copilot**). |
@@ -239,7 +243,7 @@ depends on the client.
 
 | Document | Topics |
 |---|---|
-| [Setting up each client](./references/per-client-setup.md) | Claude, ChatGPT, Cursor, Microsoft Copilot and other MCP clients in full, with plan requirements and the exact configuration each needs |
+| [Setting up each client](./references/per-client-setup.md) | Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot and other MCP clients in full, with plan requirements and the exact configuration each needs |
 
 ## Companion skills
 

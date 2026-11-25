@@ -21,7 +21,7 @@
     {
       "id": "elaichi-clients",
       "title": "elaichi-clients",
-      "whenToUse": "Connect Claude, ChatGPT, Cursor, Microsoft Copilot or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one. Use when someone is setting up an AI client, pasting the MCP endpoint, editing mcp.json, or reports that their client connected but shows no tools, is missing one, or was refused.",
+      "whenToUse": "Connect Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot or any other MCP client to Elaichi — the endpoint, per-client setup, what to tick on the consent screen (scopes, toolboxes), adding a scope later, and why a connected client shows no tools or is missing one. Use when someone is setting up an AI client, pasting the MCP endpoint, editing mcp.json, or reports that their client connected but shows no tools, is missing one, or was refused.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-clients/SKILL.md"
     },
     {
@@ -51,7 +51,7 @@
     {
       "id": "elaichi-mcp",
       "title": "elaichi-mcp",
-      "whenToUse": "Use the Elaichi MCP server well — find a connected tool with search_tools, run it with read_tool, execute_tool or run_code, pick the right account, read a refusal or \"restricted\" result, ask an admin for access, and work out why a tool is missing. For any MCP client (Claude, ChatGPT, Cursor, Microsoft Copilot and others). Use when an Elaichi MCP server is attached and you need to act on the user's connected apps, or explain why a tool is missing, refused or restricted, or which account to use. Read it before the first search_tools call.",
+      "whenToUse": "Use the Elaichi MCP server well — find a connected tool with search_tools, run it with read_tool, execute_tool or run_code, pick the right account, read a refusal or \"restricted\" result, ask an admin for access, and work out why a tool is missing. For any MCP client (Claude, ChatGPT, Perplexity, Grok, Cursor, Microsoft Copilot and others). Use when an Elaichi MCP server is attached and you need to act on the user's connected apps, or explain why a tool is missing, refused or restricted, or which account to use. Read it before the first search_tools call.",
       "rawUrl": "https://raw.githubusercontent.com/trutohq/elaichi-skills/main/skills/elaichi-mcp/SKILL.md"
     },
     {
