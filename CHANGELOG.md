@@ -20,6 +20,9 @@ Dates are `YYYY-MM-DD`.
 
 ### Changed
 
+- `elaichi-mcp`: `run_code`'s per-org cap is now a monthly allowance by plan
+  (100 on Personal, 750 on Gold, 1,200 on Black, a trial counting as Black),
+  not 1,000 a day; a refused run comes back on the 1st (UTC).
 - `elaichi-mcp`: a tool's file argument now teaches one source order. A
   `file_…` already in hand or downloaded from the app, then `file.create` for
   text you wrote, then the client's automatic upload (`file.upload_link` with a

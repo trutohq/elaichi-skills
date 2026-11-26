@@ -280,8 +280,9 @@ return r.result.length
   `.restriction` says how to ask for access — do not retry it.
 - Plain JavaScript only: no TypeScript, imports or `fetch`. `atob`,
   `TextDecoder` and `JSON` are there.
-- Per run: 50 tool calls and 30 seconds. Per org: 20 runs a minute and, by
-  default, 1,000 a day. Each call inside a run also counts against the MCP rate limit.
+- Per run: 50 tool calls and 30 seconds. Per org: 20 runs a minute, and each
+  UTC month 100 runs on Personal, 750 on Gold and 1,200 on Black (a trial
+  counts as Black). Each call inside a run also counts against the MCP rate limit.
 
 The reply is `{ ok, returned, tool_calls, logs?, truncated?, restricted? }`,
 or `{ ok: false, error, tool_calls, … }`. Your program's value is under
@@ -296,8 +297,8 @@ Every call goes through the same gates as `execute_tool`: the same
 permissions, restrictions and audit. A deleting tool needs no scope beyond `mcp:tools`.
 Confirm with the user before a program writes, sends or deletes anything.
 
-If `run_code` is refused for a rate or daily limit, do the step with
-`execute_tool` instead.
+If `run_code` is refused for a rate or monthly limit, do the step with
+`execute_tool` instead. The monthly limit comes back on the 1st (UTC).
 
 ## Cost
 
